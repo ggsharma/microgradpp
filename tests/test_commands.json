@@ -1,0 +1,12 @@
+[{
+  "name" : "test1",
+  "command" : ["a = Value(1.0)", "b = Value(2.0)", "c = a - b", "d = c.relu()", "d.backward()"],
+  "results": ["a","b","c", "d"]
+},
+  {
+    "name" : "test2",
+    "command" : ["a = Value(4.0)", "b = a.tanh()", "c = b + a", "d = Value(16.56)", "e = d - c","e.backward()"],
+    "results": ["a","b","c","d","e"]
+  }
+
+]
