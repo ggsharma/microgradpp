@@ -1,7 +1,0 @@
-/Users/gautamsharma/CS/Projects/micrograd++/build/CMakeFiles/microgradpp.dir
-/Users/gautamsharma/CS/Projects/micrograd++/build/CMakeFiles/m++.dir
-/Users/gautamsharma/CS/Projects/micrograd++/build/CMakeFiles/run_tests.dir
-/Users/gautamsharma/CS/Projects/micrograd++/build/CMakeFiles/testNeuron.dir
-/Users/gautamsharma/CS/Projects/micrograd++/build/CMakeFiles/testValue.dir
-/Users/gautamsharma/CS/Projects/micrograd++/build/CMakeFiles/edit_cache.dir
-/Users/gautamsharma/CS/Projects/micrograd++/build/CMakeFiles/rebuild_cache.dir
