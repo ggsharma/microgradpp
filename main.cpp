@@ -19,7 +19,7 @@ struct Hash {
     size_t operator()(const std::shared_ptr<Value> value) const;
 };
 
-class Value :  public std::enable_shared_from_this<Value>{
+class Value : public std::enable_shared_from_this<Value>{
 private:
     Value(float data, const vector<std::shared_ptr<Value>>& children={}, const string& op= "", const string& label="")
             : data(data), prev(children.begin(), children.end()), op(op), label(label) {}
@@ -27,7 +27,6 @@ public:
     static std::shared_ptr<Value> create(float data, const vector<std::shared_ptr<Value>>& children = {}, const string& op = "", const string& label = "") {
         return std::shared_ptr<Value>(new Value(data, children, op, label));
     }
-
 
     float data;
     float grad = 0;
@@ -37,19 +36,19 @@ public:
     string label;
 
     Value(const Value&v) = default;
-    //Value(Value&& v) = delete;
+
 
     // Add Ref
-    Value operator +(Value& other){
-        auto out = create(this->data + other.data, {shared_from_this(), other.shared_from_this()}, "tanh");
-        //auto out = Value(this->data + other.data, {shared_from_this(), other.shared_from_this()}, "+");
+    // Add Ref
+    friend std::shared_ptr<Value> operator +(const std::shared_ptr<Value>& lhs, const std::shared_ptr<Value>& rhs) {
+        auto out = Value::create(lhs->data + rhs->data, {lhs, rhs}, "+");
 
-        auto backward = [&](){
-            this->grad += out.grad;
-            other.grad += out.grad;
+        auto backward = [lhs, rhs, out]() mutable {
+            lhs->grad += out->grad;
+            rhs->grad += out->grad;
         };
 
-        out.backward = backward;
+        out->backward = backward;
         return out;
     }
 
@@ -60,35 +59,35 @@ public:
 //    }
 
     // Multiply
-    Value operator *(Value& other){
-        auto out = Value(this->data * other.data, {shared_from_this(), other.shared_from_this()}, "*");
+    friend std::shared_ptr<Value> operator *(const std::shared_ptr<Value>& lhs,  const std::shared_ptr<Value>& rhs){
+        auto out = Value::create(lhs->data * rhs->data, {lhs, rhs}, "*");
 
         auto backward = [&](){
-            this->grad += other.data * out.grad;
-            other.grad += this->data * out.grad;
+            lhs->grad += rhs->data * out->grad;
+            rhs->grad += lhs->data * out->grad;
         };
 
-        out.backward = backward;
+        out->backward = backward;
         return out;
     }
 
     // Subtract
-    Value operator -(Value& other){
-        auto out = Value(this->data - other.data, {shared_from_this(), other.shared_from_this()}, "*");
+    friend std::shared_ptr<Value> operator -(const std::shared_ptr<Value>& lhs, const std::shared_ptr<Value>& rhs){
+        auto out = Value::create(lhs->data - rhs->data, {lhs, rhs}, "*");
 
         auto backward = [&](){
-            this->grad +=  out.grad;
-            other.grad -=  out.grad;
+            lhs->grad +=  out->grad;
+            rhs->grad -=  out->grad;
         };
 
-        out.backward = backward;
+        out->backward = backward;
         return out;
     }
 
     std::shared_ptr<Value> tanh(){
         auto x = this->data;
         double t = (double)(std::exp(2*x) - 1.0f) / (double)(std::exp(2*x) + 1.0f);
-        auto out = create(t, {shared_from_this()}, "tanh");
+        auto out = Value::create(t, {shared_from_this()}, "tanh");
         auto backward = [this,t,&out]() mutable{
             this->grad +=  (double)(1 - t*t) * (double)out->grad;
         };
@@ -96,13 +95,13 @@ public:
         return out;
     }
 
-    Value relu(){
+    std::shared_ptr<Value> relu(){
         auto val = this->data < 0 ? 0 :  this->data;
-        auto out = Value(val, {shared_from_this()}, "ReLU");
+        auto out = Value::create(val, {shared_from_this()}, "ReLU");
         auto backward = [&](){
-            this->grad +=  (out.data > 0) * out.grad;
+            this->grad +=  (out->data > 0) * out->grad;
         };
-        out.backward = backward;
+        out->backward = backward;
         return out;
     }
 
@@ -121,11 +120,8 @@ public:
     void backProp(){
         vector<std::shared_ptr<Value>> topo;
         unordered_set<std::shared_ptr<Value>, Hash> visited;
-//        auto start = std::make_shared<Value>(*this);
         buildTopo(shared_from_this(), visited, topo);
-
         this->grad = 1;
-
         for( auto it = topo.rbegin(); it != topo.rend(); ++it ){
             if((*it)->backward)  {
                 (*it)->backward();
@@ -137,6 +133,7 @@ public:
 
     bool operator==(const Value& other) const;
 };
+
 
 size_t Hash::operator()(const std::shared_ptr<Value> value) const {
     return hash<string>()(value.get()->op) ^ hash<float>()(value.get()->data);
@@ -197,11 +194,12 @@ printf("Hello from micrograd++\n");
     auto a = Value::create(4.0);
     a->label = "a";
     auto b = a->tanh();
+    b->label = "b";
     auto c = b + a;
-//    auto d = Value(16.56);
-//    auto e = d - c;
-//    e.label = "e";
-    c.backProp();
+    auto d = Value::create(16.56);
+    auto e = d - c;
+    e->label = "e";
+    e->backProp();
 
 
 }
