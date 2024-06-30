@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.15)
 project(microgradpp)
 set(CMAKE_CXX_STANDARD 17)
 
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+
 # Define your library (microgradpp)
 add_library(microgradpp
         main.cpp
@@ -28,6 +30,7 @@ set(TESTS_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/tests)
 include_directories(${JSON_INCLUDE_DIR})
 include_directories(${TESTS_INCLUDE_DIR})
 
+
 # Add a custom command to run the Python script to prepare expected values
 add_custom_command(
         OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/test1_output.json
@@ -40,14 +43,42 @@ add_custom_command(
 add_custom_target(run_tests ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/test1_output.json)
 
 
-# Build the tests executable
-add_executable(tests
-        ${CMAKE_CURRENT_SOURCE_DIR}/tests/test1.cpp
-        # Add other test source files here
-)
+## Build the tests executable
+#add_executable(testDivideValue
+#        ${CMAKE_CURRENT_SOURCE_DIR}/tests/testDivideValue.cpp
+#)
+#
+## Link the microgradpp library to the tests executable
+#target_link_libraries(testDivideValue PRIVATE microgradpp)
+#
+#
+## Build the tests executable
+#add_executable(testDivideConstant
+#        ${CMAKE_CURRENT_SOURCE_DIR}/tests/testDivideConstant.cpp
+#)
+#
+## Link the microgradpp library to the tests executable
+#target_link_libraries(testDivideConstant PRIVATE microgradpp)
+#
+## Ensure the tests are run after generating expected values
+#add_dependencies(testDivideValue run_tests)
+## Ensure the tests are run after generating expected values
+#add_dependencies(testDivideConstant run_tests)
 
-# Link the microgradpp library to the tests executable
-target_link_libraries(tests PRIVATE microgradpp)
+# Function to find all test executables starting with "test"
+function(find_test_executables)
+    file(GLOB TEST_EXECUTABLES "${CMAKE_CURRENT_SOURCE_DIR}/tests/test*.cpp")
+    foreach(test_executable ${TEST_EXECUTABLES})
+        get_filename_component(test_name ${test_executable} NAME_WE)
+        add_executable(${test_name} ${test_executable})
+        target_link_libraries(${test_name} PRIVATE microgradpp)
+        add_dependencies(${test_name} run_tests)
+        add_custom_command(TARGET ${test_name} POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E echo "Running ${test_name}..."
+                COMMAND ./${test_name}
+        )
+    endforeach()
+endfunction()
 
-# Ensure the tests are run after generating expected values
-add_dependencies(tests run_tests)
+# Call the function to find and configure test executables
+find_test_executables()

@@ -156,17 +156,30 @@ run_tests/fast:
 .PHONY : run_tests/fast
 
 #=============================================================================
-# Target rules for targets named tests
+# Target rules for targets named testNeuron
 
 # Build rule for target.
-tests: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tests
-.PHONY : tests
+testNeuron: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 testNeuron
+.PHONY : testNeuron
 
 # fast build rule for target.
-tests/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/build
-.PHONY : tests/fast
+testNeuron/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/testNeuron.dir/build.make CMakeFiles/testNeuron.dir/build
+.PHONY : testNeuron/fast
+
+#=============================================================================
+# Target rules for targets named testValue
+
+# Build rule for target.
+testValue: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 testValue
+.PHONY : testValue
+
+# fast build rule for target.
+testValue/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/testValue.dir/build.make CMakeFiles/testValue.dir/build
+.PHONY : testValue/fast
 
 main.o: main.cpp.o
 .PHONY : main.o
@@ -195,29 +208,53 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/m++.dir/build.make CMakeFiles/m++.dir/main.cpp.s
 .PHONY : main.cpp.s
 
-tests/test1.o: tests/test1.cpp.o
-.PHONY : tests/test1.o
+tests/testNeuron.o: tests/testNeuron.cpp.o
+.PHONY : tests/testNeuron.o
 
 # target to build an object file
-tests/test1.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/tests/test1.cpp.o
-.PHONY : tests/test1.cpp.o
+tests/testNeuron.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/testNeuron.dir/build.make CMakeFiles/testNeuron.dir/tests/testNeuron.cpp.o
+.PHONY : tests/testNeuron.cpp.o
 
-tests/test1.i: tests/test1.cpp.i
-.PHONY : tests/test1.i
+tests/testNeuron.i: tests/testNeuron.cpp.i
+.PHONY : tests/testNeuron.i
 
 # target to preprocess a source file
-tests/test1.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/tests/test1.cpp.i
-.PHONY : tests/test1.cpp.i
+tests/testNeuron.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/testNeuron.dir/build.make CMakeFiles/testNeuron.dir/tests/testNeuron.cpp.i
+.PHONY : tests/testNeuron.cpp.i
 
-tests/test1.s: tests/test1.cpp.s
-.PHONY : tests/test1.s
+tests/testNeuron.s: tests/testNeuron.cpp.s
+.PHONY : tests/testNeuron.s
 
 # target to generate assembly for a file
-tests/test1.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/tests/test1.cpp.s
-.PHONY : tests/test1.cpp.s
+tests/testNeuron.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/testNeuron.dir/build.make CMakeFiles/testNeuron.dir/tests/testNeuron.cpp.s
+.PHONY : tests/testNeuron.cpp.s
+
+tests/testValue.o: tests/testValue.cpp.o
+.PHONY : tests/testValue.o
+
+# target to build an object file
+tests/testValue.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/testValue.dir/build.make CMakeFiles/testValue.dir/tests/testValue.cpp.o
+.PHONY : tests/testValue.cpp.o
+
+tests/testValue.i: tests/testValue.cpp.i
+.PHONY : tests/testValue.i
+
+# target to preprocess a source file
+tests/testValue.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/testValue.dir/build.make CMakeFiles/testValue.dir/tests/testValue.cpp.i
+.PHONY : tests/testValue.cpp.i
+
+tests/testValue.s: tests/testValue.cpp.s
+.PHONY : tests/testValue.s
+
+# target to generate assembly for a file
+tests/testValue.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/testValue.dir/build.make CMakeFiles/testValue.dir/tests/testValue.cpp.s
+.PHONY : tests/testValue.cpp.s
 
 # Help Target
 help:
@@ -230,13 +267,17 @@ help:
 	@echo "... run_tests"
 	@echo "... m++"
 	@echo "... microgradpp"
-	@echo "... tests"
+	@echo "... testNeuron"
+	@echo "... testValue"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... tests/test1.o"
-	@echo "... tests/test1.i"
-	@echo "... tests/test1.s"
+	@echo "... tests/testNeuron.o"
+	@echo "... tests/testNeuron.i"
+	@echo "... tests/testNeuron.s"
+	@echo "... tests/testValue.o"
+	@echo "... tests/testValue.i"
+	@echo "... tests/testValue.s"
 .PHONY : help
 
 

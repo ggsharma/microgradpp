@@ -50,5 +50,6 @@ set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/microgradpp.dir/DependInfo.cmake"
   "CMakeFiles/m++.dir/DependInfo.cmake"
   "CMakeFiles/run_tests.dir/DependInfo.cmake"
-  "CMakeFiles/tests.dir/DependInfo.cmake"
+  "CMakeFiles/testNeuron.dir/DependInfo.cmake"
+  "CMakeFiles/testValue.dir/DependInfo.cmake"
   )

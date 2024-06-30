@@ -85,9 +85,16 @@ build cmake_object_order_depends_target_m++: phony || CMakeFiles/m++.dir
 build CMakeFiles/m++.dir/main.cpp.o: CXX_COMPILER__m.2b.2b_unscanned_Debug /Users/gautamsharma/CS/Projects/micrograd++/main.cpp || cmake_object_order_depends_target_m++
   DEP_FILE = CMakeFiles/m++.dir/main.cpp.o.d
   FLAGS = -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -mmacosx-version-min=14.3 -fcolor-diagnostics
-  INCLUDES = -I/Users/gautamsharma/CS/Projects/micrograd++/tests/3p/json -I/Users/gautamsharma/CS/Projects/micrograd++/tests
+  INCLUDES = -I/Users/gautamsharma/CS/Projects/micrograd++/include -I/Users/gautamsharma/CS/Projects/micrograd++/tests/3p/json -I/Users/gautamsharma/CS/Projects/micrograd++/tests
   OBJECT_DIR = CMakeFiles/m++.dir
   OBJECT_FILE_DIR = CMakeFiles/m++.dir
+
+build CMakeFiles/m++.dir/tests/testValue.cpp.o: CXX_COMPILER__m.2b.2b_unscanned_Debug /Users/gautamsharma/CS/Projects/micrograd++/tests/testValue.cpp || cmake_object_order_depends_target_m++
+  DEP_FILE = CMakeFiles/m++.dir/tests/testValue.cpp.o.d
+  FLAGS = -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -mmacosx-version-min=14.3 -fcolor-diagnostics
+  INCLUDES = -I/Users/gautamsharma/CS/Projects/micrograd++/include -I/Users/gautamsharma/CS/Projects/micrograd++/tests/3p/json -I/Users/gautamsharma/CS/Projects/micrograd++/tests
+  OBJECT_DIR = CMakeFiles/m++.dir
+  OBJECT_FILE_DIR = CMakeFiles/m++.dir/tests
 
 
 # =============================================================================
@@ -97,7 +104,7 @@ build CMakeFiles/m++.dir/main.cpp.o: CXX_COMPILER__m.2b.2b_unscanned_Debug /User
 #############################################
 # Link the executable m++
 
-build m++: CXX_EXECUTABLE_LINKER__m.2b.2b_Debug CMakeFiles/m++.dir/main.cpp.o
+build m++: CXX_EXECUTABLE_LINKER__m.2b.2b_Debug CMakeFiles/m++.dir/main.cpp.o CMakeFiles/m++.dir/tests/testValue.cpp.o
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -mmacosx-version-min=14.3
   OBJECT_DIR = CMakeFiles/m++.dir
   POST_BUILD = :
@@ -112,37 +119,70 @@ build m++: CXX_EXECUTABLE_LINKER__m.2b.2b_Debug CMakeFiles/m++.dir/main.cpp.o
 build run_tests: phony CMakeFiles/run_tests test1_output.json
 
 # =============================================================================
-# Object build statements for EXECUTABLE target tests
+# Object build statements for EXECUTABLE target testNeuron
 
 
 #############################################
-# Order-only phony target for tests
+# Order-only phony target for testNeuron
 
-build cmake_object_order_depends_target_tests: phony || cmake_object_order_depends_target_microgradpp run_tests
+build cmake_object_order_depends_target_testNeuron: phony || cmake_object_order_depends_target_microgradpp run_tests
 
-build CMakeFiles/tests.dir/tests/test1.cpp.o: CXX_COMPILER__tests_unscanned_Debug /Users/gautamsharma/CS/Projects/micrograd++/tests/test1.cpp || cmake_object_order_depends_target_tests
-  DEP_FILE = CMakeFiles/tests.dir/tests/test1.cpp.o.d
+build CMakeFiles/testNeuron.dir/tests/testNeuron.cpp.o: CXX_COMPILER__testNeuron_unscanned_Debug /Users/gautamsharma/CS/Projects/micrograd++/tests/testNeuron.cpp || cmake_object_order_depends_target_testNeuron
+  DEP_FILE = CMakeFiles/testNeuron.dir/tests/testNeuron.cpp.o.d
   FLAGS = -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -mmacosx-version-min=14.3 -fcolor-diagnostics
-  INCLUDES = -I/Users/gautamsharma/CS/Projects/micrograd++/tests/3p/json -I/Users/gautamsharma/CS/Projects/micrograd++/tests -I/Users/gautamsharma/CS/Projects/micrograd++/include
-  OBJECT_DIR = CMakeFiles/tests.dir
-  OBJECT_FILE_DIR = CMakeFiles/tests.dir/tests
+  INCLUDES = -I/Users/gautamsharma/CS/Projects/micrograd++/include -I/Users/gautamsharma/CS/Projects/micrograd++/tests/3p/json -I/Users/gautamsharma/CS/Projects/micrograd++/tests
+  OBJECT_DIR = CMakeFiles/testNeuron.dir
+  OBJECT_FILE_DIR = CMakeFiles/testNeuron.dir/tests
 
 
 # =============================================================================
-# Link build statements for EXECUTABLE target tests
+# Link build statements for EXECUTABLE target testNeuron
 
 
 #############################################
-# Link the executable tests
+# Link the executable testNeuron
 
-build tests: CXX_EXECUTABLE_LINKER__tests_Debug CMakeFiles/tests.dir/tests/test1.cpp.o | libmicrogradpp.a || libmicrogradpp.a run_tests
+build testNeuron: CXX_EXECUTABLE_LINKER__testNeuron_Debug CMakeFiles/testNeuron.dir/tests/testNeuron.cpp.o | libmicrogradpp.a || libmicrogradpp.a run_tests
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -mmacosx-version-min=14.3
   LINK_LIBRARIES = libmicrogradpp.a
-  OBJECT_DIR = CMakeFiles/tests.dir
-  POST_BUILD = :
+  OBJECT_DIR = CMakeFiles/testNeuron.dir
+  POST_BUILD = cd /Users/gautamsharma/CS/Projects/micrograd++/cmake-build-debug && /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E echo Running\ testNeuron... && ./testNeuron
   PRE_LINK = :
-  TARGET_FILE = tests
-  TARGET_PDB = tests.dbg
+  TARGET_FILE = testNeuron
+  TARGET_PDB = testNeuron.dbg
+
+# =============================================================================
+# Object build statements for EXECUTABLE target testValue
+
+
+#############################################
+# Order-only phony target for testValue
+
+build cmake_object_order_depends_target_testValue: phony || cmake_object_order_depends_target_microgradpp run_tests
+
+build CMakeFiles/testValue.dir/tests/testValue.cpp.o: CXX_COMPILER__testValue_unscanned_Debug /Users/gautamsharma/CS/Projects/micrograd++/tests/testValue.cpp || cmake_object_order_depends_target_testValue
+  DEP_FILE = CMakeFiles/testValue.dir/tests/testValue.cpp.o.d
+  FLAGS = -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -mmacosx-version-min=14.3 -fcolor-diagnostics
+  INCLUDES = -I/Users/gautamsharma/CS/Projects/micrograd++/include -I/Users/gautamsharma/CS/Projects/micrograd++/tests/3p/json -I/Users/gautamsharma/CS/Projects/micrograd++/tests
+  OBJECT_DIR = CMakeFiles/testValue.dir
+  OBJECT_FILE_DIR = CMakeFiles/testValue.dir/tests
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target testValue
+
+
+#############################################
+# Link the executable testValue
+
+build testValue: CXX_EXECUTABLE_LINKER__testValue_Debug CMakeFiles/testValue.dir/tests/testValue.cpp.o | libmicrogradpp.a || libmicrogradpp.a run_tests
+  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -mmacosx-version-min=14.3
+  LINK_LIBRARIES = libmicrogradpp.a
+  OBJECT_DIR = CMakeFiles/testValue.dir
+  POST_BUILD = cd /Users/gautamsharma/CS/Projects/micrograd++/cmake-build-debug && /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E echo Running\ testValue... && ./testValue
+  PRE_LINK = :
+  TARGET_FILE = testValue
+  TARGET_PDB = testValue.dbg
 
 
 #############################################
@@ -195,7 +235,7 @@ build microgradpp: phony libmicrogradpp.a
 #############################################
 # Folder: /Users/gautamsharma/CS/Projects/micrograd++/cmake-build-debug
 
-build all: phony libmicrogradpp.a m++ run_tests tests
+build all: phony libmicrogradpp.a m++ run_tests testNeuron testValue
 
 # =============================================================================
 # Built-in targets

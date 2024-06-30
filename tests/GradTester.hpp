@@ -4,9 +4,9 @@
 #include <iostream>
 
 namespace microgradpp{
-    class Tester{
+    class GradTester{
     public:
-        Tester() = default;
+        GradTester() = default;
 
         template<class T>
         static bool equals(T actual, T expected, std::string testName, std::string diagnostic = "") {

@@ -7,8 +7,61 @@
     "name" : "test2",
     "command" : ["a = Value(4.0)", "b = a.tanh()", "c = b + a", "d = Value(16.56)", "e = d - c","e.backward()"],
     "results": ["a","b","c","d","e"]
+  },
+  {
+    "name" : "test3",
+    "command" : ["a = Value(4.0)", "b = a.tanh()", "c = b + a", "d = Value(16.56)", "e = d - c","f = e * 67 + 78", "f.backward()"],
+    "results": ["a","b","c","d","e","f"]
+  },
+  {
+    "name" : "test_add_value",
+    "command" : ["a = Value(64)", "b = Value(8)", "c = a + b","c.backward()"],
+    "results": ["a","b", "c"]
+  },
+  {
+    "name" : "test_add_constant",
+    "command" : ["a = Value(64)", "b = a + 8.90", "b.backward()"],
+    "results": ["a","b"]
+  },
+  {
+    "name" : "test_subtract_value",
+    "command" : ["a = Value(64)", "b = Value(8)", "c = a - b","c.backward()"],
+    "results": ["a","b", "c"]
+  },
+  {
+    "name" : "test_subtract_constant",
+    "command" : ["a = Value(64)", "b = a - 8.90", "b.backward()"],
+    "results": ["a","b"]
+  },
+  {
+    "name" : "test_multiply_value",
+    "command" : ["a = Value(64)", "b = Value(8)", "c = a * b","c.backward()"],
+    "results": ["a","b", "c"]
+  },
+  {
+    "name" : "test_multiply_constant",
+    "command" : ["a = Value(64)", "b = a * 8.90", "b.backward()"],
+    "results": ["a","b"]
+  },
+  {
+    "name" : "test_divide_constant",
+    "command" : ["a = Value(64)", "b = a/8", "b.backward()"],
+    "results": ["a","b"]
+  },
+  {
+    "name" : "test_divide_value",
+    "command" : ["a = Value(64)", "b =Value(8)", "c = a/b", "c.backward()"],
+    "results": ["a","b", "c"]
+  },
+  {
+    "name" : "test_tanh",
+    "command" : ["a = Value(7.89)", "b = a.tanh()", "b.backward()"],
+    "results": ["a","b"]
+  },
+  {
+    "name" : "test_relu",
+    "command" : ["a = Value(7.89)", "b = a.relu()", "b.backward()"],
+    "results": ["a","b"]
   }
-
-
 
 ]

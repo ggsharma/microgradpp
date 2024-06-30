@@ -66,7 +66,8 @@ CMAKE_BINARY_DIR = /Users/gautamsharma/CS/Projects/micrograd++/build
 all: CMakeFiles/microgradpp.dir/all
 all: CMakeFiles/m++.dir/all
 all: CMakeFiles/run_tests.dir/all
-all: CMakeFiles/tests.dir/all
+all: CMakeFiles/testNeuron.dir/all
+all: CMakeFiles/testValue.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -77,7 +78,8 @@ preinstall:
 clean: CMakeFiles/microgradpp.dir/clean
 clean: CMakeFiles/m++.dir/clean
 clean: CMakeFiles/run_tests.dir/clean
-clean: CMakeFiles/tests.dir/clean
+clean: CMakeFiles/testNeuron.dir/clean
+clean: CMakeFiles/testValue.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -159,31 +161,58 @@ CMakeFiles/run_tests.dir/clean:
 .PHONY : CMakeFiles/run_tests.dir/clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/tests.dir
+# Target rules for target CMakeFiles/testNeuron.dir
 
 # All Build rule for target.
-CMakeFiles/tests.dir/all: CMakeFiles/microgradpp.dir/all
-CMakeFiles/tests.dir/all: CMakeFiles/run_tests.dir/all
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/gautamsharma/CS/Projects/micrograd++/build/CMakeFiles --progress-num=6,7 "Built target tests"
-.PHONY : CMakeFiles/tests.dir/all
+CMakeFiles/testNeuron.dir/all: CMakeFiles/microgradpp.dir/all
+CMakeFiles/testNeuron.dir/all: CMakeFiles/run_tests.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/testNeuron.dir/build.make CMakeFiles/testNeuron.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/testNeuron.dir/build.make CMakeFiles/testNeuron.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/gautamsharma/CS/Projects/micrograd++/build/CMakeFiles --progress-num=6,7 "Built target testNeuron"
+.PHONY : CMakeFiles/testNeuron.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/tests.dir/rule: cmake_check_build_system
+CMakeFiles/testNeuron.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/gautamsharma/CS/Projects/micrograd++/build/CMakeFiles 5
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/tests.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/testNeuron.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/gautamsharma/CS/Projects/micrograd++/build/CMakeFiles 0
-.PHONY : CMakeFiles/tests.dir/rule
+.PHONY : CMakeFiles/testNeuron.dir/rule
 
 # Convenience name for target.
-tests: CMakeFiles/tests.dir/rule
-.PHONY : tests
+testNeuron: CMakeFiles/testNeuron.dir/rule
+.PHONY : testNeuron
 
 # clean rule for target.
-CMakeFiles/tests.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/clean
-.PHONY : CMakeFiles/tests.dir/clean
+CMakeFiles/testNeuron.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/testNeuron.dir/build.make CMakeFiles/testNeuron.dir/clean
+.PHONY : CMakeFiles/testNeuron.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/testValue.dir
+
+# All Build rule for target.
+CMakeFiles/testValue.dir/all: CMakeFiles/microgradpp.dir/all
+CMakeFiles/testValue.dir/all: CMakeFiles/run_tests.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/testValue.dir/build.make CMakeFiles/testValue.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/testValue.dir/build.make CMakeFiles/testValue.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/gautamsharma/CS/Projects/micrograd++/build/CMakeFiles --progress-num=8,9 "Built target testValue"
+.PHONY : CMakeFiles/testValue.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/testValue.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/gautamsharma/CS/Projects/micrograd++/build/CMakeFiles 5
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/testValue.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/gautamsharma/CS/Projects/micrograd++/build/CMakeFiles 0
+.PHONY : CMakeFiles/testValue.dir/rule
+
+# Convenience name for target.
+testValue: CMakeFiles/testValue.dir/rule
+.PHONY : testValue
+
+# clean rule for target.
+CMakeFiles/testValue.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/testValue.dir/build.make CMakeFiles/testValue.dir/clean
+.PHONY : CMakeFiles/testValue.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

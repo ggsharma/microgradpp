@@ -41,7 +41,7 @@ namespace microgradpp {
 
                     if (value.is_object()) {
                     // Handle object values (if needed)
-                    std::cout << "Variable " << key << " is an object:" << std::endl;
+                    //std::cout << "Variable " << key << " is an object:" << std::endl;
                     // Process object fields as required
                     // Example: Read nested values
                     if (value.contains("grad")) {
@@ -49,7 +49,7 @@ namespace microgradpp {
                         if (nested_value.is_number()) {
                             double num_value = nested_value;
                             output[key].grad = num_value;
-                            std::cout << "Nested field value: " << num_value << std::endl;
+                            //std::cout << "Nested field value: " << num_value << std::endl;
                         }
                         // Handle other types as needed
                     }
@@ -58,7 +58,7 @@ namespace microgradpp {
                             if (nested_value.is_number()) {
                                 double num_value = nested_value;
                                 output[key].data = num_value;
-                                std::cout << "Nested field value: " << num_value << std::endl;
+                                //std::cout << "Nested field value: " << num_value << std::endl;
                             }
                             // Handle other types as needed
                         }
