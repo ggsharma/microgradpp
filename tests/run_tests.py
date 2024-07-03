@@ -10,6 +10,7 @@ micrograd_path = os.path.join(script_dir, '3p/micrograd')
 sys.path.insert(0, micrograd_path)
 
 from micrograd.engine import Value
+from micrograd.nn import Neuron
 
 def run_tests(test_file):
     # Calculate the full path to the test file

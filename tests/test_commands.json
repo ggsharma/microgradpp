@@ -62,6 +62,27 @@
     "name" : "test_relu",
     "command" : ["a = Value(7.89)", "b = a.relu()", "b.backward()"],
     "results": ["a","b"]
+  },
+  {
+    "name" : "test_plus_equals",
+    "command" : ["a = Value(64)", "b = Value(4.89)","b += a", "b.backward()"],
+    "results": ["a","b"]
+  },
+  {
+    "name" : "test_multiply_equals",
+    "command" : ["a = Value(64)", "b = Value(4.89)","b *= a", "b.backward()"],
+    "results": ["a","b"]
+  },
+
+  {
+    "name" : "test_neuron_equal_weights",
+    "command" : ["a = Neuron(3)", "a.set_weights_and_bias(12)","x = [-1,2,3]", "c={}","for idx in range(10):\n  y1 = a(x)\n  y1.backward()\n  d = a.parameters();\n  c[idx] = [[param.data, param.grad] for param in a.parameters()]\n  c[idx] = [[item for sublist in c[idx] for item in sublist]]\n"],
+    "results": ["c"]
+  },
+  {
+    "name" : "test_neuron_equal_weights_num_neurons_6",
+    "command" : ["a = Neuron(6)", "a.set_weights_and_bias(-9)","x = [-1,2,3,7.89,3.78,6.78]", "c={}","for idx in range(10):\n  y1 = a(x)\n  y1.backward()\n  d = a.parameters();\n  c[idx] = [[param.data, param.grad] for param in a.parameters()]\n  c[idx] = [[item for sublist in c[idx] for item in sublist]]\n"],
+    "results": ["c"]
   }
 
 ]

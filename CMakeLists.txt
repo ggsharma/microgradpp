@@ -19,66 +19,44 @@ add_executable(m++ main.cpp)
 #######################################################
 ## BUILDING TESTS
 #######################################################
-
-# Set path to include directory for third-party headers (json.hpp)
-set(JSON_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/tests/3p/json)
-
-# Include directories for tests
-set(TESTS_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/tests)
-
-# Add the third-party headers to include directory
-include_directories(${JSON_INCLUDE_DIR})
-include_directories(${TESTS_INCLUDE_DIR})
-
-
-# Add a custom command to run the Python script to prepare expected values
-add_custom_command(
-        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/test1_output.json
-        COMMAND ${CMAKE_COMMAND} -E env python3 ${CMAKE_CURRENT_SOURCE_DIR}/tests/run_tests.py
-        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/tests/run_tests.py ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_commands.json
-        COMMENT "Running Python script to prepare expected values"
-)
-
-# Add a custom target to run the tests
-add_custom_target(run_tests ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/test1_output.json)
-
-
-## Build the tests executable
-#add_executable(testDivideValue
-#        ${CMAKE_CURRENT_SOURCE_DIR}/tests/testDivideValue.cpp
+#
+## Set path to include directory for third-party headers (json.hpp)
+#set(JSON_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/tests/3p/json)
+#
+## Include directories for tests
+#set(TESTS_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/tests)
+#
+## Add the third-party headers to include directory
+#include_directories(${JSON_INCLUDE_DIR})
+#include_directories(${TESTS_INCLUDE_DIR})
+#
+#
+## Add a custom command to run the Python script to prepare expected values
+#add_custom_command(
+#        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/test1_output.json
+#        COMMAND ${CMAKE_COMMAND} -E env python3 ${CMAKE_CURRENT_SOURCE_DIR}/tests/run_tests.py
+#        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/tests/run_tests.py ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_commands.json
+#        COMMENT "Running Python script to prepare expected values"
 #)
 #
-## Link the microgradpp library to the tests executable
-#target_link_libraries(testDivideValue PRIVATE microgradpp)
+## Add a custom target to run the tests
+#add_custom_target(run_tests ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/test1_output.json)
 #
 #
-## Build the tests executable
-#add_executable(testDivideConstant
-#        ${CMAKE_CURRENT_SOURCE_DIR}/tests/testDivideConstant.cpp
-#)
+## Function to find all test executables starting with "test"
+#function(find_test_executables)
+#    file(GLOB TEST_EXECUTABLES "${CMAKE_CURRENT_SOURCE_DIR}/tests/test*.cpp")
+#    foreach(test_executable ${TEST_EXECUTABLES})
+#        get_filename_component(test_name ${test_executable} NAME_WE)
+#        add_executable(${test_name} ${test_executable})
+#        target_link_libraries(${test_name} PRIVATE microgradpp)
+#        add_dependencies(${test_name} run_tests)
+#        add_custom_command(TARGET ${test_name} POST_BUILD
+#                COMMAND ${CMAKE_COMMAND} -E echo "Running ${test_name}..."
+#                COMMAND ./${test_name}
+#        )
+#    endforeach()
+#endfunction()
 #
-## Link the microgradpp library to the tests executable
-#target_link_libraries(testDivideConstant PRIVATE microgradpp)
-#
-## Ensure the tests are run after generating expected values
-#add_dependencies(testDivideValue run_tests)
-## Ensure the tests are run after generating expected values
-#add_dependencies(testDivideConstant run_tests)
-
-# Function to find all test executables starting with "test"
-function(find_test_executables)
-    file(GLOB TEST_EXECUTABLES "${CMAKE_CURRENT_SOURCE_DIR}/tests/test*.cpp")
-    foreach(test_executable ${TEST_EXECUTABLES})
-        get_filename_component(test_name ${test_executable} NAME_WE)
-        add_executable(${test_name} ${test_executable})
-        target_link_libraries(${test_name} PRIVATE microgradpp)
-        add_dependencies(${test_name} run_tests)
-        add_custom_command(TARGET ${test_name} POST_BUILD
-                COMMAND ${CMAKE_COMMAND} -E echo "Running ${test_name}..."
-                COMMAND ./${test_name}
-        )
-    endforeach()
-endfunction()
-
-# Call the function to find and configure test executables
-find_test_executables()
+## Call the function to find and configure test executables
+#find_test_executables()
