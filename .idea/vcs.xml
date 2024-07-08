@@ -3,6 +3,7 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/3p/matplotplusplus" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/3p/opencv" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/tests/3p/micrograd" vcs="Git" />
   </component>
 </project>

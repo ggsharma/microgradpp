@@ -5,6 +5,18 @@ set(CMAKE_CXX_STANDARD 17)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
+# For visualization
+#add_subdirectory(3p/matplotplusplus)
+
+# Set the path to your local OpenCV directory
+set(OpenCV_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3p/opencv/build)
+
+# Find OpenCV package with hints
+find_package(OpenCV REQUIRED PATHS ${OpenCV_DIR} NO_DEFAULT_PATH)
+
+# Include OpenCV headers
+include_directories(${OpenCV_INCLUDE_DIRS})
+
 # Define your library (microgradpp)
 add_library(microgradpp
         main.cpp
@@ -15,6 +27,37 @@ add_library(microgradpp
 target_include_directories(microgradpp PUBLIC include)
 
 add_executable(m++ main.cpp)
+
+# Set build type to Debug by default
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Debug CACHE STRING "Build type" FORCE)
+endif()
+
+# Set compiler flags for Release build
+set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
+
+# Apply the same compiler flags to your targets
+set_target_properties(microgradpp PROPERTIES COMPILE_FLAGS "${CMAKE_CXX_FLAGS_RELEASE}")
+set_target_properties(m++ PROPERTIES COMPILE_FLAGS "${CMAKE_CXX_FLAGS_RELEASE}")
+
+option(BUILD_EXAMPLES "Build examples" ON)
+
+if(BUILD_EXAMPLES)
+#    add_executable(example_mlp examples/mlp.cpp)
+#    target_link_libraries(example_mlp PUBLIC matplot)
+
+    add_executable(example_images examples/images.cpp)
+    target_link_libraries(example_images PUBLIC  ${OpenCV_LIBS})
+
+    set_target_properties(m++ PROPERTIES COMPILE_FLAGS "${CMAKE_CXX_FLAGS_RELEASE}")
+    target_link_libraries(m++ microgradpp)
+endif()
+
+
+
+
+# Link the executable with the library
+target_link_libraries(m++ microgradpp)
 
 #######################################################
 ## BUILDING TESTS

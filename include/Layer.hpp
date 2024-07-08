@@ -56,8 +56,9 @@ class MLP{
 private:
     std::vector<size_t> sizes;
     std::vector<Layer> layers;
+    double learningRate;
 public:
-    MLP(size_t nin, std::vector<size_t> nouts){
+    MLP(size_t nin, std::vector<size_t> nouts, const double learningRate=0.0025):learningRate(learningRate){
         sizes.reserve(4);
         sizes.push_back(nin);
         std::copy(nouts.begin(), nouts.end(), std::back_inserter(sizes) );
@@ -72,6 +73,12 @@ public:
             out.emplace_back(Value::create(input[idx]));
         }
         return out;
+    }
+
+    void update(){
+        for (auto &p: this->parameters()) {
+            p->data += (double)((double)-this->learningRate * (double)p->grad);
+        }
     }
 
     std::vector<float> convertFromValue(const std::vector<std::shared_ptr<Value>>& input){
@@ -98,7 +105,6 @@ public:
         return x;
     }
 
-
     void printParameters(){
         const auto params = this->parameters();
         printf("Num parameters: %d\n", (int)params.size());
@@ -108,6 +114,7 @@ public:
         }
         printf("\n");
     }
+
     std::vector<std::shared_ptr<Value>> parameters() const{
         std::vector<std::shared_ptr<Value>> out;
         for(const auto& layer : this->layers){

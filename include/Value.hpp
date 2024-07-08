@@ -8,12 +8,13 @@
 #include <cmath>
 #include <memory>
 #include <functional> // std::function
+#include <iomanip>
 
 namespace microgradpp {
     class Value;
 
     struct Hash {
-        size_t operator()(const std::shared_ptr<Value> value) const;
+        size_t operator()(const std::shared_ptr<Value>& value) const;
     };
 
     class Value : public std::enable_shared_from_this<Value> {
@@ -230,6 +231,22 @@ namespace microgradpp {
             return out;
         }
 
+        std::shared_ptr<Value> sigmoid() {
+            double x = this->data;
+            double t = (double )(std::exp(x)) / (double )(1 + std::exp(x));
+            auto out = Value::create(t, {shared_from_this()}, "Sigmoid");
+
+            auto backward = [this, out = out, t= t]() mutable {
+                //std::cout << "Before relu : lhs.grad=" << this->grad << std::endl;
+                this->grad += (double)( double(t* (1 - t)) * out->grad);
+                this->clip_gradients();
+                //std::cout << "After relu : lhs.grad=" << this->grad << std::endl;
+            };
+
+            out->backward = backward;
+            return out;
+        }
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Topological sort
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -264,13 +281,16 @@ namespace microgradpp {
         bool operator==(const Value& other) const;
 
         friend std::ostream & operator << (std::ostream &os, const std::shared_ptr<Value> &v){
-            os << "[data: " << v->data << ", grad: "<<  v->grad << "]" << std::endl;
+            os << "[data: " << std::setw(3) << v->data << ", grad: " << std::setw(3) << v->grad << "] ";
             return os;
         }
     };
 
-    size_t Hash::operator()(const std::shared_ptr<Value> value) const {
-        return std::hash<std::string>()(value.get()->op) ^ std::hash<double>()(value.get()->data);
+    size_t Hash::operator()(const std::shared_ptr<Value>& value) const {
+        if (!value) {
+            return 0;
+        }
+        return std::hash<const void*>()(value.get());
     }
 
     bool Value::operator==(const Value& other) const {

@@ -1,3 +1,5 @@
 build
 cmake-build-debug
 cmake-build-release
+a.out
+venv

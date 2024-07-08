@@ -51,6 +51,7 @@ namespace microgradpp{
             }
         }
 
+        // Dot product of a Neurons weights with the input
         std::shared_ptr<Value> operator()(const std::vector<std::shared_ptr<Value>>& x) const{
             // Ensure both vectors are of the same size
             if (x.size() != weights.size()) {
@@ -65,9 +66,16 @@ namespace microgradpp{
 
             sum += this->bias;
 
-            auto res = sum->tanh();
+            auto res = sum->sigmoid();
 
             return res;
+        }
+
+        std::vector<std::shared_ptr<Value>> parameters() const{
+            std::vector<std::shared_ptr<Value>> out;
+            std::copy(this->weights.begin(), this->weights.end(), std::back_inserter(out));
+            out.emplace_back(this->bias);
+            return out;
         }
 
         void printParameters(){
@@ -83,13 +91,6 @@ namespace microgradpp{
 
         size_t getParametersSize() const{
             return weights.size() + 1;
-        }
-
-        std::vector<std::shared_ptr<Value>> parameters() const{
-            std::vector<std::shared_ptr<Value>> out;
-            std::copy(this->weights.begin(), this->weights.end(), std::back_inserter(out));
-            out.emplace_back(this->bias);
-            return out;
         }
 
     };
