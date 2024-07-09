@@ -21,7 +21,7 @@ micrograd++ aims to provide a simple yet powerful framework for building and tra
 
 - **CMake**: Version 3.15 or higher
 - **C++ Compiler**: Supports C++17 standard
-- **matplotplusplus**: For visualization
+- **opencv**: For visualization
 - 
 ### Building the Library
 
@@ -38,14 +38,25 @@ micrograd++ aims to provide a simple yet powerful framework for building and tra
    ```
 
 3. Configure the project with CMake:
+   ### Build microgradpp only
+      ```sh
+      cmake ..
+      ```
+   or
+   ### Builds example and tests
    ```sh
-   cmake ..
+   cmake -DBUILD_EXAMPLES=ON -DBUILD_TESTS=ON ..
    ```
 
 4. Build the project:
    ```sh
-   cmake --build .
+   make
    ```
+
+### Using the Header only Library
+
+Microgradpp is also available as a header only library. 
+
 
 ### Running the Example
 
@@ -111,3 +122,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Andrej Karpathy**: For the original [micrograd](https://github.com/karpathy/micrograd) library and inspiration.
 
 ---
+
+cmake -DJPEG_LIBRARY_RELEASE=/opt/homebrew/Cellar/jpeg/9f/lib/libjpeg.a

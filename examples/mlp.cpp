@@ -5,7 +5,7 @@
 #include "Tensor.hpp"
 
 // For visualization
-#include <matplot/matplot.h>
+//#include <matplot/matplot.h>
 
 
 
@@ -13,7 +13,7 @@ using namespace std;
 
 
 int main() {
-    using namespace matplot;
+    //using namespace matplot;
 
     using microgradpp::Value;
     using microgradpp::Neuron;
@@ -32,9 +32,9 @@ int main() {
     // For plotting
     std::vector<double> lossValues;
     std::vector<double> iterations;
-    title("Loss values");
-    xlabel("Iterations");
-    ylabel("Loss value");
+//    title("Loss values");
+//    xlabel("Iterations");
+//    ylabel("Loss value");
 
 
     /*
@@ -70,14 +70,15 @@ int main() {
 
         // Calculate loss
         for (size_t i = 0; i < ys.size(); ++i) {
-            loss +=  (ys.at(i) - ypred.at(i))^2;
+            loss +=  (ys.at(0,i) - ypred.at(0,i))^2;
         }
 
         // Plot loss
         iterations.push_back(idx);
         lossValues.push_back(loss->data);
-        plot(iterations, lossValues, "-o");
-        hold(on);
+
+//        plot(iterations, lossValues, "-o");
+//        hold(on);
 
         // Ensure all gradients are zero
         mlp.zeroGrad();
@@ -91,13 +92,6 @@ int main() {
         std::cout << idx << " " << loss->data << std::endl;
     }
 
-    show();
+    //show();
 
-//    std::vector<double> x = linspace(0, lossValues.size());
-//    plot(x, lossValues, "-o");
-//    title("Loss values");
-//    xlabel("Iterations");
-//    ylabel("Loss value");
-//    hold(on);
-//    show();
 }

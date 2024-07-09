@@ -269,7 +269,7 @@ namespace microgradpp {
             auto shared = shared_from_this();
             buildTopo(shared, visited, topo);
             shared->grad = (double)1.0;
-            std::cout<< "Num Parameters: " << topo.size() << std::endl;
+            //std::cout<< "Num Parameters: " << topo.size() << std::endl;
             for (auto it = topo.rbegin(); it != topo.rend(); ++it) {
                 if ((*it)->backward) {
                     (*it)->backward();

@@ -125,7 +125,7 @@ int main() {
 
     for (auto idx = 0; idx < 5000; ++idx) {
         auto loss = Value::create(0.0);
-        std::cout << "////////////////////////////////////////////////////////////////////////\n";
+        //std::cout << "////////////////////////////////////////////////////////////////////////\n";
         std::vector<std::shared_ptr<Value>> ypred;
         //ypred.push_back(mlp(sampleInput)[0]);
         for (auto &xx: xs) {
@@ -135,10 +135,10 @@ int main() {
             ypred.push_back(mlp(xx)[0]);
 
         }
-        std::cout << "Ypred:\n"<< std::endl;
-        for(const auto& p : ypred){
-            std::cout << p << std::endl;
-        }
+        //std::cout << "Ypred:\n"<< std::endl;
+//        for(const auto& p : ypred){
+//            std::cout << p << std::endl;
+//        }
 
         for (size_t i = 0; i < ysValue.size(); ++i) {
             loss +=  (ysValue[i] - ypred[i])^2;// std::pow(ys[i] - ypred[i], 2);
@@ -156,7 +156,7 @@ int main() {
         for (auto &p: mlp.parameters()) {
             p->data += (double)((double)-0.0025 * (double)p->grad);
         }
-        std::cout << idx << " " << loss->data << std::endl;
+        //std::cout << idx << " " << loss->data << std::endl;
 
         //mlp.printParameters();
 

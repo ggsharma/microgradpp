@@ -1,0 +1,15 @@
+# This is a generated file and its contents are an internal implementation detail.
+# The download step will be re-executed if anything in this file changes.
+# No other meaning or use of this file is supported.
+
+method=git
+command=/opt/homebrew/Cellar/cmake/3.30.0/bin/cmake;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;/Users/gautamsharma/CS/Projects/micrograd++/_deps/matplotplusplus-subbuild/matplotplusplus-populate-prefix/tmp/matplotplusplus-populate-gitclone.cmake
+source_dir=/Users/gautamsharma/CS/Projects/micrograd++/_deps/matplotplusplus-src
+work_dir=/Users/gautamsharma/CS/Projects/micrograd++/_deps
+repository=https://github.com/alandefreitas/matplotplusplus.git
+remote=origin
+init_submodules=TRUE
+recurse_submodules=--recursive
+submodules=
+CMP0097=NEW
+      

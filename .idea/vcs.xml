@@ -2,8 +2,9 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/3p/matplotplusplus" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/3p/opencv" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/_deps/matplotplusplus-src" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/examples/3p/matplotplusplus" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/examples/_deps/matplotplusplus-src" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/tests/3p/micrograd" vcs="Git" />
   </component>
 </project>

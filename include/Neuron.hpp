@@ -66,7 +66,7 @@ namespace microgradpp{
 
             sum += this->bias;
 
-            auto res = sum->sigmoid();
+            auto res = sum->relu();
 
             return res;
         }
