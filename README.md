@@ -3,6 +3,8 @@
 
 # micrograd++
 
+<img src="/public/german_shephard.jpg" alt="drawing" width="200" height="200"/>
+
 Welcome to micrograd++. This repository is inspired by Andrej Karpathy's [micrograd](https://github.com/karpathy/micrograd). micrograd++ is a pure C++ machine learning library designed to make machine learning accessible to everyone.
 
 ## Overview
@@ -22,7 +24,7 @@ micrograd++ aims to provide a simple yet powerful framework for building and tra
 - **CMake**: Version 3.15 or higher
 - **C++ Compiler**: Supports C++17 standard
 - **opencv**: For visualization
-- 
+
 ### Building the Library
 
 1. Clone the repository:
@@ -95,11 +97,27 @@ int main() {
 
 ## Examples
 
-Head over to the examples directory to play around with the examples. For example: A simple multi layer perceptron is defined in 
-mlp.cpp. Running it for 50 iterations gives the following result:
+Head over to the examples directory to play around with the examples. To build examples, configure cmake from the root directory as follows:
+
+```sh
+cd build
+cmake -DBUILD_EXAMPLES=ON .. && make
+cd examples
+./example_mlp # to run mlp example
+```
+This will produce executables in the build folder
+
+### ML example
+A simple multi layer perceptron is defined in 
+**mlp.cpp**. Running it for 50 iterations gives the following result:
 
 ![Loss function of MLP](/public/mlp.png)
 
+### Computer Vision example
+
+The example in **images.cpp** learns a cute german shephard puppy face. The output of it is as follows:
+
+![Neural network predicting a german shephard face](/public/gsd.gif)
 
 ## Contributing
 
@@ -121,6 +139,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **Andrej Karpathy**: For the original [micrograd](https://github.com/karpathy/micrograd) library and inspiration.
 
----
 
-cmake -DJPEG_LIBRARY_RELEASE=/opt/homebrew/Cellar/jpeg/9f/lib/libjpeg.a
+## Author
+- **Gautam Sharma**: [gsharma](https://www.gsharma.dev)
+
+---
