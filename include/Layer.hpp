@@ -10,19 +10,18 @@
 
 #include "Neuron.hpp"
 
+
+
+
 namespace microgradpp {
+
 class Layer{
 private:
     std::vector<Neuron> neurons;
 public:
-    Layer(size_t nin , size_t nout){
-        //std::vector<double> l = {1,2,3,4};
+    Layer(size_t nin , size_t nout, ActivationType activation){
         for(size_t idx = 0; idx < nout; ++idx){
-            //this->neurons.emplace_back(nin);
-
-            this->neurons.emplace_back(nin);
-            //auto&n = this->neurons.back();
-
+            this->neurons.emplace_back(nin, activation);
         }
     }
 

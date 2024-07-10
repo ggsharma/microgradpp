@@ -6,13 +6,19 @@
 #define MICROGRADPP_NEURON_HPP
 
 #include "Value.hpp"
+#include "Activation.hpp"
+
 #include <memory>
 #include <vector>
 #include <random>
 #include <stdio.h>
 #include <numeric> // for std::inner_product
 
+
+
 namespace microgradpp{
+
+
     // Function to generate a random float between -1 and 1
     double getRandomFloat() {
         static std::random_device rd;
@@ -25,8 +31,9 @@ namespace microgradpp{
     private:
         std::vector<std::shared_ptr<Value>> weights;
         std::shared_ptr<Value> bias = nullptr;
+        const ActivationType activation_t;
     public:
-        Neuron(size_t nin){
+        Neuron(size_t nin, const ActivationType& activation_t = ActivationType::SIGMOID): activation_t(activation_t){
             for(size_t idx = 0; idx < nin; ++idx){
                 this->weights.emplace_back(Value::create(getRandomFloat()));
             }
@@ -34,14 +41,11 @@ namespace microgradpp{
         }
 
         // For testing
-        Neuron(size_t nin, double val){
+        Neuron(size_t nin, double val,const ActivationType& activation_t = ActivationType::SIGMOID):activation_t(activation_t){
             for(size_t idx = 0; idx < nin; ++idx){
                 this->weights.emplace_back(Value::create(val));
             }
-            this->weights[0]->label = "w1";
-            this->weights[1]->label = "w2";
             this->bias = Value::create(val);
-            this->bias->label = "bias";
         }
 
         void zeroGrad(){
@@ -57,18 +61,21 @@ namespace microgradpp{
             if (x.size() != weights.size()) {
                 throw std::invalid_argument("Vectors must be of the same length");
             }
-
             auto sum = Value::create(0.0);
 
+            // Dot product -> dot product is supported from C++20
+            // TODO: need to make it more efficient
             for(size_t idx = 0; idx<weights.size() ; ++idx){
                 sum += x[idx] * weights[idx];
             }
 
+            // Add bias
             sum += this->bias;
 
-            auto res = sum->relu();
+            const auto& activationFcn = Activation::mActivationFcn[activation_t];
+            auto result = activationFcn(sum);
 
-            return res;
+            return result;
         }
 
         std::vector<std::shared_ptr<Value>> parameters() const{
@@ -95,7 +102,5 @@ namespace microgradpp{
 
     };
 }
-
-
 
 #endif //MICROGRADPP_NEURON_HPP
