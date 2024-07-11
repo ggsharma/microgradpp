@@ -1,184 +1,3 @@
-// Content from ../include/Activation.hpp
-//
-// Created by Gautam Sharma on 7/9/24.
-//
-
-#ifndef MICROGRADPP_ACTIVATION_HPP
-#define MICROGRADPP_ACTIVATION_HPP
-
-// std libs
-#include <unordered_map>
-#include <functional>
-
-// micrograd libs
-#include "Value.hpp"
-
-
-namespace microgradpp{
-    enum ActivationType{
-        RELU,
-        TANH,
-        SIGMOID
-    };
-    class Activation{
-
-        static std::shared_ptr<Value> Relu(const std::shared_ptr<Value>& val){
-            return val->relu();
-        }
-        static std::shared_ptr<Value> TanH(const std::shared_ptr<Value>& val){
-            return val->tanh();
-        }
-        static std::shared_ptr<Value> Sigmoid(const std::shared_ptr<Value>& val){
-            return val->sigmoid();
-        }
-
-    public:
-        static inline std::unordered_map<ActivationType, std::function<std::shared_ptr<Value>(const std::shared_ptr<Value>&)>> mActivationFcn = {
-                {ActivationType::RELU, Relu},
-                {ActivationType::TANH, TanH},
-                {ActivationType::SIGMOID, Sigmoid}
-        };
-
-    };
-}
-
-#endif //MICROGRADPP_ACTIVATION_HPP
-
-
-// Content from ../include/Tensor.hpp
-//
-// Created by Gautam Sharma on 7/7/24.
-//
-
-#ifndef MICROGRADPP_TENSOR_HPP
-#define MICROGRADPP_TENSOR_HPP
-
-#include "Value.hpp"
-#include <initializer_list>
-#include <vector>
-#include <memory>
-#include <iostream>
-
-
-namespace microgradpp {
-    class Tensor {
-    public:
-        std::vector<std::vector<std::shared_ptr<Value>>> tensor;
-
-        Tensor() = default;
-
-        Tensor(const std::initializer_list<double>& input){
-            for (const auto& value : input){
-                   std::vector<std::shared_ptr<Value>> subTensor;
-                   subTensor.emplace_back(std::make_shared<Value>(value));
-                   tensor.emplace_back(subTensor);
-            }
-        }
-
-        Tensor(const std::vector<double>& input){
-            std::vector<std::shared_ptr<Value>> subTensor;
-            for (const auto& value : input){
-                subTensor.emplace_back(std::make_shared<Value>(value));
-            }
-            tensor.emplace_back(subTensor);
-        }
-
-
-        Tensor(const std::vector<float>& input){
-            std::vector<std::shared_ptr<Value>> subTensor;
-            for (const auto& value : input){
-                subTensor.emplace_back(std::make_shared<Value>(static_cast<double>(value)));
-            }
-            tensor.emplace_back(subTensor);
-        }
-
-        // Constructor for a vector of initializer lists of doubles
-        Tensor(const std::initializer_list<std::initializer_list<double>>& input) {
-            for (const auto& list : input) {
-                std::vector<std::shared_ptr<Value>> subTensor;
-                for (auto& value : list) {
-                    subTensor.emplace_back(std::make_shared<Value>(value));
-                }
-                tensor.emplace_back(subTensor);
-            }
-        }
-
-        // Provide begin() and end() methods to allow range-based for loop
-        auto begin() {
-            return tensor.begin();
-        }
-
-        auto end() {
-            return tensor.end();
-        }
-
-        auto begin() const {
-            return tensor.begin();
-        }
-
-        auto end() const {
-            return tensor.end();
-        }
-
-        // Overload output stream
-        friend std::ostream & operator << (std::ostream &os, const Tensor &tensor) {
-            for (const auto& row : tensor.tensor) {
-                for (const auto& val : row) {
-                    os << val;  // Assuming you want to print the data value
-                }
-                os << std::endl;
-            }
-            return os;
-        }
-
-        void zeroGrad(){
-            for(const auto& subTensor: tensor){
-                for(const auto& value: subTensor){
-                    value->grad = 0.0;
-                }
-            }
-        }
-
-
-        /*
-         * idx: row index
-         */
-         std::vector<std::shared_ptr<Value>> operator[](const size_t idx) const{
-            if(tensor.size() <= idx){
-                throw std::invalid_argument("Accessing a Tensor out of bounds");
-            }
-            return tensor[idx];
-        }
-
-
-        /*
-         * idx: row index
-         * jdx: col index
-         */
-         std::shared_ptr<Value> at(const size_t idx, const size_t jdx) const{
-            if(tensor.size() <= idx || tensor[idx].size() <= jdx){
-                throw std::invalid_argument("Accessing a Tensor out of bounds");
-            }
-            return tensor[idx][jdx];
-        }
-
-        void push_back(const std::vector<std::shared_ptr<Value>>& value){
-            std::vector<std::shared_ptr<Value>> subTensor;
-            std::copy(value.begin(), value.end(), std::back_inserter(subTensor));
-            this->tensor.emplace_back(subTensor);
-         }
-
-
-        size_t size() const{
-            return tensor.size();
-        }
-
-    };
-}
-
-#endif //MICROGRADPP_TENSOR_HPP
-
-
 // Content from ../include/Value.hpp
 #pragma once
 #include <cstdio>
@@ -481,6 +300,292 @@ namespace microgradpp {
 }
 
 
+// Content from ../include/Activation.hpp
+//
+// Created by Gautam Sharma on 7/9/24.
+//
+
+#ifndef MICROGRADPP_ACTIVATION_HPP
+#define MICROGRADPP_ACTIVATION_HPP
+
+// std libs
+#include <unordered_map>
+#include <functional>
+
+// micrograd libs
+
+
+namespace microgradpp{
+    enum ActivationType{
+        RELU,
+        TANH,
+        SIGMOID
+    };
+    class Activation{
+
+        static std::shared_ptr<Value> Relu(const std::shared_ptr<Value>& val){
+            return val->relu();
+        }
+        static std::shared_ptr<Value> TanH(const std::shared_ptr<Value>& val){
+            return val->tanh();
+        }
+        static std::shared_ptr<Value> Sigmoid(const std::shared_ptr<Value>& val){
+            return val->sigmoid();
+        }
+
+    public:
+        static inline std::unordered_map<ActivationType, std::function<std::shared_ptr<Value>(const std::shared_ptr<Value>&)>> mActivationFcn = {
+                {ActivationType::RELU, Relu},
+                {ActivationType::TANH, TanH},
+                {ActivationType::SIGMOID, Sigmoid}
+        };
+
+    };
+}
+
+#endif //MICROGRADPP_ACTIVATION_HPP
+
+
+// Content from ../include/Tensor.hpp
+//
+// Created by Gautam Sharma on 7/7/24.
+//
+
+#ifndef MICROGRADPP_TENSOR_HPP
+#define MICROGRADPP_TENSOR_HPP
+
+#include <initializer_list>
+#include <vector>
+#include <memory>
+#include <iostream>
+
+
+namespace microgradpp {
+    class Tensor {
+    public:
+        std::vector<std::vector<std::shared_ptr<Value>>> tensor;
+
+        Tensor() = default;
+
+        Tensor(const std::initializer_list<double>& input){
+            for (const auto& value : input){
+                   std::vector<std::shared_ptr<Value>> subTensor;
+                   subTensor.emplace_back(std::make_shared<Value>(value));
+                   tensor.emplace_back(subTensor);
+            }
+        }
+
+        Tensor(const std::vector<double>& input){
+            std::vector<std::shared_ptr<Value>> subTensor;
+            for (const auto& value : input){
+                subTensor.emplace_back(std::make_shared<Value>(value));
+            }
+            tensor.emplace_back(subTensor);
+        }
+
+
+        Tensor(const std::vector<float>& input){
+            std::vector<std::shared_ptr<Value>> subTensor;
+            for (const auto& value : input){
+                subTensor.emplace_back(std::make_shared<Value>(static_cast<double>(value)));
+            }
+            tensor.emplace_back(subTensor);
+        }
+
+        // Constructor for a vector of initializer lists of doubles
+        Tensor(const std::initializer_list<std::initializer_list<double>>& input) {
+            for (const auto& list : input) {
+                std::vector<std::shared_ptr<Value>> subTensor;
+                for (auto& value : list) {
+                    subTensor.emplace_back(std::make_shared<Value>(value));
+                }
+                tensor.emplace_back(subTensor);
+            }
+        }
+
+        // Provide begin() and end() methods to allow range-based for loop
+        auto begin() {
+            return tensor.begin();
+        }
+
+        auto end() {
+            return tensor.end();
+        }
+
+        auto begin() const {
+            return tensor.begin();
+        }
+
+        auto end() const {
+            return tensor.end();
+        }
+
+        // Overload output stream
+        friend std::ostream & operator << (std::ostream &os, const Tensor &tensor) {
+            for (const auto& row : tensor.tensor) {
+                for (const auto& val : row) {
+                    os << val;  // Assuming you want to print the data value
+                }
+                os << std::endl;
+            }
+            return os;
+        }
+
+        void zeroGrad(){
+            for(const auto& subTensor: tensor){
+                for(const auto& value: subTensor){
+                    value->grad = 0.0;
+                }
+            }
+        }
+
+
+        /*
+         * idx: row index
+         */
+         std::vector<std::shared_ptr<Value>> operator[](const size_t idx) const{
+            if(tensor.size() <= idx){
+                throw std::invalid_argument("Accessing a Tensor out of bounds");
+            }
+            return tensor[idx];
+        }
+
+
+        /*
+         * idx: row index
+         * jdx: col index
+         */
+         std::shared_ptr<Value> at(const size_t idx, const size_t jdx) const{
+            if(tensor.size() <= idx || tensor[idx].size() <= jdx){
+                throw std::invalid_argument("Accessing a Tensor out of bounds");
+            }
+            return tensor[idx][jdx];
+        }
+
+        void push_back(const std::vector<std::shared_ptr<Value>>& value){
+            std::vector<std::shared_ptr<Value>> subTensor;
+            std::copy(value.begin(), value.end(), std::back_inserter(subTensor));
+            this->tensor.emplace_back(subTensor);
+         }
+
+
+        size_t size() const{
+            return tensor.size();
+        }
+
+    };
+}
+
+#endif //MICROGRADPP_TENSOR_HPP
+
+
+// Content from ../include/Neuron.hpp
+//
+// Created by Gautam Sharma on 6/30/24.
+//
+
+#ifndef MICROGRADPP_NEURON_HPP
+#define MICROGRADPP_NEURON_HPP
+
+
+#include <memory>
+#include <vector>
+#include <random>
+#include <stdio.h>
+#include <numeric> // for std::inner_product
+
+
+
+namespace microgradpp{
+
+
+    // Function to generate a random float between -1 and 1
+    double getRandomFloat() {
+        static std::random_device rd;
+        static std::mt19937 gen(rd());
+        static std::uniform_real_distribution<> dis(-1, 1);
+        return dis(gen);
+    }
+
+    class Neuron{
+    private:
+        std::vector<std::shared_ptr<Value>> weights;
+        std::shared_ptr<Value> bias = nullptr;
+        const ActivationType activation_t;
+    public:
+        Neuron(size_t nin, const ActivationType& activation_t): activation_t(activation_t){
+            for(size_t idx = 0; idx < nin; ++idx){
+                this->weights.emplace_back(Value::create(getRandomFloat()));
+            }
+            this->bias = Value::create(0);
+        }
+
+        // For testing
+        Neuron(size_t nin, double val,const ActivationType& activation_t = ActivationType::SIGMOID):activation_t(activation_t){
+            for(size_t idx = 0; idx < nin; ++idx){
+                this->weights.emplace_back(Value::create(val));
+            }
+            this->bias = Value::create(val);
+        }
+
+        void zeroGrad(){
+            auto params = this->parameters();
+            for(auto&p : params){
+                p->grad = 0;
+            }
+        }
+
+        // Dot product of a Neurons weights with the input
+        std::shared_ptr<Value> operator()(const std::vector<std::shared_ptr<Value>>& x) const{
+            // Ensure both vectors are of the same size
+            if (x.size() != weights.size()) {
+                throw std::invalid_argument("Vectors must be of the same length");
+            }
+            auto sum = Value::create(0.0);
+
+            // Dot product -> dot product is supported from C++20
+            // TODO: need to make it more efficient
+            for(size_t idx = 0; idx<weights.size() ; ++idx){
+                sum += x[idx] * weights[idx];
+            }
+
+            // Add bias
+            sum += this->bias;
+
+            const auto& activationFcn = Activation::mActivationFcn[activation_t];
+            auto result = activationFcn(sum);
+
+            return result;
+        }
+
+        std::vector<std::shared_ptr<Value>> parameters() const{
+            std::vector<std::shared_ptr<Value>> out;
+            std::copy(this->weights.begin(), this->weights.end(), std::back_inserter(out));
+            out.emplace_back(this->bias);
+            return out;
+        }
+
+        void printParameters(){
+            printf("Number of Parameters: %d \n", (int)weights.size() + 1);
+            for(const auto&param : weights){
+                printf("%f, %f", param->data,param->grad);
+                printf("\n");
+            }
+            printf("%f, %f", this->bias->data,this->bias->grad);
+            printf("\n");
+            printf("\n");
+        }
+
+        size_t getParametersSize() const{
+            return weights.size() + 1;
+        }
+
+    };
+}
+
+#endif //MICROGRADPP_NEURON_HPP
+
+
 // Content from ../include/Layer.hpp
 //
 // Created by Gautam Sharma on 7/1/24.
@@ -492,7 +597,6 @@ namespace microgradpp {
 #include <vector>
 #include <algorithm>
 
-#include "Neuron.hpp"
 
 
 
@@ -613,129 +717,5 @@ public:
 }
 
 #endif //MICROGRADPP_LAYER_HPP
-
-
-// Content from ../include/TypeDefs.hpp
-//
-// Created by Gautam Sharma on 7/9/24.
-//
-
-#ifndef MICROGRADPP_TYPEDEFS_H
-#define MICROGRADPP_TYPEDEFS_H
-namespace microgradpp{
-    namespace type{
-
-    }
-}
-#endif //MICROGRADPP_TYPEDEFS_H
-
-
-// Content from ../include/Neuron.hpp
-//
-// Created by Gautam Sharma on 6/30/24.
-//
-
-#ifndef MICROGRADPP_NEURON_HPP
-#define MICROGRADPP_NEURON_HPP
-
-#include "Value.hpp"
-#include "Activation.hpp"
-
-#include <memory>
-#include <vector>
-#include <random>
-#include <stdio.h>
-#include <numeric> // for std::inner_product
-
-
-
-namespace microgradpp{
-
-
-    // Function to generate a random float between -1 and 1
-    double getRandomFloat() {
-        static std::random_device rd;
-        static std::mt19937 gen(rd());
-        static std::uniform_real_distribution<> dis(-1, 1);
-        return dis(gen);
-    }
-
-    class Neuron{
-    private:
-        std::vector<std::shared_ptr<Value>> weights;
-        std::shared_ptr<Value> bias = nullptr;
-        const ActivationType activation_t;
-    public:
-        Neuron(size_t nin, const ActivationType& activation_t): activation_t(activation_t){
-            for(size_t idx = 0; idx < nin; ++idx){
-                this->weights.emplace_back(Value::create(getRandomFloat()));
-            }
-            this->bias = Value::create(0);
-        }
-
-        // For testing
-        Neuron(size_t nin, double val,const ActivationType& activation_t = ActivationType::SIGMOID):activation_t(activation_t){
-            for(size_t idx = 0; idx < nin; ++idx){
-                this->weights.emplace_back(Value::create(val));
-            }
-            this->bias = Value::create(val);
-        }
-
-        void zeroGrad(){
-            auto params = this->parameters();
-            for(auto&p : params){
-                p->grad = 0;
-            }
-        }
-
-        // Dot product of a Neurons weights with the input
-        std::shared_ptr<Value> operator()(const std::vector<std::shared_ptr<Value>>& x) const{
-            // Ensure both vectors are of the same size
-            if (x.size() != weights.size()) {
-                throw std::invalid_argument("Vectors must be of the same length");
-            }
-            auto sum = Value::create(0.0);
-
-            // Dot product -> dot product is supported from C++20
-            // TODO: need to make it more efficient
-            for(size_t idx = 0; idx<weights.size() ; ++idx){
-                sum += x[idx] * weights[idx];
-            }
-
-            // Add bias
-            sum += this->bias;
-
-            const auto& activationFcn = Activation::mActivationFcn[activation_t];
-            auto result = activationFcn(sum);
-
-            return result;
-        }
-
-        std::vector<std::shared_ptr<Value>> parameters() const{
-            std::vector<std::shared_ptr<Value>> out;
-            std::copy(this->weights.begin(), this->weights.end(), std::back_inserter(out));
-            out.emplace_back(this->bias);
-            return out;
-        }
-
-        void printParameters(){
-            printf("Number of Parameters: %d \n", (int)weights.size() + 1);
-            for(const auto&param : weights){
-                printf("%f, %f", param->data,param->grad);
-                printf("\n");
-            }
-            printf("%f, %f", this->bias->data,this->bias->grad);
-            printf("\n");
-            printf("\n");
-        }
-
-        size_t getParametersSize() const{
-            return weights.size() + 1;
-        }
-
-    };
-}
-
-#endif //MICROGRADPP_NEURON_HPP
 
 

@@ -33,7 +33,7 @@ namespace microgradpp{
         std::shared_ptr<Value> bias = nullptr;
         const ActivationType activation_t;
     public:
-        Neuron(size_t nin, const ActivationType& activation_t = ActivationType::SIGMOID): activation_t(activation_t){
+        Neuron(size_t nin, const ActivationType& activation_t): activation_t(activation_t){
             for(size_t idx = 0; idx < nin; ++idx){
                 this->weights.emplace_back(Value::create(getRandomFloat()));
             }

@@ -12,14 +12,13 @@
 
 
 
-
 namespace microgradpp {
 
 class Layer{
 private:
     std::vector<Neuron> neurons;
 public:
-    Layer(size_t nin , size_t nout, ActivationType activation){
+    Layer(size_t nin , size_t nout, const ActivationType& activation = ActivationType::SIGMOID){
         for(size_t idx = 0; idx < nout; ++idx){
             this->neurons.emplace_back(nin, activation);
         }
