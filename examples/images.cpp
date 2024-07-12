@@ -6,9 +6,9 @@
 #include <iostream>
 #include "Value.hpp"
 #include "Layer.hpp"
-#include "Neuron.hpp"
 #include "Tensor.hpp"
-#include <initializer_list>
+
+// This example needs openCV to compile
 
 // For visualization
 #include <opencv2/opencv.hpp>

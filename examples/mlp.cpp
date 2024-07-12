@@ -4,10 +4,6 @@
 #include "Neuron.hpp"
 #include "Tensor.hpp"
 
-// For visualization
-//#include <matplot/matplot.h>
-
-
 
 using namespace std;
 
@@ -32,10 +28,6 @@ int main() {
     // For plotting
     std::vector<double> lossValues;
     std::vector<double> iterations;
-//    title("Loss values");
-//    xlabel("Iterations");
-//    ylabel("Loss value");
-
 
     /*
      * Initialize micrograd
@@ -77,9 +69,6 @@ int main() {
         iterations.push_back(idx);
         lossValues.push_back(loss->data);
 
-//        plot(iterations, lossValues, "-o");
-//        hold(on);
-
         // Ensure all gradients are zero
         mlp.zeroGrad();
 
@@ -92,6 +81,5 @@ int main() {
         std::cout << idx << " " << loss->data << std::endl;
     }
 
-    //show();
 
 }
