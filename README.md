@@ -11,6 +11,8 @@ Welcome to micrograd++. This repository is inspired by Andrej Karpathy's [microg
 
 micrograd++ aims to provide a simple yet powerful framework for building and training machine learning models. By leveraging C++, it ensures performance efficiency and allows for deep integration with C++-based systems and applications.
 
+![Multi layer perceptron](/public/mlp.gif)
+
 ## Features
 
 - **Pure C++**: Entirely implemented in C++ for high performance.

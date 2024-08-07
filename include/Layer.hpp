@@ -61,7 +61,7 @@ public:
         sizes.push_back(nin);
         std::copy(nouts.begin(), nouts.end(), std::back_inserter(sizes) );
         for(size_t idx=0; idx < sizes.size() - 1 ; ++idx){
-            layers.emplace_back(sizes[idx], sizes[idx+1]);
+            layers.emplace_back(sizes[idx], sizes[idx+1],ActivationType::TANH);
         }
     }
 

@@ -107,7 +107,7 @@ namespace microgradpp {
          * idx: row index
          * jdx: col index
          */
-         std::shared_ptr<Value> at(const size_t idx, const size_t jdx) const{
+         std::shared_ptr<Value> at(const size_t idx, const size_t jdx = 0) const{
             if(tensor.size() <= idx || tensor[idx].size() <= jdx){
                 throw std::invalid_argument("Accessing a Tensor out of bounds");
             }

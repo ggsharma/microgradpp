@@ -1,4 +1,7 @@
 #include <iostream>
+#include <thread>         // std::this_thread::sleep_for
+#include <chrono>         // std::chrono::seconds
+
 #include "Value.hpp"
 #include "Layer.hpp"
 #include "Neuron.hpp"
@@ -9,8 +12,6 @@ using namespace std;
 
 
 int main() {
-    //using namespace matplot;
-
     using microgradpp::Value;
     using microgradpp::Neuron;
     using microgradpp::Tensor;
@@ -44,7 +45,7 @@ int main() {
 
 
     // Start learning loop
-    for (auto idx = 0; idx < 50; ++idx) {
+    for (auto idx = 0; idx < 500; ++idx) {
         // Initialize loss
         loss = Value::create(0.0);
 
@@ -62,7 +63,7 @@ int main() {
 
         // Calculate loss
         for (size_t i = 0; i < ys.size(); ++i) {
-            loss +=  (ys.at(0,i) - ypred.at(0,i))^2;
+            loss +=  (ys.at(i) - ypred.at(i))^2;
         }
 
         // Plot loss
@@ -78,7 +79,9 @@ int main() {
         // Update parameters
         mlp.update();
 
-        std::cout << idx << " " << loss->data << std::endl;
+        std::this_thread::sleep_for (std::chrono::milliseconds (100));
+
+        std::cout << "Iteration : " << idx << " " <<  "Loss: " << loss->data << std::endl;
     }
 
 
