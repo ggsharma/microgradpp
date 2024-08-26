@@ -11,6 +11,8 @@ add_library(microgradpp
         # Add other source files if needed
 )
 
+find_package(TBB REQUIRED)
+
 # Set include directories for your library
 target_include_directories(microgradpp PUBLIC include)
 
@@ -27,6 +29,7 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
 # Apply the same compiler flags to your targets
 set_target_properties(microgradpp PROPERTIES COMPILE_FLAGS "${CMAKE_CXX_FLAGS_RELEASE}")
 set_target_properties(m++ PROPERTIES COMPILE_FLAGS "${CMAKE_CXX_FLAGS_RELEASE}")
+target_link_libraries(microgradpp PUBLIC TBB::tbb)
 
 if(BUILD_EXAMPLES)
     message(STATUS "Examples will be built")

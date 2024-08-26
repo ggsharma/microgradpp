@@ -22,7 +22,7 @@ namespace microgradpp {
         Tensor(const std::initializer_list<double>& input){
             for (const auto& value : input){
                    std::vector<std::shared_ptr<Value>> subTensor;
-                   subTensor.emplace_back(std::make_shared<Value>(value));
+                   subTensor.emplace_back(Value::create(value));
                    tensor.emplace_back(subTensor);
             }
         }
@@ -30,7 +30,7 @@ namespace microgradpp {
         Tensor(const std::vector<double>& input){
             std::vector<std::shared_ptr<Value>> subTensor;
             for (const auto& value : input){
-                subTensor.emplace_back(std::make_shared<Value>(value));
+                subTensor.emplace_back(Value::create(value));
             }
             tensor.emplace_back(subTensor);
         }
@@ -39,7 +39,7 @@ namespace microgradpp {
         Tensor(const std::vector<float>& input){
             std::vector<std::shared_ptr<Value>> subTensor;
             for (const auto& value : input){
-                subTensor.emplace_back(std::make_shared<Value>(static_cast<double>(value)));
+                subTensor.emplace_back(Value::create(static_cast<double>(value)));
             }
             tensor.emplace_back(subTensor);
         }
@@ -49,7 +49,7 @@ namespace microgradpp {
             for (const auto& list : input) {
                 std::vector<std::shared_ptr<Value>> subTensor;
                 for (auto& value : list) {
-                    subTensor.emplace_back(std::make_shared<Value>(value));
+                    subTensor.emplace_back(Value::create(value));
                 }
                 tensor.emplace_back(subTensor);
             }
@@ -89,6 +89,13 @@ namespace microgradpp {
                     value->grad = 0.0;
                 }
             }
+        }
+
+        void reset(){
+//            for(auto& subTensor : tensor){
+//                subTensor.clear();
+//            }
+            tensor.clear();
         }
 
 

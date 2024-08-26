@@ -18,25 +18,39 @@ namespace microgradpp {
     };
 
     class Value : public std::enable_shared_from_this<Value> {
-    public:
+    private:
+        // Private constructor
         Value(double data, const std::vector<std::shared_ptr<Value>>& children = {}, const std::string& op = "", const std::string& label = "")
                 : data(data), prev(children.begin(), children.end()), op(op), label(label) {}
 
+    public:
+        // Factory method for creating Value instances
         static std::shared_ptr<Value> create(double data, const std::vector<std::shared_ptr<Value>>& children = {}, const std::string& op = "", const std::string& label = "") {
             std::string l;
             if (label.empty()) {
                 l = std::to_string(labelIdx); // Convert int to string
                 ++labelIdx;
+                //std::cout << labelIdx << std::endl;
             } else {
                 l = label;
+                //std::cout << labelIdx << std::endl;
             }
-            return std::make_shared<Value>(data, children, op, l);
+            return std::shared_ptr<Value>(new Value(data, children, op, l));
+        }
+
+
+
+
+        ~Value(){
+            --labelIdx;
+            //std::cout << "Destructor being called!\n";
         }
 
         double data = 0;
         double grad = 0;
         std::function<void()> backward = nullptr;
         std::unordered_set<std::shared_ptr<Value>, Hash> prev;
+        //inline static std::unordered_set<std::shared_ptr<Value>, Hash> memory = {};
         std::string op;
         std::string label;
         inline static int labelIdx = 0;
@@ -51,6 +65,12 @@ namespace microgradpp {
 //            if (grad < -GRADIENT_CLIP_VALUE) grad = -GRADIENT_CLIP_VALUE;
         }
 
+        void reset(){
+            this->grad = 0.0;
+            this->data = 0.0;
+            this->prev.clear();
+        }
+
         void resetGradients() {
             grad = 0;
         }
@@ -60,17 +80,44 @@ namespace microgradpp {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         friend std::shared_ptr<Value> operator +(const std::shared_ptr<Value>& lhs, const std::shared_ptr<Value>& rhs) {
             auto out = Value::create((double)(lhs->data + rhs->data), {lhs, rhs}, "+");
+//            auto l = std::weak_ptr<Value>(lhs);
+//            auto r = std::weak_ptr<Value>(rhs);
+//            auto o = std::weak_ptr<Value>(out);
 
-            auto backward = [lhs = lhs, rhs = rhs, out = out]() mutable {
-                //std::cout << "Before + : lhs.grad=" << lhs->grad << ", rhs.grad=" << rhs->grad << std::endl;
-                lhs->grad += (double)out->grad;
-                rhs->grad += (double)out->grad;
-                lhs->clip_gradients();
-                rhs->clip_gradients();
-                //std::cout << "After + : lhs.grad=" << lhs->grad << ", rhs.grad=" << rhs->grad << std::endl;
+//            auto backward = [lhs = std::weak_ptr<Value>(lhs), rhs = std::weak_ptr<Value>(rhs), out = std::weak_ptr<Value>(
+//                    out)]() mutable {
+//                lhs.lock()->grad += out.lock()->grad;
+//                rhs.lock()->grad += out.lock()->grad;
+//            };
+
+
+            //return out;
+
+            auto backward = [l = std::weak_ptr<Value>(lhs), r = std::weak_ptr<Value>(rhs), o=std::weak_ptr<Value>(out)]() mutable {
+                if (auto lhs = l.lock()) {
+                    if (auto out = o.lock()) {
+                        lhs->grad += (double)out->grad;
+                        lhs->clip_gradients();
+                    }
+                }
+                if (auto rhs = r.lock()) {
+                    if (auto out = o.lock()) {
+                        rhs->grad += (double)out->grad;
+                        rhs->clip_gradients();
+                    }
+                }
             };
 
             out->backward = backward;
+//            auto backward = [lhs = lhs, rhs = rhs, out = out]() mutable {
+//                //std::cout << "Before + : lhs.grad=" << lhs->grad << ", rhs.grad=" << rhs->grad << std::endl;
+//                lhs->grad += (double)out->grad;
+//                rhs->grad += (double)out->grad;
+//                lhs->clip_gradients();
+//                rhs->clip_gradients();
+//                //std::cout << "After + : lhs.grad=" << lhs->grad << ", rhs.grad=" << rhs->grad << std::endl;
+//            };
+
             return out;
         }
 
@@ -78,19 +125,36 @@ namespace microgradpp {
             auto other = Value::create((double)f);
             auto out = Value::create((double)(lhs->data + other->data), {lhs, other}, "+");
 
-            auto backward = [lhs = lhs, other = other, out = out]() mutable {
-                //std::cout << "Before + : lhs.grad=" << lhs->grad << ", rhs.grad=" << other->grad << std::endl;
-                lhs->grad += (double)(out->grad);
-                other->grad += (double)(out->grad);
-                lhs->clip_gradients();
-                other->clip_gradients();
-                //std::cout << "After + : lhs.grad=" << lhs->grad << ", rhs.grad=" << other->grad << std::endl;
+//            auto backward = [lhs = lhs, other = other, out = out]() mutable {
+//                //std::cout << "Before + : lhs.grad=" << lhs->grad << ", rhs.grad=" << other->grad << std::endl;
+//                lhs->grad += (double)(out->grad);
+//                other->grad += (double)(out->grad);
+//                lhs->clip_gradients();
+//                other->clip_gradients();
+//                //std::cout << "After + : lhs.grad=" << lhs->grad << ", rhs.grad=" << other->grad << std::endl;
+//            };
+
+
+            auto backward = [l = std::weak_ptr<Value>(lhs), r = std::weak_ptr<Value>(other), o=std::weak_ptr<Value>(out)]() mutable {
+                if (auto lhs = l.lock()) {
+                    if (auto out = o.lock()) {
+                        lhs->grad += (double)out->grad;
+                        lhs->clip_gradients();
+                    }
+                }
+                if (auto rhs = r.lock()) {
+                    if (auto out = o.lock()) {
+                        rhs->grad += (double)out->grad;
+                        rhs->clip_gradients();
+                    }
+                }
             };
+
             out->backward = backward;
             return out;
         }
 
-        friend std::shared_ptr<Value> operator +=(std::shared_ptr<Value>& lhs, const std::shared_ptr<Value>& rhs) {
+        friend std::shared_ptr<Value>& operator +=(std::shared_ptr<Value>& lhs, const std::shared_ptr<Value>& rhs) {
             lhs = lhs + rhs;
             return lhs;
         }
@@ -101,14 +165,18 @@ namespace microgradpp {
         friend std::shared_ptr<Value> operator *(const std::shared_ptr<Value>& lhs, const std::shared_ptr<Value>& rhs) {
             auto out = Value::create((double)(lhs->data * rhs->data), {lhs, rhs}, "*");
 
-            auto backward = [lhs, rhs, out]() mutable {
-                //std::cout << "Before * : lhs.grad=" << lhs->grad << ", rhs.grad=" << rhs->grad << std::endl;
-                lhs->grad += (double)(rhs->data * out->grad);
-                rhs->grad += (double)(lhs->data * out->grad);
-                lhs->clip_gradients();
-                rhs->clip_gradients();
-                //std::cout << "After * : lhs.grad=" << lhs->grad << ", rhs.grad=" << rhs->grad << std::endl;
+            auto backward = [l = std::weak_ptr<Value>(lhs), r = std::weak_ptr<Value>(rhs), o=std::weak_ptr<Value>(out)]() mutable {
+                l.lock()->grad += (double)(r.lock()->data * o.lock()->grad);
+                r.lock()->grad += (double)(l.lock()->data * o.lock()->grad);
             };
+//            auto backward = [lhs, rhs, out]() mutable {
+//                //std::cout << "Before * : lhs.grad=" << lhs->grad << ", rhs.grad=" << rhs->grad << std::endl;
+//                lhs->grad += (double)(rhs->data * out->grad);
+//                rhs->grad += (double)(lhs->data * out->grad);
+//                lhs->clip_gradients();
+//                rhs->clip_gradients();
+//                //std::cout << "After * : lhs.grad=" << lhs->grad << ", rhs.grad=" << rhs->grad << std::endl;
+//            };
 
             out->backward = backward;
             return out;
@@ -118,20 +186,19 @@ namespace microgradpp {
             auto other = Value::create((double)f);
             auto out = Value::create((double)(lhs->data * other->data), {lhs, other}, "*");
 
-            auto backward = [lhs, other, out]() mutable {
+            auto backward = [lhs = std::weak_ptr<Value>(lhs), other=std::weak_ptr<Value>(other), out=std::weak_ptr<Value>(out)]() mutable {
                 //std::cout << "Before * : lhs.grad=" << lhs->grad << ", rhs.grad=" << other->grad << std::endl;
-                lhs->grad += (double)(other->data * out->grad);
-                other->grad += (double)(lhs->data * out->grad);
-                lhs->clip_gradients();
-                other->clip_gradients();
+                lhs.lock()->grad += (double)(other.lock()->data * out.lock()->grad);
+                other.lock()->grad += (double)(lhs.lock()->data * out.lock()->grad);
+//                lhs->clip_gradients();
+//                other->clip_gradients();
                 //std::cout << "Before * : lhs.grad=" << lhs->grad << ", rhs.grad=" << other->grad << std::endl;
             };
-
             out->backward = backward;
             return out;
         }
 
-        friend std::shared_ptr<Value> operator *=(std::shared_ptr<Value>& lhs, const std::shared_ptr<Value>& rhs) {
+        friend std::shared_ptr<Value>& operator *=(std::shared_ptr<Value>& lhs, const std::shared_ptr<Value>& rhs) {
             lhs = lhs * rhs;
             return lhs;
         }
@@ -143,11 +210,10 @@ namespace microgradpp {
             auto newValue = (double)std::pow(lhs->data, otherValue);
             auto out = Value::create(newValue, {lhs}, "^");
 
-            auto backward = [lhs, out, otherValue]() mutable {
-                lhs->grad += (double)(otherValue * (double)std::pow(lhs->data, otherValue - 1) * out->grad);
-                lhs->clip_gradients();
+            auto backward = [lhs=std::weak_ptr<Value>(lhs), out=std::weak_ptr<Value>(out), otherValue]() mutable {
+                lhs.lock()->grad += (double)(otherValue * (double)std::pow(lhs.lock()->data, otherValue - 1) * out.lock()->grad);
+                //lhs->clip_gradients();
             };
-
             out->backward = backward;
             return out;
         }
@@ -155,12 +221,13 @@ namespace microgradpp {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Division
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        friend std::shared_ptr<Value> operator /(const std::shared_ptr<Value>& lhs, double otherValue) {
+        friend std::shared_ptr<Value> operator /( const std::shared_ptr<Value>& lhs, double otherValue) {
             return lhs * std::pow(otherValue, -1);
         }
 
-        friend std::shared_ptr<Value> operator /(const std::shared_ptr<Value>& lhs, const std::shared_ptr<Value>& rhs) {
-            return lhs * (rhs ^ -1);
+        friend std::shared_ptr<Value> operator /( const std::shared_ptr<Value>& lhs, const std::shared_ptr<Value>& rhs) {
+            return lhs *  (rhs ^ -1);
+            //return lhs;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -169,15 +236,14 @@ namespace microgradpp {
         friend std::shared_ptr<Value> operator -(const std::shared_ptr<Value>& lhs, const std::shared_ptr<Value>& rhs) {
             auto out = Value::create((double)(lhs->data - rhs->data), {lhs, rhs}, "-");
 
-            auto backward = [lhs, rhs, out]() mutable {
+            auto backward = [lhs=std::weak_ptr<Value>(lhs), rhs=std::weak_ptr<Value>(rhs), out=std::weak_ptr<Value>(out)]() mutable {
                 //std::cout << "Before - : lhs.grad=" << lhs->grad << ", rhs.grad=" << rhs->grad << std::endl;
-                lhs->grad += (double)out->grad;
-                rhs->grad -= (double)out->grad;
-                lhs->clip_gradients();
-                rhs->clip_gradients();
+                lhs.lock()->grad += (double)out.lock()->grad;
+                rhs.lock()->grad -= (double)out.lock()->grad;
+//                lhs->clip_gradients();
+//                rhs->clip_gradients();
                 //std::cout << "After - : lhs.grad=" << lhs->grad << ", rhs.grad=" << rhs->grad << std::endl;
             };
-
             out->backward = backward;
             return out;
         }
@@ -186,15 +252,11 @@ namespace microgradpp {
             auto other = Value::create((double)f);
             auto out = Value::create((double)(lhs->data - other->data), {lhs, other}, "-");
 
-            auto backward = [lhs, other, out]() mutable {
+            auto backward = [lhs=std::weak_ptr<Value>(lhs), other=std::weak_ptr<Value>(other), out=std::weak_ptr<Value>(out)]() mutable {
                 //std::cout << "Before - : lhs.grad=" << lhs->grad << ", rhs.grad=" << other->grad << std::endl;
-                lhs->grad += (double)out->grad;
-                other->grad -= (double)out->grad;
-                lhs->clip_gradients();
-                other->clip_gradients();
-                //std::cout << "After - : lhs.grad=" << lhs->grad << ", rhs.grad=" << other->grad << std::endl;
+                lhs.lock()->grad += (double)out.lock()->grad;
+                other.lock()->grad -= (double)out.lock()->grad;
             };
-
             out->backward = backward;
             return out;
         }
@@ -207,11 +269,9 @@ namespace microgradpp {
             double t = (double )(std::exp(2 * x) - 1) / (double )(std::exp(2 * x) + 1);
             auto out = Value::create(t, {shared_from_this()}, "tanh");
 
-            auto backward = [this, t, out = out]() mutable {
-                this->grad += (double )(1 - t * t) * out->grad;
-                this->clip_gradients();
+            auto backward = [this, t, out=std::weak_ptr<Value>(out)]() mutable {
+                this->grad += (double )(1 - t * t) * out.lock()->grad;
             };
-
             out->backward = backward;
             return out;
         }
@@ -223,10 +283,8 @@ namespace microgradpp {
             auto backward = [this, out = out]() mutable {
                 //std::cout << "Before relu : lhs.grad=" << this->grad << std::endl;
                 this->grad += (double)((out->data > 0) * out->grad);
-                this->clip_gradients();
                 //std::cout << "After relu : lhs.grad=" << this->grad << std::endl;
             };
-
             out->backward = backward;
             return out;
         }
@@ -242,7 +300,6 @@ namespace microgradpp {
                 this->clip_gradients();
                 //std::cout << "After relu : lhs.grad=" << this->grad << std::endl;
             };
-
             out->backward = backward;
             return out;
         }
@@ -272,10 +329,12 @@ namespace microgradpp {
             //std::cout<< "Num Parameters: " << topo.size() << std::endl;
             for (auto it = topo.rbegin(); it != topo.rend(); ++it) {
                 if ((*it)->backward) {
+                    //std::cout <<(*it).get() << ": " <<  (*it).use_count() << std::endl;
                     (*it)->backward();
-                    //(*it)->clip_gradients(); // Clip gradients here
+
                 }
             }
+
         }
 
         bool operator==(const Value& other) const;
@@ -286,6 +345,8 @@ namespace microgradpp {
         }
     };
 
+
+
     size_t Hash::operator()(const std::shared_ptr<Value>& value) const {
         if (!value) {
             return 0;
@@ -293,7 +354,14 @@ namespace microgradpp {
         return std::hash<const void*>()(value.get());
     }
 
+//    size_t Hash::operator()(const std::weak_ptr<Value>& value) const {
+//
+//        return std::hash<const void*>()(value.lock().get());
+//    }
+
     bool Value::operator==(const Value& other) const {
         return data == other.data && op == other.op && prev == other.prev;
     }
 }
+
+
