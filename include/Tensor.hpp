@@ -19,7 +19,7 @@ namespace microgradpp {
 
         Tensor() = default;
 
-        Tensor(const std::initializer_list<double>& input){
+        Tensor(const std::initializer_list<float>& input){
             for (const auto& value : input){
                    std::vector<std::shared_ptr<Value>> subTensor;
                    subTensor.emplace_back(Value::create(value));
@@ -27,7 +27,7 @@ namespace microgradpp {
             }
         }
 
-        Tensor(const std::vector<double>& input){
+        Tensor(const std::vector<float>& input){
             std::vector<std::shared_ptr<Value>> subTensor;
             for (const auto& value : input){
                 subTensor.emplace_back(Value::create(value));
@@ -36,16 +36,9 @@ namespace microgradpp {
         }
 
 
-        Tensor(const std::vector<float>& input){
-            std::vector<std::shared_ptr<Value>> subTensor;
-            for (const auto& value : input){
-                subTensor.emplace_back(Value::create(static_cast<double>(value)));
-            }
-            tensor.emplace_back(subTensor);
-        }
 
         // Constructor for a vector of initializer lists of doubles
-        Tensor(const std::initializer_list<std::initializer_list<double>>& input) {
+        Tensor(const std::initializer_list<std::initializer_list<float>>& input) {
             for (const auto& list : input) {
                 std::vector<std::shared_ptr<Value>> subTensor;
                 for (auto& value : list) {

@@ -94,7 +94,7 @@ int main() {
     std::vector<float> baseline(vec.begin()+8080, vec.begin()+8090);
 
     // Initialize MLP
-    constexpr double learningRate = 0.00001;
+    constexpr float learningRate = 0.00001;
     auto mlp = microgradpp::MLP(newWidth * newHeight ,{4,4,static_cast<size_t>(newWidth * newHeight )}, learningRate);
 
     std::shared_ptr<Value> loss;

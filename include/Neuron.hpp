@@ -31,7 +31,7 @@ namespace microgradpp{
     }
 
     // Function to generate a random float between -1 and 1
-    double getRandomFloat() {
+    float getRandomFloat() {
         static std::random_device rd;
         static std::mt19937 gen(rd());
         static std::uniform_real_distribution<> dis(-1, 1);
@@ -55,7 +55,7 @@ namespace microgradpp{
         }
 
         // For testing
-        Neuron(size_t nin, double val,const ActivationType& activation_t = ActivationType::SIGMOID):activation_t(activation_t){
+        Neuron(size_t nin, float val,const ActivationType& activation_t = ActivationType::SIGMOID):activation_t(activation_t){
             for(size_t idx = 0; idx < nin; ++idx){
                 this->weights.emplace_back(Value::create(val));
             }
