@@ -19,20 +19,20 @@ namespace microgradpp{
         TANH,
         SIGMOID
     };
-    class Activation{
 
+    class Activation{
         static std::shared_ptr<Value> Relu(const std::shared_ptr<Value>& val){
-            return val->relu();
+            return Value::relu(val);
         }
         static std::shared_ptr<Value> TanH(const std::shared_ptr<Value>& val){
-            return val->tanh();
+            return Value::tanh(val);
         }
         static std::shared_ptr<Value> Sigmoid(const std::shared_ptr<Value>& val){
-            return val->sigmoid();
+            return Value::sigmoid(val);
         }
 
     public:
-        static inline std::unordered_map<ActivationType, std::function<std::shared_ptr<Value>(const std::shared_ptr<Value>&)>> mActivationFcn = {
+        static inline std::unordered_map<ActivationType, std::function<std::shared_ptr<Value>(std::shared_ptr<Value>&)>> mActivationFcn = {
                 {ActivationType::RELU, Relu},
                 {ActivationType::TANH, TanH},
                 {ActivationType::SIGMOID, Sigmoid}

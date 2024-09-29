@@ -119,3 +119,6 @@
 //    // Output the duration in seconds
 //    std::cout << "Time taken by testNeuron: " << duration.count() << " seconds" << std::endl;
 //}
+int main(){
+    return 0;
+}

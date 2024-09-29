@@ -40,7 +40,7 @@ add_executable(example_mlp mlp.cpp)
 target_link_libraries(example_mlp PUBLIC microgradpp)
 
 
-## Add example_memory
-add_executable(example_memory memory.cpp)
-target_link_libraries(example_memory PUBLIC microgradpp)
+### Add example_memory
+#add_executable(example_memory memory.cpp)
+#target_link_libraries(example_memory PUBLIC microgradpp)
 

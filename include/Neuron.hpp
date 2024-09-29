@@ -18,17 +18,9 @@
 #include <numeric> // For std::transform_reduce
 
 #include <future>
-//#include "tbb/parallel_for.h"
+
 
 namespace microgradpp{
-
-// Helper function to compute partial dot product
-    std::shared_ptr<Value> dotProductPartial(const std::vector<std::shared_ptr<Value>>& x,
-                             const std::vector<std::shared_ptr<Value>>& weights,
-                             size_t idx) {
-        return x[idx] * weights[idx];
-        //return partialSum;
-    }
 
     // Function to generate a random float between -1 and 1
     float getRandomFloat() {
@@ -38,108 +30,81 @@ namespace microgradpp{
         return dis(gen);
     }
 
-    class Neuron{
+    class Neuron {
     private:
-        std::vector<std::shared_ptr<Value>> weights;
-        mutable std::shared_ptr<Value> bias = nullptr;
+        std::vector<ValuePtr> weights;
+        ValuePtr bias = Value::create(0.0);
         const ActivationType activation_t;
-        //mutable std::vector<std::shared_ptr<Value>> params;
-        //mutable std::shared_ptr<Value> sum; //= Value::create(0.0);
+
     public:
-        Neuron(size_t nin, const ActivationType& activation_t): activation_t(activation_t){
-            for(size_t idx = 0; idx < nin; ++idx){
-                this->weights.emplace_back(Value::create(getRandomFloat()));
+        Neuron(size_t nin, const ActivationType& activation_t) : activation_t(activation_t) {
+            for (size_t idx = 0; idx < nin; ++idx) {
+                weights.emplace_back(Value::create(getRandomFloat()));
             }
-            //this->sum = Value::create(0.0);;
-            this->bias = Value::create(0.0);
         }
 
         // For testing
-        Neuron(size_t nin, float val,const ActivationType& activation_t = ActivationType::SIGMOID):activation_t(activation_t){
-            for(size_t idx = 0; idx < nin; ++idx){
-                this->weights.emplace_back(Value::create(val));
+        Neuron(size_t nin, float val, const ActivationType& activation_t = ActivationType::SIGMOID)
+                : activation_t(activation_t) {
+            for (size_t idx = 0; idx < nin; ++idx) {
+                weights.emplace_back(Value::create(getRandomFloat()));
             }
-            this->bias = Value::create(val);
-            //this->sum = Value::create(0.0);;
         }
 
-
-
-        void zeroGrad(){
-
-            auto params = this->parameters();
-            for(auto&p : params){
-                p->grad = 0;
+        void zeroGrad() {
+            for (auto& weight : weights) {
+                weight->grad = 0;
             }
-
-//            this->sum->reset();
-//            this->bias->reset();
-
+            bias->grad = 0;
         }
 
-        // Dot product of a Neurons weights with the input
-        std::shared_ptr<Value> operator()(const std::vector<std::shared_ptr<Value>>& x) const {
-            // Ensure both vectors are of the same size
+        // Dot product of a Neuron's weights with the input
+        ValuePtr operator()(const std::vector<ValuePtr>& x) {
             if (x.size() != weights.size()) {
                 throw std::invalid_argument("Vectors must be of the same length");
             }
-            auto sum = Value::create(0.0);
-////
-////            // Dot product -> dot product is supported from C++20
-////            // TODO: need to make it more efficient
 
-            // Parallel for with thread-safe accumulator
-//            tbb::parallel_for(tbb::blocked_range<size_t>(0, weights.size()),
-//                              [x = x, weights = this->weights, sum = std::weak_ptr<Value>(sum),&sum_mutex](const tbb::blocked_range<size_t>& range) {
-//
-//                                 auto s = sum.lock();
-//                                  for (size_t idx = range.begin(); idx != range.end(); ++idx) {
-//                                      //std::lock_guard<std::mutex> lock(sum_mutex);
-//                                      s += x[idx] * weights[idx];
-//                                  }
-//                              });
-            for(size_t idx = 0; idx<weights.size() ; ++idx){
-                sum += x[idx] * weights[idx];
+            ValuePtr sum = Value::create(0.0);
+
+            for (size_t idx = 0; idx < weights.size(); ++idx) {
+
+                ValuePtr intermediateVal = Value::multiply(x[idx], weights[idx]);
+                sum = Value::add(sum, intermediateVal);
             }
 
             // Add bias
-            sum += this->bias;
+            //sum->add_inplace(bias);
+            sum = Value::add(sum, bias);
 
-            const auto& activationFcn = Activation::mActivationFcn[activation_t];
-            auto result = activationFcn(sum);
-
-            return result;
+            // Apply activation function
+            const auto& activationFcn = Activation::mActivationFcn.at(activation_t);
+            return activationFcn(sum);
         }
 
-        std::vector<std::shared_ptr<Value>> parameters() const{
-//            if(params.empty()){
-//                std::copy(this->weights.begin(), this->weights.end(), std::back_inserter(params));
-//                params.emplace_back(this->bias);
-//            }
-//
-//            return params;
-            std::vector<std::shared_ptr<Value>> out;
-            std::copy(this->weights.begin(), this->weights.end(), std::back_inserter(out));
-            out.emplace_back(this->bias);
+        std::vector<ValuePtr> parameters() const {
+            std::vector<ValuePtr> out;
+            out.reserve(weights.size() + 1);
+
+            out.insert(out.end(), weights.begin(), weights.end());
+            out.push_back(bias);
+
             return out;
         }
 
-        void printParameters(){
-            printf("Number of Parameters: %d \n", (int)weights.size() + 1);
-            for(const auto&param : weights){
-                printf("%f, %f", param->data,param->grad);
-                printf("\n");
+        void printParameters() const {
+            printf("Number of Parameters: %zu\n", weights.size() + 1);
+            for (const auto& param : weights) {
+                printf("%f, %f\n", param->data, param->grad);
             }
-            printf("%f, %f", this->bias->data,this->bias->grad);
-            printf("\n");
+            printf("%f, %f\n", bias->data, bias->grad);
             printf("\n");
         }
 
-        size_t getParametersSize() const{
+        size_t getParametersSize() const {
             return weights.size() + 1;
         }
-
     };
+
 }
 
 #endif //MICROGRADPP_NEURON_HPP

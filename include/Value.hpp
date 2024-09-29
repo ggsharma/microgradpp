@@ -10,41 +10,59 @@
 #include <functional> // std::function
 #include <iomanip>
 
+// m++ headers
+#include "Autograd.hpp"
+
 namespace microgradpp {
     class Value;
+
+    Autograd Autograd::global_tape;
 
     struct Hash {
         size_t operator()(const std::shared_ptr<Value>& value) const;
     };
 
-    class Value : public std::enable_shared_from_this<Value> {
-    private:
-        // Private constructor
-        Value(float data, const std::vector<std::shared_ptr<Value>>& children = {}, const std::string& op = "", const std::string& label = "")
-                : data(data), prev(children.begin(), children.end()), op(op), label(label) {}
 
+    using ValuePtr = std::shared_ptr<Value>;
+    class Value : public std::enable_shared_from_this<Value> {
+
+    private:
+        Value(float data, const std::string& op = "", size_t id = 0)
+                : data(data), grad(0.0), op(op), id(id) {}
     public:
-        // Factory method for creating Value instances
-        static std::shared_ptr<Value> create(float data, const std::vector<std::shared_ptr<Value>>& children = {}, const std::string& op = "", const std::string& label = "") {
-            std::string l;
-            if (label.empty()) {
-                l = std::to_string(labelIdx); // Convert int to string
-                ++labelIdx;
-            } else {
-                l = label;
+        inline static size_t currentID = 0;
+        float data;
+        float grad;
+        std::string op;
+        size_t id = 0LU;
+        std::vector<ValuePtr> prev;
+        std::function<void()> backward;
+
+        static size_t generateID() {
+            return currentID++;
+        }
+
+        /**
+         * @param data : float
+         * @param op : string
+         * @param id : string
+         * @brief Something brief about this
+         */
+        static ValuePtr create(float data, const std::string& op = "", size_t id = 0){
+            if(id == 0){
+                id = generateID();
             }
-            return std::shared_ptr<Value>(new Value(data, children, op, l));
+            return std::shared_ptr<Value>(new Value(data,  op, id));
         }
 
         ~Value(){
-            --labelIdx;
+            --currentID;
+//            if(currentID == 0){
+//                std::cout << "Clearing out\n";
+//                Autograd::global_tape.clear();
+//            }
         }
 
-        float data = 0;
-        float grad = 0;
-        std::function<void()> backward = nullptr;
-        std::unordered_set<std::shared_ptr<Value>, Hash> prev;
-        std::string op;
         std::string label;
         inline static int labelIdx = 0;
 
@@ -71,179 +89,164 @@ namespace microgradpp {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Addition
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        friend std::shared_ptr<Value> operator +(const std::shared_ptr<Value>& lhs, const std::shared_ptr<Value>& rhs) {
-            auto out = Value::create((float)(lhs->data + rhs->data), {lhs, rhs}, "+");
-
-            auto backward = [l = std::weak_ptr<Value>(lhs), r = std::weak_ptr<Value>(rhs), o=std::weak_ptr<Value>(out)]() mutable {
-                if (auto lhs = l.lock()) {
-                    if (auto out = o.lock()) {
-                        lhs->grad += (float)out->grad;
-                        lhs->clip_gradients();
-                    }
-                }
-                if (auto rhs = r.lock()) {
-                    if (auto out = o.lock()) {
-                        rhs->grad += (float)out->grad;
-                        rhs->clip_gradients();
-                    }
-                }
-            };
-
-            out->backward = backward;
+        // Static methods to create operations
+        static ValuePtr add(const ValuePtr& lhs, const ValuePtr& rhs) {
+            auto out = create(lhs->data + rhs->data, "+", generateID());
+            out->prev = {lhs, rhs};
+            Autograd::global_tape.add_entry(out, [lhs_weak = std::weak_ptr<Value>(lhs), rhs_weak = std::weak_ptr<Value>(rhs), out_weak = std::weak_ptr<Value>(out)]() {
+                //if (auto lhs = lhs_weak.lock()) {
+                lhs_weak.lock()->grad += out_weak.lock()->grad;
+                //}
+                //if (auto rhs = rhs_weak.lock()) {
+                rhs_weak.lock()->grad += out_weak.lock()->grad;
+                //}
+            });
             return out;
         }
 
-        friend std::shared_ptr<Value> operator +(const std::shared_ptr<Value>& lhs, float f) {
-            auto other = Value::create((float)f);
-            auto out = Value::create((float)(lhs->data + other->data), {lhs, other}, "+");
 
-            auto backward = [l = std::weak_ptr<Value>(lhs), r = std::weak_ptr<Value>(other), o=std::weak_ptr<Value>(out)]() mutable {
-                if (auto lhs = l.lock()) {
-                    if (auto out = o.lock()) {
-                        lhs->grad += (float)out->grad;
-                        lhs->clip_gradients();
-                    }
-                }
-                if (auto rhs = r.lock()) {
-                    if (auto out = o.lock()) {
-                        rhs->grad += (float)out->grad;
-                        rhs->clip_gradients();
-                    }
-                }
-            };
-
-            out->backward = backward;
+        static ValuePtr add(const ValuePtr& lhs, float f) {
+            auto rhs = Value::create((float)f);
+            auto out = create(lhs->data + f, "+", generateID());
+            out->prev = {lhs, rhs};
+            Autograd::global_tape.add_entry(out, [lhs_weak = std::weak_ptr<Value>(lhs), rhs_weak = std::weak_ptr<Value>(rhs), out_weak = std::weak_ptr<Value>(out)]() {
+                //if (auto lhs = lhs_weak.lock()) {
+                lhs_weak.lock()->grad += out_weak.lock()->grad;
+                //}
+                //if (auto rhs = rhs_weak.lock()) {
+                rhs_weak.lock()->grad += out_weak.lock()->grad;
+                //}
+            });
             return out;
         }
 
-        friend std::shared_ptr<Value>& operator +=(std::shared_ptr<Value>& lhs, const std::shared_ptr<Value>& rhs) {
-            lhs = lhs + rhs;
-            return lhs;
-        }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Multiplication
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        friend std::shared_ptr<Value> operator *(const std::shared_ptr<Value>& lhs, const std::shared_ptr<Value>& rhs) {
-            auto out = Value::create((float)(lhs->data * rhs->data), {lhs, rhs}, "*");
-
-            auto backward = [l = std::weak_ptr<Value>(lhs), r = std::weak_ptr<Value>(rhs), o=std::weak_ptr<Value>(out)]() mutable {
-                l.lock()->grad += (float)(r.lock()->data * o.lock()->grad);
-                r.lock()->grad += (float)(l.lock()->data * o.lock()->grad);
-            };
-
-            out->backward = backward;
+        static ValuePtr multiply(const ValuePtr& lhs, const ValuePtr& rhs) {
+            auto out = create(lhs->data * rhs->data, "*", generateID());
+            out->prev = {lhs, rhs};
+            Autograd::global_tape.add_entry(out,[lhs_weak = std::weak_ptr<Value>(lhs), rhs_weak = std::weak_ptr<Value>(rhs), out_weak = std::weak_ptr<Value>(out)]() {
+                //if (auto lhs = lhs_weak.lock()) {
+                lhs_weak.lock()->grad += rhs_weak.lock()->data * out_weak.lock()->grad;
+                //}
+                //if (auto rhs = rhs_weak.lock()) {
+                rhs_weak.lock()->grad += lhs_weak.lock()->data * out_weak.lock()->grad;
+                //}
+            });
             return out;
         }
 
-        friend std::shared_ptr<Value> operator *(const std::shared_ptr<Value>& lhs, float f) {
-            auto other = Value::create((float)f);
-            auto out = Value::create((float)(lhs->data * other->data), {lhs, other}, "*");
 
-            auto backward = [lhs = std::weak_ptr<Value>(lhs), other=std::weak_ptr<Value>(other), out=std::weak_ptr<Value>(out)]() mutable {
-                lhs.lock()->grad += (float)(other.lock()->data * out.lock()->grad);
-                other.lock()->grad += (float)(lhs.lock()->data * out.lock()->grad);
-            };
-            out->backward = backward;
+        static ValuePtr multiply(const ValuePtr& lhs, float f) {
+            auto rhs = create(f);
+            auto out = create(lhs->data * f, "*", generateID());
+            out->prev = {lhs, rhs};
+            Autograd::global_tape.add_entry(out,[lhs_weak = std::weak_ptr<Value>(lhs), rhs_weak = std::weak_ptr<Value>(rhs), out_weak = std::weak_ptr<Value>(out)]() {
+                //if (auto lhs = lhs_weak.lock()) {
+                lhs_weak.lock()->grad += rhs_weak.lock()->data * out_weak.lock()->grad;
+                //}
+                //if (auto rhs = rhs_weak.lock()) {
+                rhs_weak.lock()->grad += lhs_weak.lock()->data * out_weak.lock()->grad;
+                //}
+            });
             return out;
         }
 
-        friend std::shared_ptr<Value>& operator *=(std::shared_ptr<Value>& lhs, const std::shared_ptr<Value>& rhs) {
-            lhs = lhs * rhs;
-            return lhs;
-        }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Power
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        friend std::shared_ptr<Value> operator ^(const std::shared_ptr<Value>& lhs, float otherValue) {
-            auto newValue = (float)std::pow(lhs->data, otherValue);
-            auto out = Value::create(newValue, {lhs}, "^");
-
-            auto backward = [lhs=std::weak_ptr<Value>(lhs), out=std::weak_ptr<Value>(out), otherValue]() mutable {
-                lhs.lock()->grad += (float)(otherValue * (float)std::pow(lhs.lock()->data, otherValue - 1) * out.lock()->grad);
-                //lhs->clip_gradients();
-            };
-            out->backward = backward;
+        static ValuePtr pow(const ValuePtr& base, float exponent) {
+            float newValue = std::pow(base->data, exponent);
+            auto out = create(newValue, "^", generateID());
+            out->prev = {base};
+            Autograd::global_tape.add_entry(out,[base_weak = std::weak_ptr<Value>(base), out_weak = std::weak_ptr<Value>(out), exponent]() {
+                if (auto base = base_weak.lock()) {
+                    base->grad += exponent * std::pow(base->data, exponent - 1) * out_weak.lock()->grad;
+                }
+            });
             return out;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Division
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        friend std::shared_ptr<Value> operator /( const std::shared_ptr<Value>& lhs, float otherValue) {
-            return lhs * std::pow(otherValue, -1);
+        static ValuePtr divide ( const std::shared_ptr<Value>& lhs, float otherValue) {
+            return multiply(lhs , std::pow(otherValue, -1));
         }
 
-        friend std::shared_ptr<Value> operator /( const std::shared_ptr<Value>& lhs, const std::shared_ptr<Value>& rhs) {
-            return lhs *  (rhs ^ -1);
-            //return lhs;
+        static ValuePtr divide(const ValuePtr& lhs, const ValuePtr& rhs) {
+            auto reciprocal = pow(rhs, -1);
+            return multiply(lhs, reciprocal);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Subtraction
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        friend std::shared_ptr<Value> operator -(const std::shared_ptr<Value>& lhs, const std::shared_ptr<Value>& rhs) {
-            auto out = Value::create((float)(lhs->data - rhs->data), {lhs, rhs}, "-");
-
-            auto backward = [lhs=std::weak_ptr<Value>(lhs), rhs=std::weak_ptr<Value>(rhs), out=std::weak_ptr<Value>(out)]() mutable {
-                lhs.lock()->grad += (float)out.lock()->grad;
-                rhs.lock()->grad -= (float)out.lock()->grad;
-            };
-            out->backward = backward;
+        static ValuePtr subtract(const ValuePtr& lhs, const ValuePtr& rhs) {
+            auto out = create(lhs->data - rhs->data, "-", generateID());
+            out->prev = {lhs, rhs};
+            Autograd::global_tape.add_entry(out,[lhs_weak = std::weak_ptr<Value>(lhs), rhs_weak = std::weak_ptr<Value>(rhs), out_weak = std::weak_ptr<Value>(out)]() {
+                //if (auto lhs = lhs_weak.lock()) {
+                lhs_weak.lock()->grad += out_weak.lock()->grad;
+                //}
+                //if (auto rhs = rhs_weak.lock()) {
+                rhs_weak.lock()->grad -= out_weak.lock()->grad;
+                //}
+            });
             return out;
         }
 
-        friend std::shared_ptr<Value> operator -(const std::shared_ptr<Value>& lhs, float f) {
-            auto other = Value::create((float)f);
-            auto out = Value::create((float)(lhs->data - other->data), {lhs, other}, "-");
 
-            auto backward = [lhs=std::weak_ptr<Value>(lhs), other=std::weak_ptr<Value>(other), out=std::weak_ptr<Value>(out)]() mutable {
-                lhs.lock()->grad += (float)out.lock()->grad;
-                other.lock()->grad -= (float)out.lock()->grad;
-            };
-            out->backward = backward;
+        static ValuePtr subtract(const ValuePtr& lhs, float f) {
+            auto rhs = create(f);
+            auto out = create(lhs->data - rhs->data, "-", generateID());
+            out->prev = {lhs, rhs};
+            Autograd::global_tape.add_entry(out,[lhs_weak = std::weak_ptr<Value>(lhs), rhs_weak = std::weak_ptr<Value>(rhs), out_weak = std::weak_ptr<Value>(out)]() {
+                //if (auto lhs = lhs_weak.lock()) {
+                lhs_weak.lock()->grad += out_weak.lock()->grad;
+                //}
+                //if (auto rhs = rhs_weak.lock()) {
+                rhs_weak.lock()->grad -= out_weak.lock()->grad;
+                //}
+            });
             return out;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Activation functions
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        std::shared_ptr<Value> tanh() {
-            float x = this->data;
-            float t = (float )(std::exp(2 * x) - 1) / (float )(std::exp(2 * x) + 1);
-            auto out = Value::create(t, {shared_from_this()}, "tanh");
-
-            auto backward = [this, t, out=std::weak_ptr<Value>(out)]() mutable {
-                this->grad += (float )(1 - t * t) * out.lock()->grad;
-            };
-            out->backward = backward;
+        static ValuePtr tanh(const ValuePtr& v) {
+            float x = v->data;
+            float t = (std::exp(2 * x) - 1) / (std::exp(2 * x) + 1);
+            auto out = create(t, "tanh", generateID());
+            out->prev = {v};
+            Autograd::global_tape.add_entry(out,[v_weak = std::weak_ptr<Value>(v), t, out_weak = std::weak_ptr<Value>(out)]() {
+                v_weak.lock()->grad += (1 - t * t) * out_weak.lock()->grad;
+            });
             return out;
         }
 
-        std::shared_ptr<Value> relu() {
-            float val = this->data < 0 ? 0 : this->data;
-            auto out = Value::create(val, {shared_from_this()}, "ReLU");
-
-            auto backward = [this, out = out]() mutable {
-                //std::cout << "Before relu : lhs.grad=" << this->grad << std::endl;
-                this->grad += (float)((out->data > 0) * out->grad);
-                //std::cout << "After relu : lhs.grad=" << this->grad << std::endl;
-            };
-            out->backward = backward;
+        static ValuePtr relu(const ValuePtr& v) {
+            float val = std::max(0.0f, v->data);
+            auto out = create(val, "ReLU", generateID());
+            out->prev = {v};
+            Autograd::global_tape.add_entry(out,[v, out]() {
+                if (v) v->grad += (out->data > 0) * out->grad;
+            });
             return out;
         }
 
-        std::shared_ptr<Value> sigmoid() {
-            float x = this->data;
-            float t = (float )(std::exp(x)) / (float )(1 + std::exp(x));
-            auto out = Value::create(t, {shared_from_this()}, "Sigmoid");
-
-            auto backward = [this, out = out, t= t]() mutable {
-                this->grad += (float)( float(t* (1 - t)) * out->grad);
-                this->clip_gradients();
-            };
-            out->backward = backward;
+        static ValuePtr sigmoid(const ValuePtr& v) {
+            float x = v->data;
+            float t = std::exp(x) / (1 + std::exp(x));
+            auto out = create(t, "Sigmoid", generateID());
+            out->prev = {v};
+            Autograd::global_tape.add_entry(out,[v_weak = std::weak_ptr<Value>(v), t, out_weak = std::weak_ptr<Value>(out)]() {
+                v_weak.lock()->grad += t * (1 - t) * out_weak.lock()->grad;
+            });
             return out;
         }
 
@@ -263,16 +266,25 @@ namespace microgradpp {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Backpropagation algorithm
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Backpropagation
         void backProp() {
-            std::vector<std::shared_ptr<Value>> topo;
-            std::unordered_set<std::shared_ptr<Value>, Hash> visited;
-            auto shared = shared_from_this();
-            buildTopo(shared, visited, topo);
-            shared->grad = (float)1.0;
-            for (auto it = topo.rbegin(); it != topo.rend(); ++it) {
-                if ((*it)->backward) {
-                    (*it)->backward();
+            this->_backward();
+        }
+
+        // A backward pass function that assigns a gradient of 1 to the output value
+        void _backward() {
+            grad = 1.0f;
+            Autograd::global_tape.backward();            // Start the backward pass on the tape
+
+        }
+
+        void buildTopo(const ValuePtr& v, std::unordered_map<size_t, bool>& visited, std::vector<ValuePtr>& topo) {
+            if (visited.find(v->id) == visited.end()) {
+                visited[v->id] = true;
+                for (const auto& child : v->prev) {
+                    buildTopo(child, visited, topo);
                 }
+                topo.push_back(v);
             }
         }
 

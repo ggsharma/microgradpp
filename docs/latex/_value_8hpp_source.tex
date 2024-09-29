@@ -1,0 +1,302 @@
+\doxysection{Value.\+hpp}
+\hypertarget{_value_8hpp_source}{}\label{_value_8hpp_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <cstdio>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <unordered\_set>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <set>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <functional>}\ \textcolor{comment}{//\ std::function}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <iomanip>}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{comment}{//\ m++\ headers}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}Autograd.hpp"{}}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{namespace\ }microgradpp\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{class\ }Value;}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ Autograd\ Autograd::global\_tape;}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmicrogradpp_1_1_hash}{Hash}}\ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ operator()(\textcolor{keyword}{const}\ std::shared\_ptr<Value>\&\ value)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00023\ \ \ \ \ \};}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{using\ }ValuePtr\ =\ std::shared\_ptr<Value>;}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classmicrogradpp_1_1_value}{Value}}\ :\ \textcolor{keyword}{public}\ std::enable\_shared\_from\_this<Value>\ \{}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classmicrogradpp_1_1_value}{Value}}(\textcolor{keywordtype}{float}\ data,\ \textcolor{keyword}{const}\ std::string\&\ op\ =\ \textcolor{stringliteral}{"{}"{}},\ \textcolor{keywordtype}{size\_t}\ \textcolor{keywordtype}{id}\ =\ 0)}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ data(data),\ grad(0.0),\ op(op),\ id(\textcolor{keywordtype}{id})\ \{\}}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{size\_t}\ currentID\ =\ 0;}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ data;}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ grad;}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ std::string\ op;}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \textcolor{keywordtype}{id}\ =\ 0LU;}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ std::vector<ValuePtr>\ prev;}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ std::function<void()>\ backward;}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{size\_t}\ generateID()\ \{}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ currentID++;}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00046\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ *\ @param\ data\ :\ float}}
+\DoxyCodeLine{00047\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ *\ @param\ op\ :\ string}}
+\DoxyCodeLine{00048\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ *\ @param\ id\ :\ string}}
+\DoxyCodeLine{00049\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ *\ @brief\ Something\ brief\ about\ this}}
+\DoxyCodeLine{00050\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ ValuePtr\ create(\textcolor{keywordtype}{float}\ data,\ \textcolor{keyword}{const}\ std::string\&\ op\ =\ \textcolor{stringliteral}{"{}"{}},\ \textcolor{keywordtype}{size\_t}\ \textcolor{keywordtype}{id}\ =\ 0)\{}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\textcolor{keywordtype}{id}\ ==\ 0)\{}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{id}\ =\ generateID();}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::shared\_ptr<Value>(\textcolor{keyword}{new}\ \mbox{\hyperlink{classmicrogradpp_1_1_value}{Value}}(data,\ \ op,\ \textcolor{keywordtype}{id}));}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classmicrogradpp_1_1_value}{\string~Value}}()\{}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ -\/-\/currentID;}
+\DoxyCodeLine{00060\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ if(currentID\ ==\ 0)\{}}
+\DoxyCodeLine{00061\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ "{}Clearing\ out\(\backslash\)n"{};}}
+\DoxyCodeLine{00062\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Autograd::global\_tape.clear();}}
+\DoxyCodeLine{00063\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ std::string\ label;}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ labelIdx\ =\ 0;}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classmicrogradpp_1_1_value}{Value}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classmicrogradpp_1_1_value}{Value}}\&\ v)\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ GRADIENT\_CLIP\_VALUE\ =\ 1e4;\ \textcolor{comment}{//\ Gradient\ clipping\ value}}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ EPSILON\ =\ 1e-\/7;\ \textcolor{comment}{//\ Small\ value\ for\ numerical\ stability}}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ clip\_gradients()\ \{}
+\DoxyCodeLine{00075\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ if\ (grad\ >\ GRADIENT\_CLIP\_VALUE)\ grad\ =\ GRADIENT\_CLIP\_VALUE;}}
+\DoxyCodeLine{00076\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ if\ (grad\ <\ -\/GRADIENT\_CLIP\_VALUE)\ grad\ =\ -\/GRADIENT\_CLIP\_VALUE;}}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ reset()\{}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>grad\ =\ 0.0;}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>data\ =\ 0.0;}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>prev.clear();}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ resetGradients()\ \{}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ grad\ =\ 0;}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Addition}}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Static\ methods\ to\ create\ operations}}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ ValuePtr\ add(\textcolor{keyword}{const}\ ValuePtr\&\ lhs,\ \textcolor{keyword}{const}\ ValuePtr\&\ rhs)\ \{}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ out\ =\ create(lhs-\/>data\ +\ rhs-\/>data,\ \textcolor{stringliteral}{"{}+"{}},\ generateID());}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ out-\/>prev\ =\ \{lhs,\ rhs\};}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ Autograd::global\_tape.add\_entry(out,\ [lhs\_weak\ =\ std::weak\_ptr<Value>(lhs),\ rhs\_weak\ =\ std::weak\_ptr<Value>(rhs),\ out\_weak\ =\ std::weak\_ptr<Value>(out)]()\ \{}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//if\ (auto\ lhs\ =\ lhs\_weak.lock())\ \{}}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ lhs\_weak.lock()-\/>grad\ +=\ out\_weak.lock()-\/>grad;}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\}}}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//if\ (auto\ rhs\ =\ rhs\_weak.lock())\ \{}}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rhs\_weak.lock()-\/>grad\ +=\ out\_weak.lock()-\/>grad;}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\}}}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ ValuePtr\ add(\textcolor{keyword}{const}\ ValuePtr\&\ lhs,\ \textcolor{keywordtype}{float}\ f)\ \{}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ rhs\ =\ Value::create((\textcolor{keywordtype}{float})f);}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ out\ =\ create(lhs-\/>data\ +\ f,\ \textcolor{stringliteral}{"{}+"{}},\ generateID());}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ out-\/>prev\ =\ \{lhs,\ rhs\};}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ Autograd::global\_tape.add\_entry(out,\ [lhs\_weak\ =\ std::weak\_ptr<Value>(lhs),\ rhs\_weak\ =\ std::weak\_ptr<Value>(rhs),\ out\_weak\ =\ std::weak\_ptr<Value>(out)]()\ \{}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//if\ (auto\ lhs\ =\ lhs\_weak.lock())\ \{}}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ lhs\_weak.lock()-\/>grad\ +=\ out\_weak.lock()-\/>grad;}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\}}}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//if\ (auto\ rhs\ =\ rhs\_weak.lock())\ \{}}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rhs\_weak.lock()-\/>grad\ +=\ out\_weak.lock()-\/>grad;}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\}}}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Multiplication}}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ ValuePtr\ multiply(\textcolor{keyword}{const}\ ValuePtr\&\ lhs,\ \textcolor{keyword}{const}\ ValuePtr\&\ rhs)\ \{}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ out\ =\ create(lhs-\/>data\ *\ rhs-\/>data,\ \textcolor{stringliteral}{"{}*"{}},\ generateID());}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ out-\/>prev\ =\ \{lhs,\ rhs\};}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ Autograd::global\_tape.add\_entry(out,[lhs\_weak\ =\ std::weak\_ptr<Value>(lhs),\ rhs\_weak\ =\ std::weak\_ptr<Value>(rhs),\ out\_weak\ =\ std::weak\_ptr<Value>(out)]()\ \{}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//if\ (auto\ lhs\ =\ lhs\_weak.lock())\ \{}}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ lhs\_weak.lock()-\/>grad\ +=\ rhs\_weak.lock()-\/>data\ *\ out\_weak.lock()-\/>grad;}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\}}}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//if\ (auto\ rhs\ =\ rhs\_weak.lock())\ \{}}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rhs\_weak.lock()-\/>grad\ +=\ lhs\_weak.lock()-\/>data\ *\ out\_weak.lock()-\/>grad;}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\}}}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ ValuePtr\ multiply(\textcolor{keyword}{const}\ ValuePtr\&\ lhs,\ \textcolor{keywordtype}{float}\ f)\ \{}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ rhs\ =\ create(f);}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ out\ =\ create(lhs-\/>data\ *\ f,\ \textcolor{stringliteral}{"{}*"{}},\ generateID());}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ out-\/>prev\ =\ \{lhs,\ rhs\};}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ Autograd::global\_tape.add\_entry(out,[lhs\_weak\ =\ std::weak\_ptr<Value>(lhs),\ rhs\_weak\ =\ std::weak\_ptr<Value>(rhs),\ out\_weak\ =\ std::weak\_ptr<Value>(out)]()\ \{}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//if\ (auto\ lhs\ =\ lhs\_weak.lock())\ \{}}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ lhs\_weak.lock()-\/>grad\ +=\ rhs\_weak.lock()-\/>data\ *\ out\_weak.lock()-\/>grad;}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\}}}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//if\ (auto\ rhs\ =\ rhs\_weak.lock())\ \{}}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rhs\_weak.lock()-\/>grad\ +=\ lhs\_weak.lock()-\/>data\ *\ out\_weak.lock()-\/>grad;}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\}}}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00156\ }
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Power}}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ ValuePtr\ pow(\textcolor{keyword}{const}\ ValuePtr\&\ base,\ \textcolor{keywordtype}{float}\ exponent)\ \{}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ newValue\ =\ std::pow(base-\/>data,\ exponent);}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ out\ =\ create(newValue,\ \textcolor{stringliteral}{"{}\string^"{}},\ generateID());}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ out-\/>prev\ =\ \{base\};}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ Autograd::global\_tape.add\_entry(out,[base\_weak\ =\ std::weak\_ptr<Value>(base),\ out\_weak\ =\ std::weak\_ptr<Value>(out),\ exponent]()\ \{}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{auto}\ base\ =\ base\_weak.lock())\ \{}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ base-\/>grad\ +=\ exponent\ *\ std::pow(base-\/>data,\ exponent\ -\/\ 1)\ *\ out\_weak.lock()-\/>grad;}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00172\ }
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Division}}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ ValuePtr\ divide\ (\ \textcolor{keyword}{const}\ std::shared\_ptr<Value>\&\ lhs,\ \textcolor{keywordtype}{float}\ otherValue)\ \{}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ multiply(lhs\ ,\ std::pow(otherValue,\ -\/1));}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ ValuePtr\ divide(\textcolor{keyword}{const}\ ValuePtr\&\ lhs,\ \textcolor{keyword}{const}\ ValuePtr\&\ rhs)\ \{}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ reciprocal\ =\ pow(rhs,\ -\/1);}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ multiply(lhs,\ reciprocal);}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00184\ }
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Subtraction}}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ ValuePtr\ subtract(\textcolor{keyword}{const}\ ValuePtr\&\ lhs,\ \textcolor{keyword}{const}\ ValuePtr\&\ rhs)\ \{}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ out\ =\ create(lhs-\/>data\ -\/\ rhs-\/>data,\ \textcolor{stringliteral}{"{}-\/"{}},\ generateID());}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ out-\/>prev\ =\ \{lhs,\ rhs\};}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \ \ Autograd::global\_tape.add\_entry(out,[lhs\_weak\ =\ std::weak\_ptr<Value>(lhs),\ rhs\_weak\ =\ std::weak\_ptr<Value>(rhs),\ out\_weak\ =\ std::weak\_ptr<Value>(out)]()\ \{}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//if\ (auto\ lhs\ =\ lhs\_weak.lock())\ \{}}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ lhs\_weak.lock()-\/>grad\ +=\ out\_weak.lock()-\/>grad;}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\}}}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//if\ (auto\ rhs\ =\ rhs\_weak.lock())\ \{}}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rhs\_weak.lock()-\/>grad\ -\/=\ out\_weak.lock()-\/>grad;}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\}}}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00201\ }
+\DoxyCodeLine{00202\ }
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ ValuePtr\ subtract(\textcolor{keyword}{const}\ ValuePtr\&\ lhs,\ \textcolor{keywordtype}{float}\ f)\ \{}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ rhs\ =\ create(f);}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ out\ =\ create(lhs-\/>data\ -\/\ rhs-\/>data,\ \textcolor{stringliteral}{"{}-\/"{}},\ generateID());}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \ \ \ out-\/>prev\ =\ \{lhs,\ rhs\};}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \ \ \ \ Autograd::global\_tape.add\_entry(out,[lhs\_weak\ =\ std::weak\_ptr<Value>(lhs),\ rhs\_weak\ =\ std::weak\_ptr<Value>(rhs),\ out\_weak\ =\ std::weak\_ptr<Value>(out)]()\ \{}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//if\ (auto\ lhs\ =\ lhs\_weak.lock())\ \{}}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ lhs\_weak.lock()-\/>grad\ +=\ out\_weak.lock()-\/>grad;}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\}}}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//if\ (auto\ rhs\ =\ rhs\_weak.lock())\ \{}}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rhs\_weak.lock()-\/>grad\ -\/=\ out\_weak.lock()-\/>grad;}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\}}}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00217\ }
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Activation\ functions}}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ ValuePtr\ tanh(\textcolor{keyword}{const}\ ValuePtr\&\ v)\ \{}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ x\ =\ v-\/>data;}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ t\ =\ (std::exp(2\ *\ x)\ -\/\ 1)\ /\ (std::exp(2\ *\ x)\ +\ 1);}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ out\ =\ create(t,\ \textcolor{stringliteral}{"{}tanh"{}},\ generateID());}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \ \ \ \ out-\/>prev\ =\ \{v\};}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \ \ \ \ Autograd::global\_tape.add\_entry(out,[v\_weak\ =\ std::weak\_ptr<Value>(v),\ t,\ out\_weak\ =\ std::weak\_ptr<Value>(out)]()\ \{}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ v\_weak.lock()-\/>grad\ +=\ (1\ -\/\ t\ *\ t)\ *\ out\_weak.lock()-\/>grad;}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00231\ }
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ ValuePtr\ relu(\textcolor{keyword}{const}\ ValuePtr\&\ v)\ \{}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ val\ =\ std::max(0.0f,\ v-\/>data);}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ out\ =\ create(val,\ \textcolor{stringliteral}{"{}ReLU"{}},\ generateID());}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \ \ \ \ out-\/>prev\ =\ \{v\};}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \ \ \ \ Autograd::global\_tape.add\_entry(out,[v,\ out]()\ \{}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (v)\ v-\/>grad\ +=\ (out-\/>data\ >\ 0)\ *\ out-\/>grad;}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00241\ }
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ ValuePtr\ sigmoid(\textcolor{keyword}{const}\ ValuePtr\&\ v)\ \{}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ x\ =\ v-\/>data;}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ t\ =\ std::exp(x)\ /\ (1\ +\ std::exp(x));}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ out\ =\ create(t,\ \textcolor{stringliteral}{"{}Sigmoid"{}},\ generateID());}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \ \ \ \ out-\/>prev\ =\ \{v\};}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \ \ \ \ Autograd::global\_tape.add\_entry(out,[v\_weak\ =\ std::weak\_ptr<Value>(v),\ t,\ out\_weak\ =\ std::weak\_ptr<Value>(out)]()\ \{}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ v\_weak.lock()-\/>grad\ +=\ t\ *\ (1\ -\/\ t)\ *\ out\_weak.lock()-\/>grad;}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00252\ }
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Topological\ sort}}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ buildTopo(std::shared\_ptr<Value>\ v,\ std::unordered\_set<std::shared\_ptr<Value>,\ \mbox{\hyperlink{structmicrogradpp_1_1_hash}{Hash}}>\&\ visited,\ std::vector<std::shared\_ptr<Value>>\&\ topo)\ \{}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (visited.find(v)\ ==\ visited.end())\ \{}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ visited.insert(v);}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ child\ :\ v-\/>prev)\ \{}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ buildTopo(child,\ visited,\ topo);}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ topo.push\_back(v);}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00265\ }
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Backpropagation\ algorithm}}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Backpropagation}}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ backProp()\ \{}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>\_backward();}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00273\ }
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ A\ backward\ pass\ function\ that\ assigns\ a\ gradient\ of\ 1\ to\ the\ output\ value}}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \_backward()\ \{}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \ \ \ \ grad\ =\ 1.0f;}
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \ \ \ \ Autograd::global\_tape.backward();\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Start\ the\ backward\ pass\ on\ the\ tape}}
+\DoxyCodeLine{00278\ }
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00280\ }
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ buildTopo(\textcolor{keyword}{const}\ ValuePtr\&\ v,\ std::unordered\_map<size\_t,\ bool>\&\ visited,\ std::vector<ValuePtr>\&\ topo)\ \{}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (visited.find(v-\/>id)\ ==\ visited.end())\ \{}
+\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ visited[v-\/>id]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ child\ :\ v-\/>prev)\ \{}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ buildTopo(child,\ visited,\ topo);}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ topo.push\_back(v);}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00290\ }
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ \mbox{\hyperlink{classmicrogradpp_1_1_value}{Value}}\&\ other)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00292\ }
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ std::ostream\ \&\ operator\ <<\ (std::ostream\ \&os,\ \textcolor{keyword}{const}\ std::shared\_ptr<Value>\ \&v)\{}
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ \ \ \ \ os\ <<\ \textcolor{stringliteral}{"{}[data:\ "{}}\ <<\ std::setw(3)\ <<\ v-\/>data\ <<\ \textcolor{stringliteral}{"{},\ grad:\ "{}}\ <<\ std::setw(3)\ <<\ v-\/>grad\ <<\ \textcolor{stringliteral}{"{}]\ "{}};}
+\DoxyCodeLine{00295\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ os;}
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00297\ \ \ \ \ \};}
+\DoxyCodeLine{00298\ }
+\DoxyCodeLine{00299\ }
+\DoxyCodeLine{00300\ }
+\DoxyCodeLine{00301\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ Hash::operator()(\textcolor{keyword}{const}\ std::shared\_ptr<Value>\&\ value)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!value)\ \{}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::hash<const\ void*>()(value.get());}
+\DoxyCodeLine{00306\ \ \ \ \ \}}
+\DoxyCodeLine{00307\ }
+\DoxyCodeLine{00308\ \ \ \ \ \textcolor{keywordtype}{bool}\ Value::operator==(\textcolor{keyword}{const}\ Value\&\ other)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ data\ ==\ other.data\ \&\&\ op\ ==\ other.op\ \&\&\ prev\ ==\ other.prev;}
+\DoxyCodeLine{00310\ \ \ \ \ \}}
+\DoxyCodeLine{00311\ \}}
+\DoxyCodeLine{00312\ }
+\DoxyCodeLine{00313\ }
+
+\end{DoxyCode}

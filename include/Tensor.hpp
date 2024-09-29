@@ -15,32 +15,30 @@
 namespace microgradpp {
     class Tensor {
     public:
-        std::vector<std::vector<std::shared_ptr<Value>>> tensor;
+        std::vector<std::vector<ValuePtr>> tensor;
 
         Tensor() = default;
 
         Tensor(const std::initializer_list<float>& input){
             for (const auto& value : input){
-                   std::vector<std::shared_ptr<Value>> subTensor;
-                   subTensor.emplace_back(Value::create(value));
-                   tensor.emplace_back(subTensor);
+                std::vector<ValuePtr> subTensor;
+                subTensor.emplace_back(Value::create(value));
+                tensor.emplace_back(subTensor);
             }
         }
 
         Tensor(const std::vector<float>& input){
-            std::vector<std::shared_ptr<Value>> subTensor;
+            std::vector<ValuePtr> subTensor;
             for (const auto& value : input){
                 subTensor.emplace_back(Value::create(value));
             }
             tensor.emplace_back(subTensor);
         }
 
-
-
         // Constructor for a vector of initializer lists of doubles
         Tensor(const std::initializer_list<std::initializer_list<float>>& input) {
             for (const auto& list : input) {
-                std::vector<std::shared_ptr<Value>> subTensor;
+                std::vector<ValuePtr> subTensor;
                 for (auto& value : list) {
                     subTensor.emplace_back(Value::create(value));
                 }
@@ -77,17 +75,14 @@ namespace microgradpp {
         }
 
         void zeroGrad(){
-            for(const auto& subTensor: tensor){
-                for(const auto& value: subTensor){
+            for(auto& subTensor: tensor){
+                for(auto& value: subTensor){
                     value->grad = 0.0;
                 }
             }
         }
 
         void reset(){
-//            for(auto& subTensor : tensor){
-//                subTensor.clear();
-//            }
             tensor.clear();
         }
 
@@ -95,7 +90,7 @@ namespace microgradpp {
         /*
          * idx: row index
          */
-         std::vector<std::shared_ptr<Value>> operator[](const size_t idx) const{
+        std::vector<ValuePtr> operator[](const size_t idx) const{
             if(tensor.size() <= idx){
                 throw std::invalid_argument("Accessing a Tensor out of bounds");
             }
@@ -107,23 +102,32 @@ namespace microgradpp {
          * idx: row index
          * jdx: col index
          */
-         std::shared_ptr<Value> at(const size_t idx, const size_t jdx = 0) const{
+        ValuePtr at(const size_t idx, const size_t jdx = 0) const{
             if(tensor.size() <= idx || tensor[idx].size() <= jdx){
                 throw std::invalid_argument("Accessing a Tensor out of bounds");
             }
             return tensor[idx][jdx];
         }
 
-        void push_back(const std::vector<std::shared_ptr<Value>>& value){
-            std::vector<std::shared_ptr<Value>> subTensor;
+        void push_back(const std::vector<ValuePtr>& value){
+            std::vector<ValuePtr> subTensor;
             std::copy(value.begin(), value.end(), std::back_inserter(subTensor));
             this->tensor.emplace_back(subTensor);
-         }
-
+        }
 
         size_t size() const{
             return tensor.size();
         }
+
+
+
+        // Web
+//       __WEB__ float web_at(const size_t idx, const size_t jdx){
+//            if(tensor.size() <= idx || tensor[idx].size() <= jdx){
+//                throw std::invalid_argument("Accessing a Tensor out of bounds");
+//            }
+//            return tensor[idx][jdx]->data;
+//         }
 
     };
 }

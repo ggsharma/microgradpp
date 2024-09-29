@@ -1,0 +1,133 @@
+\doxysection{microgradpp\+::Value Class Reference}
+\hypertarget{classmicrogradpp_1_1_value}{}\label{classmicrogradpp_1_1_value}\index{microgradpp::Value@{microgradpp::Value}}
+Inheritance diagram for microgradpp\+::Value\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmicrogradpp_1_1_value}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_a2d119389db64e2a80f94a47b275ea0a3}\label{classmicrogradpp_1_1_value_a2d119389db64e2a80f94a47b275ea0a3} 
+{\bfseries Value} (const \mbox{\hyperlink{classmicrogradpp_1_1_value}{Value}} \&v)=default
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_a8778daa86bda466160990a558c838b38}\label{classmicrogradpp_1_1_value_a8778daa86bda466160990a558c838b38} 
+void {\bfseries clip\+\_\+gradients} ()
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_a8847e97acc9e0a418783c9020aac500e}\label{classmicrogradpp_1_1_value_a8847e97acc9e0a418783c9020aac500e} 
+void {\bfseries reset} ()
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_a546daac3f29b9be620d8d6f7b56cf3fc}\label{classmicrogradpp_1_1_value_a546daac3f29b9be620d8d6f7b56cf3fc} 
+void {\bfseries reset\+Gradients} ()
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_a97668b985b1c6222590a63a16380da80}\label{classmicrogradpp_1_1_value_a97668b985b1c6222590a63a16380da80} 
+void {\bfseries build\+Topo} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classmicrogradpp_1_1_value}{Value}} $>$ v, std\+::unordered\+\_\+set$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classmicrogradpp_1_1_value}{Value}} $>$, \mbox{\hyperlink{structmicrogradpp_1_1_hash}{Hash}} $>$ \&visited, std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classmicrogradpp_1_1_value}{Value}} $>$ $>$ \&topo)
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_a62dbda7ec513f0bf08cf2afddea6b813}\label{classmicrogradpp_1_1_value_a62dbda7ec513f0bf08cf2afddea6b813} 
+void {\bfseries back\+Prop} ()
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_aa8863b2e5674522161b95dd4100a6c79}\label{classmicrogradpp_1_1_value_aa8863b2e5674522161b95dd4100a6c79} 
+void {\bfseries \+\_\+backward} ()
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_a0f6ab49d513c5fe697c9a8097aaf62bc}\label{classmicrogradpp_1_1_value_a0f6ab49d513c5fe697c9a8097aaf62bc} 
+void {\bfseries build\+Topo} (const Value\+Ptr \&v, std\+::unordered\+\_\+map$<$ size\+\_\+t, bool $>$ \&visited, std\+::vector$<$ Value\+Ptr $>$ \&topo)
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_a483b00259ef0d15c68d6d76a6b051326}\label{classmicrogradpp_1_1_value_a483b00259ef0d15c68d6d76a6b051326} 
+bool {\bfseries operator==} (const \mbox{\hyperlink{classmicrogradpp_1_1_value}{Value}} \&other) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_adfa24eb862aefa0e1c605bfa36444866}\label{classmicrogradpp_1_1_value_adfa24eb862aefa0e1c605bfa36444866} 
+static size\+\_\+t {\bfseries generate\+ID} ()
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_a8711cfeea393b1dd690625c8b2963d2b}\label{classmicrogradpp_1_1_value_a8711cfeea393b1dd690625c8b2963d2b} 
+static Value\+Ptr {\bfseries create} (float data, const std\+::string \&op="{}"{}, size\+\_\+t id=0)
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_a8e0413c6126c5024829b952489aa7e5c}\label{classmicrogradpp_1_1_value_a8e0413c6126c5024829b952489aa7e5c} 
+static Value\+Ptr {\bfseries add} (const Value\+Ptr \&lhs, const Value\+Ptr \&rhs)
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_acd38f98da51632dadf944930d7e4dc15}\label{classmicrogradpp_1_1_value_acd38f98da51632dadf944930d7e4dc15} 
+static Value\+Ptr {\bfseries add} (const Value\+Ptr \&lhs, float f)
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_ab404a0dc56e44379e6da5c78389ec178}\label{classmicrogradpp_1_1_value_ab404a0dc56e44379e6da5c78389ec178} 
+static Value\+Ptr {\bfseries multiply} (const Value\+Ptr \&lhs, const Value\+Ptr \&rhs)
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_a19f3bb4e18282f379b49427e0899fc81}\label{classmicrogradpp_1_1_value_a19f3bb4e18282f379b49427e0899fc81} 
+static Value\+Ptr {\bfseries multiply} (const Value\+Ptr \&lhs, float f)
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_a711e9b9ec523b5ad17e10122dc8b3953}\label{classmicrogradpp_1_1_value_a711e9b9ec523b5ad17e10122dc8b3953} 
+static Value\+Ptr {\bfseries pow} (const Value\+Ptr \&base, float exponent)
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_a59325a24efd12a8bf62ef6c73b681b7a}\label{classmicrogradpp_1_1_value_a59325a24efd12a8bf62ef6c73b681b7a} 
+static Value\+Ptr {\bfseries divide} (const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classmicrogradpp_1_1_value}{Value}} $>$ \&lhs, float other\+Value)
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_a26d0214a05050a4cfb8569af2f28d883}\label{classmicrogradpp_1_1_value_a26d0214a05050a4cfb8569af2f28d883} 
+static Value\+Ptr {\bfseries divide} (const Value\+Ptr \&lhs, const Value\+Ptr \&rhs)
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_a91834dfeca032f1f99cbabc1ec4a273e}\label{classmicrogradpp_1_1_value_a91834dfeca032f1f99cbabc1ec4a273e} 
+static Value\+Ptr {\bfseries subtract} (const Value\+Ptr \&lhs, const Value\+Ptr \&rhs)
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_a590213c259ebd4651e1237e6c3675458}\label{classmicrogradpp_1_1_value_a590213c259ebd4651e1237e6c3675458} 
+static Value\+Ptr {\bfseries subtract} (const Value\+Ptr \&lhs, float f)
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_a07aef3c3d4ed3d39e05734dc6642d2c6}\label{classmicrogradpp_1_1_value_a07aef3c3d4ed3d39e05734dc6642d2c6} 
+static Value\+Ptr {\bfseries tanh} (const Value\+Ptr \&v)
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_a1d1b6b557b21badf8d81cfbc361d63b1}\label{classmicrogradpp_1_1_value_a1d1b6b557b21badf8d81cfbc361d63b1} 
+static Value\+Ptr {\bfseries relu} (const Value\+Ptr \&v)
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_ab37c547a08a48b4d825ceadbceecfe1c}\label{classmicrogradpp_1_1_value_ab37c547a08a48b4d825ceadbceecfe1c} 
+static Value\+Ptr {\bfseries sigmoid} (const Value\+Ptr \&v)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_a0bbccc395e757d34afe68f0baf4396f6}\label{classmicrogradpp_1_1_value_a0bbccc395e757d34afe68f0baf4396f6} 
+float {\bfseries data}
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_a11873b14bc740ec54a477af2e477ad65}\label{classmicrogradpp_1_1_value_a11873b14bc740ec54a477af2e477ad65} 
+float {\bfseries grad}
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_aab6bc737d047c4410d73bb059a4654e0}\label{classmicrogradpp_1_1_value_aab6bc737d047c4410d73bb059a4654e0} 
+std\+::string {\bfseries op}
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_ac5c8389df7e79dc161e49bd12243ddcf}\label{classmicrogradpp_1_1_value_ac5c8389df7e79dc161e49bd12243ddcf} 
+size\+\_\+t {\bfseries id} = 0\+LU
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_a473db9d383baa5187aa41b1a40965f5a}\label{classmicrogradpp_1_1_value_a473db9d383baa5187aa41b1a40965f5a} 
+std\+::vector$<$ Value\+Ptr $>$ {\bfseries prev}
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_af6d1dc988cc64ebabde870ce593513b0}\label{classmicrogradpp_1_1_value_af6d1dc988cc64ebabde870ce593513b0} 
+std\+::function$<$ void()$>$ {\bfseries backward}
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_a567fdbd8d0a17bf5c181057534b1e6a3}\label{classmicrogradpp_1_1_value_a567fdbd8d0a17bf5c181057534b1e6a3} 
+std\+::string {\bfseries label}
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_a48ac576db942bc4922ed4f4280649e06}\label{classmicrogradpp_1_1_value_a48ac576db942bc4922ed4f4280649e06} 
+const float {\bfseries GRADIENT\+\_\+\+CLIP\+\_\+\+VALUE} = 1e4
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_a37d739936e16efe9bca307ba95c32974}\label{classmicrogradpp_1_1_value_a37d739936e16efe9bca307ba95c32974} 
+const float {\bfseries EPSILON} = 1e-\/7
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_a853a60f9c5e56d64681b2ab9bcc9cf75}\label{classmicrogradpp_1_1_value_a853a60f9c5e56d64681b2ab9bcc9cf75} 
+static size\+\_\+t {\bfseries current\+ID} = 0
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_a3dcf69644503a6b81ca9a6f7421453cd}\label{classmicrogradpp_1_1_value_a3dcf69644503a6b81ca9a6f7421453cd} 
+static int {\bfseries label\+Idx} = 0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classmicrogradpp_1_1_value_a614d13c01d4d1a2b6311b597db50dcc1}\label{classmicrogradpp_1_1_value_a614d13c01d4d1a2b6311b597db50dcc1} 
+std\+::ostream \& {\bfseries operator$<$$<$} (std\+::ostream \&os, const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classmicrogradpp_1_1_value}{Value}} $>$ \&v)
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Value.\+hpp\end{DoxyCompactItemize}

@@ -49,7 +49,12 @@ micrograd++ aims to provide a simple yet powerful framework for building and tra
    or
    ### Builds example and tests
    ```sh
-   cmake -DBUILD_EXAMPLES=ON -DBUILD_TESTS=ON ..
+   cmake .. -DBUILD_EXAMPLES=ON -DBUILD_TESTS=ON ..
+   ```
+   or
+   ### To build a Release build
+   ```sh
+   cmake .. -DCMAKE_BUILD_TYPE=Release
    ```
 
 4. Build the project:
