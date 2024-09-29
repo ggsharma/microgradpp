@@ -9,7 +9,7 @@
 #include <algorithm>
 
 #include "Neuron.hpp"
-
+#include "TypeDefs.hpp"
 
 
 
@@ -41,6 +41,7 @@ namespace microgradpp {
             }
         }
 
+        __MICROGRADPP_NO_DISCARD__
         std::vector<Value*> parameters() const{
             std::vector<Value*> params;
             if(params.empty()) {
@@ -53,7 +54,7 @@ namespace microgradpp {
             return params;
         }
 
-        void print(){
+        void print() const{
             const auto params = this->parameters();
             printf("Num parameters: %d\n", (int)params.size());
             for(const auto& p : params){
@@ -63,8 +64,6 @@ namespace microgradpp {
             printf("\n");
         }
     };
-
-
 
 
     class MLP{
@@ -103,20 +102,13 @@ namespace microgradpp {
             }
         }
 
+
         ~MLP(){
             std::cout << "mlp destroyed" << std::endl;
         }
 
 
-//    std::vector<std::shared_ptr<Value>> convertToValue(const std::vector<float>& input){
-//        std::vector<std::shared_ptr<Value>> out;
-//        for(size_t idx=0; idx<input.size(); ++idx){
-//            out.emplace_back(Value::create(input[idx]));
-//        }
-//        return out;
-//    }
-
-        void update(){
+        void update() const{
 
             for (auto &p: this->parameters()) {
                 p->data += (float)((float)-this->learningRate * (float)p->grad);
@@ -140,7 +132,7 @@ namespace microgradpp {
             return x;
         }
 
-        void printParameters(){
+        void printParameters() const{
             const auto params = this->parameters();
             printf("Num parameters: %d\n", (int)params.size());
             for(const auto& p : params){
@@ -150,6 +142,7 @@ namespace microgradpp {
             printf("\n");
         }
 
+        __MICROGRADPP_NO_DISCARD__
         std::vector<Value*> parameters() const{
             std::vector<Value*> params;
             if(params.empty()) {

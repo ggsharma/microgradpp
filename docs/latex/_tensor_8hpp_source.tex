@@ -25,7 +25,7 @@
 \DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classmicrogradpp_1_1_tensor}{Tensor}}(\textcolor{keyword}{const}\ std::initializer\_list<float>\&\ input)\{}
 \DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ value\ :\ input)\{}
 \DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<ValuePtr>\ subTensor;}
-\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ subTensor.emplace\_back(Value::create(value));}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ subTensor.emplace\_back(\mbox{\hyperlink{classmicrogradpp_1_1_value_a8711cfeea393b1dd690625c8b2963d2b}{Value::create}}(value));}
 \DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tensor.emplace\_back(subTensor);}
 \DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \}}
@@ -33,7 +33,7 @@
 \DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classmicrogradpp_1_1_tensor}{Tensor}}(\textcolor{keyword}{const}\ std::vector<float>\&\ input)\{}
 \DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<ValuePtr>\ subTensor;}
 \DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ value\ :\ input)\{}
-\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ subTensor.emplace\_back(Value::create(value));}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ subTensor.emplace\_back(\mbox{\hyperlink{classmicrogradpp_1_1_value_a8711cfeea393b1dd690625c8b2963d2b}{Value::create}}(value));}
 \DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ tensor.emplace\_back(subTensor);}
 \DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \}}
@@ -43,7 +43,7 @@
 \DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ list\ :\ input)\ \{}
 \DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<ValuePtr>\ subTensor;}
 \DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ value\ :\ list)\ \{}
-\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ subTensor.emplace\_back(Value::create(value));}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ subTensor.emplace\_back(\mbox{\hyperlink{classmicrogradpp_1_1_value_a8711cfeea393b1dd690625c8b2963d2b}{Value::create}}(value));}
 \DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tensor.emplace\_back(subTensor);}
 \DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ \}}

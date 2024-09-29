@@ -4,9 +4,14 @@
 
 #ifndef MICROGRADPP_TYPEDEFS_H
 #define MICROGRADPP_TYPEDEFS_H
-namespace microgradpp{
-    namespace type{
 
-    }
+
+// Strongly typed
+namespace microgradpp::type{
+
 }
+
+// Preprocessor directives
+#define __MICROGRADPP_NO_DISCARD__ [[nodiscard]]
+
 #endif //MICROGRADPP_TYPEDEFS_H

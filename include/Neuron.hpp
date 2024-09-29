@@ -7,6 +7,7 @@
 
 #include "Value.hpp"
 #include "Activation.hpp"
+#include "TypeDefs.hpp"
 
 #include <memory>
 #include <vector>
@@ -27,13 +28,13 @@ namespace microgradpp{
         static std::random_device rd;
         static std::mt19937 gen(rd());
         static std::uniform_real_distribution<> dis(-1, 1);
-        return dis(gen);
+        return static_cast<float>(dis(gen));
     }
 
     class Neuron {
     private:
         std::vector<ValuePtr> weights;
-        ValuePtr bias = Value::create(0.0);
+        ValuePtr bias = Value::create(0.0f);
         const ActivationType activation_t;
 
     public:
@@ -81,6 +82,7 @@ namespace microgradpp{
             return activationFcn(sum);
         }
 
+        __MICROGRADPP_NO_DISCARD__
         std::vector<ValuePtr> parameters() const {
             std::vector<ValuePtr> out;
             out.reserve(weights.size() + 1);
@@ -100,6 +102,7 @@ namespace microgradpp{
             printf("\n");
         }
 
+        __MICROGRADPP_NO_DISCARD__
         size_t getParametersSize() const {
             return weights.size() + 1;
         }

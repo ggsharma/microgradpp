@@ -20,7 +20,7 @@ namespace microgradpp{
 
         // Add an operation to the tape
         void add_entry(const ValuePtr& output, std::function<void()> backward_fn) {
-            tape.push_back({output, backward_fn});
+            tape.push_back({output, std::move(backward_fn)});
         }
 
         // Backward pass: Traverse the tape in reverse order
@@ -30,9 +30,10 @@ namespace microgradpp{
             }
         }
 
-        void clear() noexcept{
+        static void clear() noexcept{
             global_tape.tape.clear();
         }
+
         static Autograd global_tape;
     };
 }

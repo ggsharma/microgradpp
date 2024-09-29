@@ -27,8 +27,9 @@ namespace microgradpp {
             }
         }
 
-        Tensor(const std::vector<float>& input){
+        explicit Tensor(const std::vector<float>& input){
             std::vector<ValuePtr> subTensor;
+            subTensor.reserve(input.size());
             for (const auto& value : input){
                 subTensor.emplace_back(Value::create(value));
             }
@@ -47,18 +48,22 @@ namespace microgradpp {
         }
 
         // Provide begin() and end() methods to allow range-based for loop
+        __MICROGRADPP_NO_DISCARD__
         auto begin() {
             return tensor.begin();
         }
 
+        __MICROGRADPP_NO_DISCARD__
         auto end() {
             return tensor.end();
         }
 
+        __MICROGRADPP_NO_DISCARD__
         auto begin() const {
             return tensor.begin();
         }
 
+        __MICROGRADPP_NO_DISCARD__
         auto end() const {
             return tensor.end();
         }
@@ -102,6 +107,7 @@ namespace microgradpp {
          * idx: row index
          * jdx: col index
          */
+        __MICROGRADPP_NO_DISCARD__
         ValuePtr at(const size_t idx, const size_t jdx = 0) const{
             if(tensor.size() <= idx || tensor[idx].size() <= jdx){
                 throw std::invalid_argument("Accessing a Tensor out of bounds");
@@ -115,6 +121,7 @@ namespace microgradpp {
             this->tensor.emplace_back(subTensor);
         }
 
+        __MICROGRADPP_NO_DISCARD__
         size_t size() const{
             return tensor.size();
         }

@@ -12,13 +12,11 @@
 
 using namespace std;
 
-
 int main() {
     using microgradpp::Value;
     using microgradpp::Neuron;
     using microgradpp::Tensor;
     using microgradpp::MLP;
-
     printf("Hello from micrograd++\n");
 //    // Input data
 //    Tensor xs = {{-0.6766,  0.8353, -0.9439,  0.4799,  0.6168,  0.8016,  0.6596,  0.6993,

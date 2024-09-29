@@ -15,46 +15,71 @@
 
 namespace microgradpp {
     class Value;
-
+    /// Global instance of Autograd to manage the computation tape
     Autograd Autograd::global_tape;
 
+    /**
+    * @brief Custom hash function for std::shared_ptr<Value> to allow its use in unordered containers.
+    */
     struct Hash {
+        /**
+        * @brief Generates a hash value for a shared pointer to Value.
+        * @param value A shared pointer to a Value object.
+        * @return A size_t representing the hash value.
+        */
         size_t operator()(const std::shared_ptr<Value>& value) const;
     };
 
 
     using ValuePtr = std::shared_ptr<Value>;
+
+    /**
+     * @brief A class representing a value in the computational graph with automatic differentiation support.
+     */
     class Value : public std::enable_shared_from_this<Value> {
-
     private:
-        Value(float data, const std::string& op = "", size_t id = 0)
-                : data(data), grad(0.0), op(op), id(id) {}
+        /**
+         * @brief Constructor for Value.
+         * @param data The numerical value stored.
+         * @param op The operation used to create this value (optional).
+         * @param id The unique identifier for this value (optional).
+         */
+        explicit Value(float data, std::string op = "", size_t id = 0)
+                : data(data), grad(0.0), op(std::move(op)), id(id) {}
     public:
-        inline static size_t currentID = 0;
-        float data;
-        float grad;
-        std::string op;
-        size_t id = 0LU;
-        std::vector<ValuePtr> prev;
-        std::function<void()> backward;
+        inline static size_t currentID = 0; ///< Global counter for generating unique IDs.
+        float data; ///< The actual numerical value.
+        float grad; ///< The gradient of the value (used in backpropagation).
+        std::string op; ///< The operation used to create the value (e.g., +, *, etc.).
+        size_t id = 0LU; ///< A unique identifier for the value.
+        std::vector<ValuePtr> prev; ///< Pointers to the previous values that were inputs to this value.
+        std::function<void()> backward; ///< Function to compute the gradient during backpropagation.
 
+        /**
+        * @brief Generates a new unique ID for each value.
+        * @return A size_t representing the unique ID.
+        */
         static size_t generateID() {
             return currentID++;
         }
 
         /**
-         * @param data : float
-         * @param op : string
-         * @param id : string
-         * @brief Something brief about this
+         * @brief Factory method to create a new Value instance.
+         * @param data The numerical value stored.
+         * @param op The operation used to create this value (optional).
+         * @param id The unique identifier for this value (optional).
+         * @return A shared pointer to the created Value.
          */
-        static ValuePtr create(float data, const std::string& op = "", size_t id = 0){
+        static ValuePtr create(float data, std::string op = "", size_t id = 0){
             if(id == 0){
                 id = generateID();
             }
-            return std::shared_ptr<Value>(new Value(data,  op, id));
+            return std::shared_ptr<Value>(new Value(data,  std::move(op), id));
         }
 
+        /**
+           * @brief Destructor for Value.
+        */
         ~Value(){
             --currentID;
 //            if(currentID == 0){
@@ -63,25 +88,35 @@ namespace microgradpp {
 //            }
         }
 
-        std::string label;
-        inline static int labelIdx = 0;
+        std::string label; ///< A label for the value (optional).
+        inline static int labelIdx = 0; ///< Global counter for labels.
+
+        const float GRADIENT_CLIP_VALUE = 1e4; ///< Gradient clipping threshold.
+        const float EPSILON = 1e-7; ///< Small value to avoid numerical instability.
 
         Value(const Value& v) = default;
 
-        const float GRADIENT_CLIP_VALUE = 1e4; // Gradient clipping value
-        const float EPSILON = 1e-7; // Small value for numerical stability
-
+        /**
+             * @brief Clips the gradients to avoid exploding gradients.
+        */
         void clip_gradients() {
 //            if (grad > GRADIENT_CLIP_VALUE) grad = GRADIENT_CLIP_VALUE;
 //            if (grad < -GRADIENT_CLIP_VALUE) grad = -GRADIENT_CLIP_VALUE;
         }
 
+
+        /**
+         * @brief Resets the value and its gradients.
+         */
         void reset(){
             this->grad = 0.0;
             this->data = 0.0;
             this->prev.clear();
         }
 
+        /**
+         * @brief Resets the gradients to zero.
+         */
         void resetGradients() {
             grad = 0;
         }
@@ -89,7 +124,12 @@ namespace microgradpp {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Addition
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // Static methods to create operations
+        /**
+          * @brief Adds two values and creates a new value.
+          * @param lhs The left-hand side ValuePtr.
+          * @param rhs The right-hand side ValuePtr.
+          * @return A shared pointer to the new Value representing the sum.
+          */
         static ValuePtr add(const ValuePtr& lhs, const ValuePtr& rhs) {
             auto out = create(lhs->data + rhs->data, "+", generateID());
             out->prev = {lhs, rhs};
@@ -104,7 +144,12 @@ namespace microgradpp {
             return out;
         }
 
-
+        /**
+         * @brief Adds a value and a float.
+         * @param lhs The left-hand side ValuePtr.
+         * @param f The float to add.
+         * @return A shared pointer to the new Value representing the sum.
+         */
         static ValuePtr add(const ValuePtr& lhs, float f) {
             auto rhs = Value::create((float)f);
             auto out = create(lhs->data + f, "+", generateID());
@@ -124,6 +169,13 @@ namespace microgradpp {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Multiplication
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+          * @brief Multiplies two values and creates a new value.
+          * @param lhs The left-hand side ValuePtr.
+          * @param rhs The right-hand side ValuePtr.
+          * @return A shared pointer to the new Value representing the product.
+          */
         static ValuePtr multiply(const ValuePtr& lhs, const ValuePtr& rhs) {
             auto out = create(lhs->data * rhs->data, "*", generateID());
             out->prev = {lhs, rhs};
@@ -135,10 +187,17 @@ namespace microgradpp {
                 rhs_weak.lock()->grad += lhs_weak.lock()->data * out_weak.lock()->grad;
                 //}
             });
+
             return out;
+
         }
 
-
+        /**
+           * @brief Multiplies a value and a float.
+           * @param lhs The left-hand side ValuePtr.
+           * @param f The float to multiply.
+           * @return A shared pointer to the new Value representing the product.
+           */
         static ValuePtr multiply(const ValuePtr& lhs, float f) {
             auto rhs = create(f);
             auto out = create(lhs->data * f, "*", generateID());
@@ -158,6 +217,12 @@ namespace microgradpp {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Power
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /**
+         * @brief Raises a value to the power of an exponent.
+         * @param base The base ValuePtr.
+         * @param exponent The float exponent.
+         * @return A shared pointer to the new Value representing the result.
+         */
         static ValuePtr pow(const ValuePtr& base, float exponent) {
             float newValue = std::pow(base->data, exponent);
             auto out = create(newValue, "^", generateID());
@@ -173,10 +238,22 @@ namespace microgradpp {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Division
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /**
+         * @brief Divides a value by a float.
+         * @param lhs The left-hand side ValuePtr.
+         * @param otherValue The float divisor.
+         * @return A shared pointer to the new Value representing the quotient.
+         */
         static ValuePtr divide ( const std::shared_ptr<Value>& lhs, float otherValue) {
-            return multiply(lhs , std::pow(otherValue, -1));
+            return multiply(lhs , std::pow(otherValue, -1.0f));
         }
 
+        /**
+        * @brief Divides a value by a float.
+        * @param lhs The left-hand side ValuePtr.
+        * @param rhs The right-hand side ValuePtr.
+        * @return A shared pointer to the new Value representing the quotient.
+        */
         static ValuePtr divide(const ValuePtr& lhs, const ValuePtr& rhs) {
             auto reciprocal = pow(rhs, -1);
             return multiply(lhs, reciprocal);
@@ -185,6 +262,12 @@ namespace microgradpp {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Subtraction
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /**
+       * @brief Subtracts two values and creates a new value.
+       * @param lhs The left-hand side ValuePtr.
+       * @param rhs The right-hand side ValuePtr.
+       * @return A shared pointer to the new Value representing the difference.
+       */
         static ValuePtr subtract(const ValuePtr& lhs, const ValuePtr& rhs) {
             auto out = create(lhs->data - rhs->data, "-", generateID());
             out->prev = {lhs, rhs};
@@ -199,7 +282,12 @@ namespace microgradpp {
             return out;
         }
 
-
+        /**
+       * @brief Subtracts two values and creates a new value.
+       * @param lhs The left-hand side ValuePtr.
+       * @param f float
+       * @return A shared pointer to the new Value representing the difference.
+       */
         static ValuePtr subtract(const ValuePtr& lhs, float f) {
             auto rhs = create(f);
             auto out = create(lhs->data - rhs->data, "-", generateID());
@@ -218,6 +306,11 @@ namespace microgradpp {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Activation functions
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /**
+       * @brief Applies the tanh activation function.
+       * @param v The input ValuePtr.
+       * @return A shared pointer to the new Value representing the tanh output.
+       */
         static ValuePtr tanh(const ValuePtr& v) {
             float x = v->data;
             float t = (std::exp(2 * x) - 1) / (std::exp(2 * x) + 1);
@@ -229,16 +322,26 @@ namespace microgradpp {
             return out;
         }
 
+        /**
+         * @brief Applies the ReLU activation function.
+         * @param v The input ValuePtr.
+         * @return A shared pointer to the new Value representing the ReLU output.
+         */
         static ValuePtr relu(const ValuePtr& v) {
             float val = std::max(0.0f, v->data);
             auto out = create(val, "ReLU", generateID());
             out->prev = {v};
             Autograd::global_tape.add_entry(out,[v, out]() {
-                if (v) v->grad += (out->data > 0) * out->grad;
+                if (v) v->grad += static_cast<float>((out->data > 0)) * out->grad;
             });
             return out;
         }
 
+        /**
+           * @brief Applies the sigmoid activation function.
+           * @param v The input ValuePtr.
+           * @return A shared pointer to the new Value representing the sigmoid output.
+        */
         static ValuePtr sigmoid(const ValuePtr& v) {
             float x = v->data;
             float t = std::exp(x) / (1 + std::exp(x));
@@ -253,15 +356,16 @@ namespace microgradpp {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Topological sort
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        void buildTopo(std::shared_ptr<Value> v, std::unordered_set<std::shared_ptr<Value>, Hash>& visited, std::vector<std::shared_ptr<Value>>& topo) {
-            if (visited.find(v) == visited.end()) {
-                visited.insert(v);
-                for (const auto& child : v->prev) {
-                    buildTopo(child, visited, topo);
-                }
-                topo.push_back(v);
-            }
-        }
+
+//        void buildTopo(std::shared_ptr<Value> v, std::unordered_set<std::shared_ptr<Value>, Hash>& visited, std::vector<std::shared_ptr<Value>>& topo) {
+//            if (visited.find(v) == visited.end()) {
+//                visited.insert(v);
+//                for (const auto& child : v->prev) {
+//                    buildTopo(child, visited, topo);
+//                }
+//                topo.push_back(v);
+//            }
+//        }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Backpropagation algorithm
@@ -270,14 +374,21 @@ namespace microgradpp {
         void backProp() {
             this->_backward();
         }
-
-        // A backward pass function that assigns a gradient of 1 to the output value
+        /**
+            * @brief Initiates the backward pass by setting the gradient of the output value to 1.
+        */
         void _backward() {
             grad = 1.0f;
             Autograd::global_tape.backward();            // Start the backward pass on the tape
 
         }
 
+        /**
+         * @brief Builds the topological order of the computational graph.
+         * @param v The input ValuePtr.
+         * @param visited A set to track visited nodes.
+         * @param topo The topologically sorted output values.
+         */
         void buildTopo(const ValuePtr& v, std::unordered_map<size_t, bool>& visited, std::vector<ValuePtr>& topo) {
             if (visited.find(v->id) == visited.end()) {
                 visited[v->id] = true;

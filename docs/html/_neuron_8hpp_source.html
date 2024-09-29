@@ -123,13 +123,13 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="classmicrogradpp_1_1_neuron.html">   33</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classmicrogradpp_1_1_neuron.html">Neuron</a> {</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keyword">private</span>:</div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        std::vector&lt;ValuePtr&gt; weights;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        ValuePtr bias = Value::create(0.0);</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        ValuePtr bias = <a class="code hl_function" href="classmicrogradpp_1_1_value.html#a8711cfeea393b1dd690625c8b2963d2b">Value::create</a>(0.0);</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <span class="keyword">const</span> ActivationType activation_t;</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keyword">public</span>:</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        <a class="code hl_class" href="classmicrogradpp_1_1_neuron.html">Neuron</a>(<span class="keywordtype">size_t</span> nin, <span class="keyword">const</span> ActivationType&amp; activation_t) : activation_t(activation_t) {</div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> idx = 0; idx &lt; nin; ++idx) {</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>                weights.emplace_back(Value::create(getRandomFloat()));</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>                weights.emplace_back(<a class="code hl_function" href="classmicrogradpp_1_1_value.html#a8711cfeea393b1dd690625c8b2963d2b">Value::create</a>(getRandomFloat()));</div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>            }</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        }</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
@@ -137,7 +137,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <a class="code hl_class" href="classmicrogradpp_1_1_neuron.html">Neuron</a>(<span class="keywordtype">size_t</span> nin, <span class="keywordtype">float</span> val, <span class="keyword">const</span> ActivationType&amp; activation_t = ActivationType::SIGMOID)</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                : activation_t(activation_t) {</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> idx = 0; idx &lt; nin; ++idx) {</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>                weights.emplace_back(Value::create(getRandomFloat()));</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>                weights.emplace_back(<a class="code hl_function" href="classmicrogradpp_1_1_value.html#a8711cfeea393b1dd690625c8b2963d2b">Value::create</a>(getRandomFloat()));</div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>            }</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        }</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
@@ -154,17 +154,17 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>                <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;Vectors must be of the same length&quot;</span>);</div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>            }</div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            ValuePtr sum = Value::create(0.0);</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            ValuePtr sum = <a class="code hl_function" href="classmicrogradpp_1_1_value.html#a8711cfeea393b1dd690625c8b2963d2b">Value::create</a>(0.0);</div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> idx = 0; idx &lt; weights.size(); ++idx) {</div>
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>                ValuePtr intermediateVal = Value::multiply(x[idx], weights[idx]);</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>                sum = Value::add(sum, intermediateVal);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>                ValuePtr intermediateVal = <a class="code hl_function" href="classmicrogradpp_1_1_value.html#ab404a0dc56e44379e6da5c78389ec178">Value::multiply</a>(x[idx], weights[idx]);</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>                sum = <a class="code hl_function" href="classmicrogradpp_1_1_value.html#a8e0413c6126c5024829b952489aa7e5c">Value::add</a>(sum, intermediateVal);</div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            }</div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            <span class="comment">// Add bias</span></div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            <span class="comment">//sum-&gt;add_inplace(bias);</span></div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            sum = Value::add(sum, bias);</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            sum = <a class="code hl_function" href="classmicrogradpp_1_1_value.html#a8e0413c6126c5024829b952489aa7e5c">Value::add</a>(sum, bias);</div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            <span class="comment">// Apply activation function</span></div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>            <span class="keyword">const</span> <span class="keyword">auto</span>&amp; activationFcn = Activation::mActivationFcn.at(activation_t);</div>
@@ -200,6 +200,9 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span><span class="preprocessor">#endif </span><span class="comment">//MICROGRADPP_NEURON_HPP</span></div>
 <div class="ttc" id="aclassmicrogradpp_1_1_neuron_html"><div class="ttname"><a href="classmicrogradpp_1_1_neuron.html">microgradpp::Neuron</a></div><div class="ttdef"><b>Definition</b> Neuron.hpp:33</div></div>
+<div class="ttc" id="aclassmicrogradpp_1_1_value_html_a8711cfeea393b1dd690625c8b2963d2b"><div class="ttname"><a href="classmicrogradpp_1_1_value.html#a8711cfeea393b1dd690625c8b2963d2b">microgradpp::Value::create</a></div><div class="ttdeci">static ValuePtr create(float data, const std::string &amp;op=&quot;&quot;, size_t id=0)</div><div class="ttdoc">Factory method to create a new Value instance.</div><div class="ttdef"><b>Definition</b> Value.hpp:73</div></div>
+<div class="ttc" id="aclassmicrogradpp_1_1_value_html_a8e0413c6126c5024829b952489aa7e5c"><div class="ttname"><a href="classmicrogradpp_1_1_value.html#a8e0413c6126c5024829b952489aa7e5c">microgradpp::Value::add</a></div><div class="ttdeci">static ValuePtr add(const ValuePtr &amp;lhs, const ValuePtr &amp;rhs)</div><div class="ttdoc">Adds two values and creates a new value.</div><div class="ttdef"><b>Definition</b> Value.hpp:133</div></div>
+<div class="ttc" id="aclassmicrogradpp_1_1_value_html_ab404a0dc56e44379e6da5c78389ec178"><div class="ttname"><a href="classmicrogradpp_1_1_value.html#ab404a0dc56e44379e6da5c78389ec178">microgradpp::Value::multiply</a></div><div class="ttdeci">static ValuePtr multiply(const ValuePtr &amp;lhs, const ValuePtr &amp;rhs)</div><div class="ttdoc">Multiplies two values and creates a new value.</div><div class="ttdef"><b>Definition</b> Value.hpp:179</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

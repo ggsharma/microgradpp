@@ -1,11 +1,43 @@
 \doxysection{microgradpp\+::Hash Struct Reference}
 \hypertarget{structmicrogradpp_1_1_hash}{}\label{structmicrogradpp_1_1_hash}\index{microgradpp::Hash@{microgradpp::Hash}}
+
+
+Custom hash function for std\+::shared\+\_\+ptr$<$\+Value$>$ to allow its use in unordered containers.  
+
+
+
+
+{\ttfamily \#include $<$Value.\+hpp$>$}
+
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\Hypertarget{structmicrogradpp_1_1_hash_a53a255959fc326b7c7e7a2fc62363a51}\label{structmicrogradpp_1_1_hash_a53a255959fc326b7c7e7a2fc62363a51} 
-size\+\_\+t {\bfseries operator()} (const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classmicrogradpp_1_1_value}{Value}} $>$ \&value) const
-\end{DoxyCompactItemize}
+size\+\_\+t \mbox{\hyperlink{structmicrogradpp_1_1_hash_a53a255959fc326b7c7e7a2fc62363a51}{operator()}} (const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classmicrogradpp_1_1_value}{Value}} $>$ \&value) const
+\begin{DoxyCompactList}\small\item\em Generates a hash value for a shared pointer to \doxylink{classmicrogradpp_1_1_value}{Value}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Custom hash function for std\+::shared\+\_\+ptr$<$\+Value$>$ to allow its use in unordered containers. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structmicrogradpp_1_1_hash_a53a255959fc326b7c7e7a2fc62363a51}\index{microgradpp::Hash@{microgradpp::Hash}!operator()@{operator()}}
+\index{operator()@{operator()}!microgradpp::Hash@{microgradpp::Hash}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily \label{structmicrogradpp_1_1_hash_a53a255959fc326b7c7e7a2fc62363a51} 
+size\+\_\+t microgradpp\+::\+Hash\+::operator() (\begin{DoxyParamCaption}\item[{const std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classmicrogradpp_1_1_value}{Value}} $>$ \&}]{value}{}\end{DoxyParamCaption}) const}
+
+
+
+Generates a hash value for a shared pointer to \doxylink{classmicrogradpp_1_1_value}{Value}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & A shared pointer to a \doxylink{classmicrogradpp_1_1_value}{Value} object. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A size\+\_\+t representing the hash value. 
+\end{DoxyReturn}
 
 
 The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}

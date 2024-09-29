@@ -94,13 +94,47 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">microgradpp::Hash Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Custom hash function for std::shared_ptr&lt;Value&gt; to allow its use in unordered containers.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_value_8hpp_source.html">Value.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a53a255959fc326b7c7e7a2fc62363a51" id="r_a53a255959fc326b7c7e7a2fc62363a51"><td class="memItemLeft" align="right" valign="top"><a id="a53a255959fc326b7c7e7a2fc62363a51" name="a53a255959fc326b7c7e7a2fc62363a51"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>operator()</b> (const std::shared_ptr&lt; <a class="el" href="classmicrogradpp_1_1_value.html">Value</a> &gt; &amp;value) const</td></tr>
+<tr class="memitem:a53a255959fc326b7c7e7a2fc62363a51" id="r_a53a255959fc326b7c7e7a2fc62363a51"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a53a255959fc326b7c7e7a2fc62363a51">operator()</a> (const std::shared_ptr&lt; <a class="el" href="classmicrogradpp_1_1_value.html">Value</a> &gt; &amp;value) const</td></tr>
+<tr class="memdesc:a53a255959fc326b7c7e7a2fc62363a51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a hash value for a shared pointer to <a class="el" href="classmicrogradpp_1_1_value.html" title="A class representing a value in the computational graph with automatic differentiation support.">Value</a>.  <br /></td></tr>
 <tr class="separator:a53a255959fc326b7c7e7a2fc62363a51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Custom hash function for std::shared_ptr&lt;Value&gt; to allow its use in unordered containers. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a53a255959fc326b7c7e7a2fc62363a51" name="a53a255959fc326b7c7e7a2fc62363a51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53a255959fc326b7c7e7a2fc62363a51">&#9670;&#160;</a></span>operator()()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t microgradpp::Hash::operator() </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="classmicrogradpp_1_1_value.html">Value</a> &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generates a hash value for a shared pointer to <a class="el" href="classmicrogradpp_1_1_value.html" title="A class representing a value in the computational graph with automatic differentiation support.">Value</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>A shared pointer to a <a class="el" href="classmicrogradpp_1_1_value.html" title="A class representing a value in the computational graph with automatic differentiation support.">Value</a> object. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A size_t representing the hash value. </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
 <li><a class="el" href="_value_8hpp_source.html">Value.hpp</a></li>
 </ul>

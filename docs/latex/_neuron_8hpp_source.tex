@@ -36,13 +36,13 @@
 \DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classmicrogradpp_1_1_neuron}{Neuron}}\ \{}
 \DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{private}:}
 \DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ std::vector<ValuePtr>\ weights;}
-\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ ValuePtr\ bias\ =\ Value::create(0.0);}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ ValuePtr\ bias\ =\ \mbox{\hyperlink{classmicrogradpp_1_1_value_a8711cfeea393b1dd690625c8b2963d2b}{Value::create}}(0.0);}
 \DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ ActivationType\ activation\_t;}
 \DoxyCodeLine{00038\ }
 \DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{public}:}
 \DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classmicrogradpp_1_1_neuron}{Neuron}}(\textcolor{keywordtype}{size\_t}\ nin,\ \textcolor{keyword}{const}\ ActivationType\&\ activation\_t)\ :\ activation\_t(activation\_t)\ \{}
 \DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ idx\ =\ 0;\ idx\ <\ nin;\ ++idx)\ \{}
-\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ weights.emplace\_back(Value::create(getRandomFloat()));}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ weights.emplace\_back(\mbox{\hyperlink{classmicrogradpp_1_1_value_a8711cfeea393b1dd690625c8b2963d2b}{Value::create}}(getRandomFloat()));}
 \DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00045\ }
@@ -50,7 +50,7 @@
 \DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classmicrogradpp_1_1_neuron}{Neuron}}(\textcolor{keywordtype}{size\_t}\ nin,\ \textcolor{keywordtype}{float}\ val,\ \textcolor{keyword}{const}\ ActivationType\&\ activation\_t\ =\ ActivationType::SIGMOID)}
 \DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ activation\_t(activation\_t)\ \{}
 \DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ idx\ =\ 0;\ idx\ <\ nin;\ ++idx)\ \{}
-\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ weights.emplace\_back(Value::create(getRandomFloat()));}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ weights.emplace\_back(\mbox{\hyperlink{classmicrogradpp_1_1_value_a8711cfeea393b1dd690625c8b2963d2b}{Value::create}}(getRandomFloat()));}
 \DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00053\ }
@@ -67,17 +67,17 @@
 \DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::invalid\_argument(\textcolor{stringliteral}{"{}Vectors\ must\ be\ of\ the\ same\ length"{}});}
 \DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00066\ }
-\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ ValuePtr\ sum\ =\ Value::create(0.0);}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ ValuePtr\ sum\ =\ \mbox{\hyperlink{classmicrogradpp_1_1_value_a8711cfeea393b1dd690625c8b2963d2b}{Value::create}}(0.0);}
 \DoxyCodeLine{00068\ }
 \DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ idx\ =\ 0;\ idx\ <\ weights.size();\ ++idx)\ \{}
 \DoxyCodeLine{00070\ }
-\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ValuePtr\ intermediateVal\ =\ Value::multiply(x[idx],\ weights[idx]);}
-\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sum\ =\ Value::add(sum,\ intermediateVal);}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ValuePtr\ intermediateVal\ =\ \mbox{\hyperlink{classmicrogradpp_1_1_value_ab404a0dc56e44379e6da5c78389ec178}{Value::multiply}}(x[idx],\ weights[idx]);}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sum\ =\ \mbox{\hyperlink{classmicrogradpp_1_1_value_a8e0413c6126c5024829b952489aa7e5c}{Value::add}}(sum,\ intermediateVal);}
 \DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00074\ }
 \DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Add\ bias}}
 \DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//sum-\/>add\_inplace(bias);}}
-\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ sum\ =\ Value::add(sum,\ bias);}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ sum\ =\ \mbox{\hyperlink{classmicrogradpp_1_1_value_a8e0413c6126c5024829b952489aa7e5c}{Value::add}}(sum,\ bias);}
 \DoxyCodeLine{00078\ }
 \DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Apply\ activation\ function}}
 \DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ activationFcn\ =\ Activation::mActivationFcn.at(activation\_t);}
