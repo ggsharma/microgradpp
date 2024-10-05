@@ -22,9 +22,11 @@ namespace microgradpp::loss{
             return loss;
         }
     };
-    class MeanSquaredErrorForPixels : public AbstractLoss<Tensor>{
+
+
+    class MeanSquaredErrorFor1DPixels : public AbstractLoss<Tensor>{
     public:
-        MeanSquaredErrorForPixels () = default;
+        MeanSquaredErrorFor1DPixels () = default;
         ValuePtr operator()(const Tensor& groundTruth, const Tensor& prediction) override{
             // Calculate loss
             auto loss = Value::create(0.0f);

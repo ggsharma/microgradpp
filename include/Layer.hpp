@@ -20,7 +20,7 @@ namespace microgradpp {
         //mutable std::vector<Value*> params;
     public:
         std::vector<Neuron> neurons;
-        Layer(size_t nin , size_t nout, const ActivationType& activation = ActivationType::SIGMOID){
+        Layer(size_t nin , size_t nout, const ActivationType& activation){
             for(size_t idx = 0; idx < nout; ++idx){
                 this->neurons.emplace_back(nin, activation);
             }
@@ -29,7 +29,7 @@ namespace microgradpp {
         std::vector<ValuePtr> operator()(const std::vector<ValuePtr>& x) {
             std::vector<ValuePtr> out;
             out.reserve(this->neurons.size());
-            std::for_each(this->neurons.begin(), this->neurons.end(), [&out, &x](   auto& neuron)mutable{
+            std::for_each(this->neurons.begin(), this->neurons.end(), [&out, x=x](   auto neuron)mutable{
                 out.emplace_back(neuron(x));
             });
             return out;

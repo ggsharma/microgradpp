@@ -19,7 +19,7 @@ namespace microgradpp {
 
         Tensor() = default;
 
-        Tensor(const std::initializer_list<float>& input){
+         Tensor(const std::initializer_list<float>& input){
             for (const auto& value : input){
                 std::vector<ValuePtr> subTensor;
                 subTensor.emplace_back(Value::create(value));
@@ -74,7 +74,6 @@ namespace microgradpp {
                 for (const auto& val : row) {
                     os << val;  // Assuming you want to print the data value
                 }
-                os << std::endl;
             }
             return os;
         }
@@ -90,7 +89,6 @@ namespace microgradpp {
         void reset(){
             tensor.clear();
         }
-
 
         /*
          * idx: row index

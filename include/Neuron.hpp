@@ -27,7 +27,7 @@ namespace microgradpp{
     float getRandomFloat() {
         static std::random_device rd;
         static std::mt19937 gen(rd());
-        static std::uniform_real_distribution<> dis(0, 1);
+        static std::uniform_real_distribution<> dis(-1, 1);
         return static_cast<float>(dis(gen));
     }
 
@@ -62,7 +62,7 @@ namespace microgradpp{
         // Dot product of a Neuron's weights with the input
         ValuePtr operator()(const std::vector<ValuePtr>& x) {
             if (x.size() != weights.size()) {
-                throw std::invalid_argument("Vectors must be of the same length");
+                throw std::invalid_argument("Error in micrograd::Neuron -> Vectors must be of the same length");
             }
 
             ValuePtr sum = Value::create(0.0);
@@ -81,9 +81,9 @@ namespace microgradpp{
 
             // Apply activation function
             const auto& activationFcn = Activation::mActivationFcn.at(activation_t);
-            auto b =  activationFcn(sum);
+            return activationFcn(sum);
             //std::cout << "Results of actvation is: " << b << "\n";
-            return b;
+            //return b;
 
         }
 

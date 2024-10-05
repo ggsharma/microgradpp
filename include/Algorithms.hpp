@@ -31,6 +31,7 @@ namespace microgradpp::algorithms{
             std::vector<Layer> layers;
             float learningRate;
         public:
+            // Image works with sigmoid
             // Preferred way to instantiate a MLP
             MLP(size_t nin, std::vector<size_t> nouts, const float learningRate=0.0025):learningRate(learningRate){
                 //sizes.reserve(4);
@@ -53,7 +54,7 @@ namespace microgradpp::algorithms{
 
 
             MLP(size_t nin, size_t nout1, size_t  nout2, size_t nout3, const float learningRate=0.0025):learningRate(learningRate){
-                sizes.reserve(4);
+                //sizes.reserve(4);
                 sizes.push_back(nin);
                 std::vector<size_t> nouts = {nout1, nout2, nout3};
                 std::copy(nouts.begin(), nouts.end(), std::back_inserter(sizes) );
@@ -70,15 +71,15 @@ namespace microgradpp::algorithms{
 
             void update() const{
                 for (auto &p: this->parameters()) {
-                    p->data += (float)((-this->learningRate) * p->grad);
+                    p->data += (float)((float)-this->learningRate * (float)p->grad);
                 }
 
             }
 
             void zeroGrad(){
-                std::for_each(this->layers.begin(), this->layers.end(),[](auto& layer){
+                for(auto& layer: this->layers){
                     layer.zeroGrad();
-                });
+                }
             }
 
             std::vector<ValuePtr> forward(const std::vector<ValuePtr>& input){
