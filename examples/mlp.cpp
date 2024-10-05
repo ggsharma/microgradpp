@@ -82,6 +82,11 @@ int main() {
         printf("Hello from micrograd++\n");
 
         // Input data
+//        Tensor xs = {{0.2, 0.3, -1.0},
+//                     {0.4, 0.3, 0.1},
+//                     {0.5, 0.1, -0.1},
+//                     {1.0, 1.0, -1.0}};
+//        Tensor ys = {-0.5, 0.8, 0.5, 1};
         Tensor xs = {{-0.6766,  0.8353, -0.9439,  0.4799,  0.6168,  0.8016,  0.6596,  0.6993,
                              0.8828,  0.5242},
                      {-0.2141,  0.1933, -0.7998,  0.0819,  0.6718,  0.3808,  0.5816,  0.2885,
@@ -123,14 +128,14 @@ int main() {
                      { 0.9870, -0.0352, -0.0840,  0.5445,  0.8870,  0.1733,  0.7722,  0.4949,
 
                              0.7470, -0.3344}};
-        // Expected output:
-        // Sum of each row in the input should be equal to each entry in ys
-        // Example: 0.2+0.3+-1 = -0.5
+//         Expected output:
+//         Sum of each row in the input should be equal to each entry in ys
+//         Example: 0.2+0.3+-1 = -0.5
         Tensor ys = { 0.3879,  0.0737, -0.1173, -0.1467,  0.1155, -0.3718,  0.2522,  0.1087,
                       -0.1298,  0.0640, -0.1024, -0.0652, -0.0101,  0.0767,  0.1131, -0.0359,
                       -0.1566, -0.0048,  0.1575,  0.4152};
 
-        constexpr float learningRate = 0.0025;
+        constexpr float learningRate = 0.00025;
         constexpr size_t numIterations = 100000;
 
         // Define loss function
@@ -145,7 +150,7 @@ int main() {
          */
         //constexpr float learningRate = 0.0025;
 
-        auto mlp = std::make_unique<MLP>(10, 20,20,1, learningRate);
+        auto mlp = std::make_unique<MLP>(10, 5,5,1, learningRate);
 
         // Initialize prediction Tensor
         Tensor ypred;
@@ -169,9 +174,17 @@ int main() {
                 // Predict values
                 for (const auto &input: xs) {
                     ypred.push_back(mlp->forward(input));
+                    //ypred.push_back((*mlp)(input));
+                }
+            auto loss = Value::create(0.0f);
+                // Calculate loss
+                for (size_t i = 0; i < ys.size(); ++i) {
+                    auto c = Value::subtract(ys.at(i) , ypred.at(i));
+                    auto b = Value::multiply(c, c);
+                    loss = Value::add(loss, b);
                 }
 
-                auto loss = lossFcn(ys, ypred);
+                //auto loss = lossFcn(ys, ypred);
 
                 // Ensure all gradients are zero
                 mlp->zeroGrad();
@@ -181,6 +194,8 @@ int main() {
 
                 // Update parameters
                 mlp->update();
+
+                //mlp->printParameters();
 
                 std::cout << "Extra Memory usage: " << getMemoryUsage() - initial_memory_usage << " KB\n";
 

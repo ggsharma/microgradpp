@@ -79,78 +79,74 @@ int main() {
     }
 
     // Resize the image to new dimensions
-    int newWidth = 100;
-    int newHeight = 100;
+    int newWidth = 50;
+    int newHeight = 50;
     cv::Mat resizedImage = resizeImage(img, newWidth, newHeight);
     resizedImage.convertTo(resizedImage, CV_8UC3);
 
-//    cv::imshow("True Pixels", resizedImage);
-//    waitKey(100);
+    cv::imshow("True Pixels", resizedImage);
+    waitKey(100);
     // Flatten the matrix into a single row
     cv::Mat flatMat = resizedImage.reshape(1, 1);
+
+    // Convert image to a 1 dimensional vector with 1 row and newWidth*newHeight columns
     std::vector<float> vec(flatMat.begin<uint8_t>(), flatMat.end<uint8_t>());
 
-
+    // convert values from 0 - 255 to  0 - 1
     auto normVec = normalizeVector(vec);
     Tensor input(normVec);
     Tensor output(normVec);
 
-    //std::vector<float> baseline(vec.begin()+8080, vec.begin()+8090);
-
     // Initialize MLP
-    constexpr float learningRate =  0.1;
-    auto mlp = std::make_unique<MLP>(newWidth * newHeight ,std::vector<size_t> {4,static_cast<size_t>(newWidth * newHeight )}, learningRate);
+    constexpr float learningRate =  0.01;
+    auto mlp = std::make_unique<MLP>(newWidth * newHeight ,10,10,static_cast<size_t>(newWidth * newHeight) , learningRate);
 
-//    std::shared_ptr<Value> loss;
-    std::vector<float> pixels;
+    std::vector<float> predictionPixels;
 
     microgradpp::loss::MeanSquaredErrorForPixels lossFcn;
     Tensor ypred;
 
-
-    for (auto idx = 0; idx < 500; ++idx) {
+    for (auto idx = 0; idx < 50000; ++idx) {
         __MICROGRADPP_CLEAR__
-        //std::cout << "++++++++++++" << std::endl;
 
-        input.zeroGrad();
-        //pixels.clear();
+        input.zeroGrad();;
+        predictionPixels.clear();
+
+        auto loss = Value::create(0);
         // Predict values
-        //std::cout << "Input data is: " << input << "\n";
         for (const auto& inp : input) {
-            ypred.push_back(mlp->forward(inp));
+            ypred.push_back((*mlp)(inp));
         }
 
         // std::cout << ypred << std::endl;
 
-//        for (const auto& y : ypred) {
-//            for (const auto& val : y) {
-//                pixels.push_back(static_cast<float>(val->data));
-//            }
-//        }
-
-//        auto p = denormalizeVector(pixels);
-//
-//        cv::Mat predictedMatDuringIter(p, false);  //vectorToMat(p, newHeight, newWidth,1);
-//        predictedMatDuringIter.convertTo(predictedMatDuringIter, CV_8UC3);
-//        predictedMatDuringIter = predictedMatDuringIter.reshape(1,newWidth);
-//        std::string label = "Iteration: " + std::to_string(idx);
-//        cv::putText(predictedMatDuringIter, label, Point(50, 190), FONT_HERSHEY_PLAIN, 1.0, CV_RGB(0,255,0), 2.0);
-//        cv::imshow("Predicted True Pixels", predictedMatDuringIter);
-//        waitKey(50);
-
-        // Backpropagation
-        // Ensure all gradients are zero
-        //mlp->zeroGrad();
-//        //auto groundTruth =
-        //auto loss = lossFcn(output, ypred);
-//        //auto groundTruth =
-        auto loss = Value::create(0.0);
-        const size_t  maxSize = ypred[0].size();
-        for (size_t i = 0; i < maxSize; ++i) {
-            auto v = Value::multiply(Value::subtract(output.at(0,i) , ypred.at(0,i)),Value::subtract(output.at(0,i) , ypred.at(0,i)));
-            loss = Value::add(loss, Value::divide(v,1000));
+        for (const auto& y : ypred) {
+            for (const auto& val : y) {
+                predictionPixels.push_back(static_cast<float>(val->data));
+            }
         }
-//        // Ensure all gradients are zero
+
+        auto p = denormalizeVector(predictionPixels); // convert from 0-1 range to 0-255 range
+
+        cv::Mat predictedMatDuringIter(p, false);  //vectorToMat(p, newHeight, newWidth,1);
+        predictedMatDuringIter.convertTo(predictedMatDuringIter, CV_8UC3);
+        predictedMatDuringIter = predictedMatDuringIter.reshape(1,newWidth);
+        std::string label = "Iteration: " + std::to_string(idx);
+        cv::putText(predictedMatDuringIter, label, Point(0, 50), FONT_HERSHEY_PLAIN, 1.0, CV_RGB(0,255,0), 2.0);
+        cv::imshow("Predicted True Pixels", predictedMatDuringIter);
+        waitKey(50);
+
+
+        // For every pixel calculate loss between input and output
+        for (size_t i = 0; i < output[0].size(); ++i) {
+            // Since output tensor is 1-by-numHeight*numWidth, we need to access the first row and index of columns
+            auto c = Value::subtract(output.at(0,i) , ypred.at(0,i));
+            auto b = Value::multiply(c, c);
+            loss = Value::add(loss, b);
+        }
+
+
+        // Ensure all gradients are zero
         mlp->zeroGrad();
 
         // Perform backprop
@@ -160,8 +156,6 @@ int main() {
         mlp->update();
 
         ypred.reset();
-
-        //mlp->printParameters();
 
         std::cout << idx << " " << loss->data << std::endl;
     }

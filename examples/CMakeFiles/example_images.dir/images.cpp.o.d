@@ -1,4 +1,5 @@
-CMakeFiles/example_images.dir/images.cpp.o: \
+examples/CMakeFiles/example_images.dir/images.cpp.o: \
+  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/share/asan_ignorelist.txt \
   /Users/gautamsharma/CS/Projects/micrograd++/examples/images.cpp \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/iostream \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__assert \
@@ -823,7 +824,7 @@ CMakeFiles/example_images.dir/images.cpp.o: \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/_types/_nl_item.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__locale_dir/locale_base_api/bsd_locale_defaults.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/cstdarg \
-  /Users/gautamsharma/CS/Projects/micrograd++/examples/../include/Value.hpp \
+  /Users/gautamsharma/CS/Projects/micrograd++/include/Value.hpp \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/vector \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__format/formatter.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__format/format_fwd.h \
@@ -880,8 +881,11 @@ CMakeFiles/example_images.dir/images.cpp.o: \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/set \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__tree \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/iomanip \
-  /Users/gautamsharma/CS/Projects/micrograd++/examples/../include/Layer.hpp \
-  /Users/gautamsharma/CS/Projects/micrograd++/examples/../include/Neuron.hpp \
+  /Users/gautamsharma/CS/Projects/micrograd++/include/Autograd.hpp \
+  /Users/gautamsharma/CS/Projects/micrograd++/include/Layer.hpp \
+  /Users/gautamsharma/CS/Projects/micrograd++/include/Neuron.hpp \
+  /Users/gautamsharma/CS/Projects/micrograd++/include/Activation.hpp \
+  /Users/gautamsharma/CS/Projects/micrograd++/include/TypeDefs.hpp \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/random \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/bernoulli_distribution.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/uniform_real_distribution.h \
@@ -929,52 +933,11 @@ CMakeFiles/example_images.dir/images.cpp.o: \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/seed_seq.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/student_t_distribution.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__random/weibull_distribution.h \
-  /Users/gautamsharma/CS/Projects/micrograd++/examples/../include/Tensor.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/opencv.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/opencv_modules.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/core.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/core/cvdef.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/core/version.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/core/hal/interface.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/core/cv_cpu_dispatch.h \
-  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include/arm_neon.h \
-  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include/arm_bf16.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/core/base.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/core/cvstd.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/core/cvstd_wrapper.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/core/neon_utils.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/core/vsx_utils.hpp \
-  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/assert.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/core/check.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/core/traits.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/core/matx.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/core/saturate.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/core/fast_math.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/core/types.hpp \
-  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/cfloat \
-  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/float.h \
-  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include/float.h \
-  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/float.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/core/mat.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/core/bufferpool.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/core/mat.inl.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/core/persistence.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/core/operations.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/core/cvstd.inl.hpp \
-  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/complex \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/thread \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__thread/formatter.h \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__thread/this_thread.h \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__thread/thread.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/sstream \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/core/utility.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/core/optim.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/core/ovx.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/calib3d.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/features2d.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann/miniflann.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann/defines.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann/config.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/core/affine.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/dnn.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/dnn/dnn.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/core/async.hpp \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/chrono \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__chrono/calendar.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__chrono/convert_to_tm.h \
@@ -992,77 +955,131 @@ CMakeFiles/example_images.dir/images.cpp.o: \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__chrono/year_month_day.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__chrono/year_month_weekday.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__chrono/literals.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/dnn/../dnn/version.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/dnn/dict.hpp \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/future \
+  /Users/gautamsharma/CS/Projects/micrograd++/include/Tensor.hpp \
+  /Users/gautamsharma/CS/Projects/micrograd++/include/Algorithms.hpp \
+  /Users/gautamsharma/CS/Projects/micrograd++/include/LossFunctions.hpp \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/cassert \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/assert.h \
+  /Users/gautamsharma/CS/Projects/micrograd++/include/AbstractLoss.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/opencv.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/opencv_modules.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/cvdef.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/version.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/hal/interface.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/cv_cpu_dispatch.h \
+  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include/arm_neon.h \
+  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include/arm_bf16.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/base.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/cvstd.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/cvstd_wrapper.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/neon_utils.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/vsx_utils.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/check.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/traits.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/matx.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/saturate.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/fast_math.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/matx.inl.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/types.hpp \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/cfloat \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/float.h \
+  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include/float.h \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/float.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/mat.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/bufferpool.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/mat.inl.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/persistence.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/operations.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/cvstd.inl.hpp \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/complex \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/utility.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/optim.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/ovx.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/calib3d.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/features2d.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann/miniflann.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann/defines.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann/config.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/affine.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/utils/logger.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/utils/logger.defines.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/utils/logtag.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/dnn.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/dnn/dnn.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/async.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/dnn/../dnn/version.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/dnn/dict.hpp \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/map \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/dnn/layer.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/dnn/dnn.inl.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/dnn/utils/inference_engine.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/dnn/utils/../dnn.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann/flann_base.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann/general.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann/matrix.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann/params.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann/any.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann/saving.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann/nn_index.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann/result_set.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann/all_indices.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann/kdtree_index.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann/dynamic_bitset.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann/dist.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann/heap.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann/allocator.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann/random.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann/kdtree_single_index.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann/kmeans_index.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann/logger.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann/composite_index.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann/linear_index.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann/hierarchical_clustering_index.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann/lsh_index.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann/lsh_table.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann/autotuned_index.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann/ground_truth.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann/index_testing.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann/timer.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/flann/sampling.h \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/highgui.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/imgcodecs.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/videoio.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/imgproc.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/./imgproc/segmentation.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/ml.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/ml/ml.inl.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/objdetect.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/objdetect/aruco_detector.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/objdetect/aruco_dictionary.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/objdetect/aruco_board.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/objdetect/graphical_code_detector.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/objdetect/detection_based_tracker.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/objdetect/face.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/objdetect/charuco_detector.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/objdetect/barcode.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/photo.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/stitching.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/stitching/warpers.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/stitching/detail/warpers.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/core/cuda.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/core/cuda_types.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/core/cuda.inl.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/stitching/detail/warpers_inl.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/stitching/detail/matchers.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/stitching/detail/motion_estimators.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/stitching/detail/util.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/dnn/layer.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/dnn/dnn.inl.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/dnn/utils/inference_engine.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/dnn/utils/../dnn.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann/flann_base.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann/general.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann/matrix.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann/params.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann/any.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann/saving.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann/nn_index.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann/result_set.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann/all_indices.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann/kdtree_index.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann/dynamic_bitset.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann/dist.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann/heap.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann/allocator.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann/random.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann/kdtree_single_index.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann/kmeans_index.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann/logger.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann/composite_index.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann/linear_index.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann/hierarchical_clustering_index.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann/lsh_index.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann/lsh_table.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann/autotuned_index.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann/ground_truth.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann/index_testing.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann/timer.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/flann/sampling.h \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/highgui.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/imgcodecs.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/videoio.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/imgproc.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/./imgproc/segmentation.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/ml.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/ml/ml.inl.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/objdetect.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/objdetect/aruco_detector.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/objdetect/aruco_dictionary.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/objdetect/aruco_board.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/objdetect/graphical_code_detector.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/objdetect/detection_based_tracker.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/objdetect/face.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/objdetect/charuco_detector.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/objdetect/barcode.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/photo.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/stitching.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/stitching/warpers.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/stitching/detail/warpers.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/cuda.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/cuda_types.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/core/cuda.inl.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/stitching/detail/warpers_inl.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/stitching/detail/matchers.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/stitching/detail/motion_estimators.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/stitching/detail/util.hpp \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/list \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/stitching/detail/util_inl.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/stitching/detail/util_inl.hpp \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/queue \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/deque \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/stitching/detail/camera.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/stitching/detail/exposure_compensate.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/stitching/detail/seam_finders.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/stitching/detail/blenders.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/video.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/video/tracking.hpp \
-  /opt/homebrew/Cellar/opencv/4.9.0_12/include/opencv4/opencv2/video/background_segm.hpp
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/stitching/detail/camera.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/stitching/detail/exposure_compensate.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/stitching/detail/seam_finders.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/stitching/detail/blenders.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/video.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/video/tracking.hpp \
+  /opt/homebrew/Cellar/opencv/4.10.0_9/include/opencv4/opencv2/video/background_segm.hpp

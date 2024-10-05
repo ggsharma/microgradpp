@@ -92,7 +92,7 @@ example_mlp_EXTERNAL_OBJECTS =
 
 examples/example_mlp: examples/CMakeFiles/example_mlp.dir/mlp.cpp.o
 examples/example_mlp: examples/CMakeFiles/example_mlp.dir/build.make
-examples/example_mlp: libmicrogradpp.a
+examples/example_mlp: /opt/homebrew/lib/libtbb.12.13.dylib
 examples/example_mlp: examples/CMakeFiles/example_mlp.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/gautamsharma/CS/Projects/micrograd++/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable example_mlp"
 	cd /Users/gautamsharma/CS/Projects/micrograd++/examples && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/example_mlp.dir/link.txt --verbose=$(VERBOSE)

@@ -117,20 +117,6 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-examples/CMakeFiles/example_mlp.dir/rule:
-	cd /Users/gautamsharma/CS/Projects/micrograd++ && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/CMakeFiles/example_mlp.dir/rule
-.PHONY : examples/CMakeFiles/example_mlp.dir/rule
-
-# Convenience name for target.
-example_mlp: examples/CMakeFiles/example_mlp.dir/rule
-.PHONY : example_mlp
-
-# fast build rule for target.
-example_mlp/fast:
-	cd /Users/gautamsharma/CS/Projects/micrograd++ && $(MAKE) $(MAKESILENT) -f examples/CMakeFiles/example_mlp.dir/build.make examples/CMakeFiles/example_mlp.dir/build
-.PHONY : example_mlp/fast
-
-# Convenience name for target.
 examples/CMakeFiles/example_images.dir/rule:
 	cd /Users/gautamsharma/CS/Projects/micrograd++ && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/CMakeFiles/example_images.dir/rule
 .PHONY : examples/CMakeFiles/example_images.dir/rule
@@ -143,6 +129,20 @@ example_images: examples/CMakeFiles/example_images.dir/rule
 example_images/fast:
 	cd /Users/gautamsharma/CS/Projects/micrograd++ && $(MAKE) $(MAKESILENT) -f examples/CMakeFiles/example_images.dir/build.make examples/CMakeFiles/example_images.dir/build
 .PHONY : example_images/fast
+
+# Convenience name for target.
+examples/CMakeFiles/example_mlp.dir/rule:
+	cd /Users/gautamsharma/CS/Projects/micrograd++ && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 examples/CMakeFiles/example_mlp.dir/rule
+.PHONY : examples/CMakeFiles/example_mlp.dir/rule
+
+# Convenience name for target.
+example_mlp: examples/CMakeFiles/example_mlp.dir/rule
+.PHONY : example_mlp
+
+# fast build rule for target.
+example_mlp/fast:
+	cd /Users/gautamsharma/CS/Projects/micrograd++ && $(MAKE) $(MAKESILENT) -f examples/CMakeFiles/example_mlp.dir/build.make examples/CMakeFiles/example_mlp.dir/build
+.PHONY : example_mlp/fast
 
 images.o: images.cpp.o
 .PHONY : images.o
