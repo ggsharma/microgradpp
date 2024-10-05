@@ -27,7 +27,7 @@ namespace microgradpp{
     float getRandomFloat() {
         static std::random_device rd;
         static std::mt19937 gen(rd());
-        static std::uniform_real_distribution<> dis(-1, 1);
+        static std::uniform_real_distribution<> dis(0, 1);
         return static_cast<float>(dis(gen));
     }
 
@@ -70,7 +70,9 @@ namespace microgradpp{
             for (size_t idx = 0; idx < weights.size(); ++idx) {
 
                 ValuePtr intermediateVal = Value::multiply(x[idx], weights[idx]);
+                //std::cout << "Multiplying " << weights[idx] << " with " << x[idx] << " Results is: " << intermediateVal<<"\n";
                 sum = Value::add(sum, intermediateVal);
+                //std::cout <<  sum << std::endl;
             }
 
             // Add bias
@@ -79,7 +81,10 @@ namespace microgradpp{
 
             // Apply activation function
             const auto& activationFcn = Activation::mActivationFcn.at(activation_t);
-            return activationFcn(sum);
+            auto b =  activationFcn(sum);
+            //std::cout << "Results of actvation is: " << b << "\n";
+            return b;
+
         }
 
         __MICROGRADPP_NO_DISCARD__

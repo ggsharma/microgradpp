@@ -4,8 +4,8 @@ project(microgradpp)
 set(CMAKE_CXX_STANDARD 17)
 
 # Define clang tidy
-set(CMAKE_CXX_CLANG_TIDY "clang-tidy;-header-filter=${CMAKE_SOURCE_DIR}/include/*")
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+#set(CMAKE_CXX_CLANG_TIDY "clang-tidy;-header-filter=${CMAKE_SOURCE_DIR}/include/*")
+#set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Enable AddressSanitizer for debug builds
 if(CMAKE_BUILD_TYPE MATCHES Debug)
@@ -47,10 +47,10 @@ if(BUILD_MAIN_EXECUTABLE)
 endif()
 
 # Optionally build examples
-if(BUILD_EXAMPLES)
+#if(BUILD_EXAMPLES)
     message(STATUS "Examples will be built")
     add_subdirectory(examples)
-endif()
+#endif()
 
 # Optionally build tests
 if(BUILD_TESTS)

@@ -187,6 +187,29 @@ using microgradpp::Value;
          microgradpp::GradTester::equals<float>(b->grad, variables["b"].grad, "testRelu b grad");
      }
 
+     // testReluLong
+     {
+         auto variables = microgradpp::utils::readVariablesFromJson("test_value_relu_long_output.json");
+
+         auto a = Value::create(0.4);
+         a->label = "a";
+         auto b = Value::create(0.03);
+         b->label = "b";
+
+         auto c = Value::multiply(a,b);
+         c->label = "c";
+         auto d = Value::relu(c);
+         d->label = "d";
+         d->_backward();
+         microgradpp::GradTester::equals<float>(a->data, variables["a"].data, "testRelu a data");
+         microgradpp::GradTester::equals<float>(a->grad, variables["a"].grad, "testRelu a grad");
+         microgradpp::GradTester::equals<float>(b->data, variables["b"].data, "testRelu b data");
+         microgradpp::GradTester::equals<float>(b->grad, variables["b"].grad, "testRelu b grad");
+         microgradpp::GradTester::equals<float>(c->data, variables["c"].data, "testRelu c data");
+         microgradpp::GradTester::equals<float>(c->grad, variables["c"].grad, "testRelu c grad");
+         microgradpp::GradTester::equals<float>(d->data, variables["d"].data, "testRelu d data");
+         microgradpp::GradTester::equals<float>(d->grad, variables["d"].grad, "testRelu d grad");
+     }
      // testPlusEquals
      // TODO
 //     {

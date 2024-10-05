@@ -9,6 +9,7 @@
 #include "Neuron.hpp"
 #include "Tensor.hpp"
 #include "Autograd.hpp"
+#include "Algorithms.hpp"
 #include "LossFunctions.hpp"
 
 using namespace std;
@@ -70,7 +71,7 @@ int main() {
     using microgradpp::Value;
     using microgradpp::Neuron;
     using microgradpp::Tensor;
-    using microgradpp::MLP;
+    using microgradpp::algorithms::MLP;
     using microgradpp::Autograd;
     using microgradpp::loss::MeanSquaredError;
 
@@ -129,8 +130,8 @@ int main() {
                       -0.1298,  0.0640, -0.1024, -0.0652, -0.0101,  0.0767,  0.1131, -0.0359,
                       -0.1566, -0.0048,  0.1575,  0.4152};
 
-        constexpr float learningRate = 0.025;
-        constexpr size_t numIterations = 100;
+        constexpr float learningRate = 0.0025;
+        constexpr size_t numIterations = 100000;
 
         // Define loss function
         MeanSquaredError lossFcn;
@@ -144,7 +145,7 @@ int main() {
          */
         //constexpr float learningRate = 0.0025;
 
-        auto mlp = std::make_unique<MLP>(10, 100,100,1, learningRate);
+        auto mlp = std::make_unique<MLP>(10, 20,20,1, learningRate);
 
         // Initialize prediction Tensor
         Tensor ypred;
@@ -156,9 +157,10 @@ int main() {
 
         for (auto idx = 0; idx < numIterations; ++idx) {
 
-                std::cout << "////////////////////////////////////////////////////////////////////////\n";
-                //std::shared_ptr<Value> loss = Value::create(0.0);
-                Autograd::clear();
+                //std::cout << "////////////////////////////////////////////////////////////////////////\n";
+
+                __MICROGRADPP_CLEAR__
+
                 initial_memory_usage = getMemoryUsage();
 
                 // Ensure the gradients of inputs is always zero
@@ -166,7 +168,7 @@ int main() {
 
                 // Predict values
                 for (const auto &input: xs) {
-                    ypred.push_back((*mlp)(input));
+                    ypred.push_back(mlp->forward(input));
                 }
 
                 auto loss = lossFcn(ys, ypred);

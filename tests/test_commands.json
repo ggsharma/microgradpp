@@ -64,6 +64,11 @@
     "results": ["a","b"]
   },
   {
+    "name" : "test_value_relu_long",
+    "command" : ["a = Value(0.4)", "b = Value(0.03)", "c=a*b","d=c.relu()","d.backward()"],
+    "results": ["a","b","c","d"]
+  },
+  {
     "name" : "test_plus_equals",
     "command" : ["a = Value(64)", "b = Value(4.89)","b += a", "b.backward()"],
     "results": ["a","b"]
@@ -84,5 +89,4 @@
     "command" : ["a = Neuron(6)", "a.set_weights_and_bias(-9)","x = [-1,2,3,7.89,3.78,6.78]", "c={}","for idx in range(10):\n  y1 = a(x)\n  y1.backward()\n  d = a.parameters();\n  c[idx] = [[param.data, param.grad] for param in a.parameters()]\n  c[idx] = [[item for sublist in c[idx] for item in sublist]]\n"],
     "results": ["c"]
   }
-
 ]

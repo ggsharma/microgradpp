@@ -9,29 +9,37 @@ set(PROJECT_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/..)
 # Add OpenCV submodule
 find_package(OpenCV REQUIRED)
 
+# Set build type to Debug by default
+if(NOT CMAKE_BUILD_TYPE)
+    message(STATUS "You are using DEBUG build of micrograd++")
+    set(CMAKE_BUILD_TYPE Debug CACHE STRING "Build type" FORCE)
+endif()
+
+
 # Enable AddressSanitizer for debug builds
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     message(STATUS "AddressSanitizer enabled for Debug build")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -g")
     set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fsanitize=address")
+    set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fsanitize=undefined")
 endif()
 
 
+
 # Check if OpenCV was found
-if(OpenCV_FOUND)
+#if(OpenCV_FOUND)
     message(STATUS "Found OpenCV: ${OpenCV_VERSION}")
     add_definitions(-DOPENCV_FOUND)
     # Include directories for examples
     include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../include ${OpenCV_INCLUDE_DIRS})
     # Add example_images
-    add_executable(example_images images.cpp
-            memory.cpp)
+    add_executable(example_images images.cpp)
     target_link_libraries(example_images PUBLIC microgradpp ${OpenCV_LIBS})
-else()
+#else()
     # Include directories for examples
-    include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../include)
-    message(WARNING "OpenCV not found")
-endif()
+#    include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../include)
+#    message(WARNING "OpenCV not found")
+#endif()
 
 
 

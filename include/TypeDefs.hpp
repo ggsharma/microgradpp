@@ -13,5 +13,7 @@ namespace microgradpp::type{
 
 // Preprocessor directives
 #define __MICROGRADPP_NO_DISCARD__ [[nodiscard]]
+#define __MICROGRADPP_CLEAR__ microgradpp::Autograd::clear();
+
 
 #endif //MICROGRADPP_TYPEDEFS_H

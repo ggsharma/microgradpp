@@ -8,7 +8,7 @@
 #include "Layer.hpp"
 #include "Neuron.hpp"
 #include "Tensor.hpp"
-
+#include "Algorithms.hpp"
 
 using namespace std;
 
@@ -16,8 +16,10 @@ int main() {
     using microgradpp::Value;
     using microgradpp::Neuron;
     using microgradpp::Tensor;
-    using microgradpp::MLP;
+    using microgradpp::algorithms::MLP;
     printf("Hello from micrograd++\n");
+
+
 //    // Input data
 //    Tensor xs = {{-0.6766,  0.8353, -0.9439,  0.4799,  0.6168,  0.8016,  0.6596,  0.6993,
 //                         0.8828,  0.5242},

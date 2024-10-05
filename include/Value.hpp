@@ -53,7 +53,7 @@ namespace microgradpp {
         std::string op; ///< The operation used to create the value (e.g., +, *, etc.).
         size_t id = 0LU; ///< A unique identifier for the value.
         std::vector<ValuePtr> prev; ///< Pointers to the previous values that were inputs to this value.
-        std::function<void()> backward; ///< Function to compute the gradient during backpropagation.
+        std::function<void()> backward = nullptr; ///< Function to compute the gradient during backpropagation.
 
         /**
         * @brief Generates a new unique ID for each value.
@@ -131,16 +131,26 @@ namespace microgradpp {
           * @return A shared pointer to the new Value representing the sum.
           */
         static ValuePtr add(const ValuePtr& lhs, const ValuePtr& rhs) {
-            auto out = create(lhs->data + rhs->data, "+", generateID());
+            auto out = create((float)(lhs->data + rhs->data), "+", generateID());
             out->prev = {lhs, rhs};
-            Autograd::global_tape.add_entry(out, [lhs_weak = std::weak_ptr<Value>(lhs), rhs_weak = std::weak_ptr<Value>(rhs), out_weak = std::weak_ptr<Value>(out)]() {
-                //if (auto lhs = lhs_weak.lock()) {
-                lhs_weak.lock()->grad += out_weak.lock()->grad;
-                //}
-                //if (auto rhs = rhs_weak.lock()) {
-                rhs_weak.lock()->grad += out_weak.lock()->grad;
-                //}
-            });
+            out->backward  =
+                    [lhs_weak = std::weak_ptr<Value>(lhs), rhs_weak = std::weak_ptr<Value>(rhs), out_weak = std::weak_ptr<Value>(out)]() {
+                        //if (auto lhs = lhs_weak.lock()) {
+                        lhs_weak.lock()->grad += out_weak.lock()->grad;
+                        //}
+                        //if (auto rhs = rhs_weak.lock()) {
+                        rhs_weak.lock()->grad += out_weak.lock()->grad;
+                        //}
+                    };
+//            Autograd::global_tape.add_entry(out, [lhs_weak = std::weak_ptr<Value>(lhs), rhs_weak = std::weak_ptr<Value>(rhs), out_weak = std::weak_ptr<Value>(out)]() {
+//                //if (auto lhs = lhs_weak.lock()) {
+//                lhs_weak.lock()->grad += out_weak.lock()->grad;
+//                //}
+//                //if (auto rhs = rhs_weak.lock()) {
+//                rhs_weak.lock()->grad += out_weak.lock()->grad;
+//                //}
+//            });
+
             return out;
         }
 
@@ -152,16 +162,26 @@ namespace microgradpp {
          */
         static ValuePtr add(const ValuePtr& lhs, float f) {
             auto rhs = Value::create((float)f);
-            auto out = create(lhs->data + f, "+", generateID());
+            auto out = create((float)(lhs->data + f), "+", generateID());
             out->prev = {lhs, rhs};
-            Autograd::global_tape.add_entry(out, [lhs_weak = std::weak_ptr<Value>(lhs), rhs_weak = std::weak_ptr<Value>(rhs), out_weak = std::weak_ptr<Value>(out)]() {
-                //if (auto lhs = lhs_weak.lock()) {
-                lhs_weak.lock()->grad += out_weak.lock()->grad;
-                //}
-                //if (auto rhs = rhs_weak.lock()) {
-                rhs_weak.lock()->grad += out_weak.lock()->grad;
-                //}
-            });
+            out->backward  =
+                    [lhs_weak = std::weak_ptr<Value>(lhs), rhs_weak = std::weak_ptr<Value>(rhs), out_weak = std::weak_ptr<Value>(out)]() {
+                        //if (auto lhs = lhs_weak.lock()) {
+                        lhs_weak.lock()->grad += out_weak.lock()->grad;
+                        //}
+                        //if (auto rhs = rhs_weak.lock()) {
+                        rhs_weak.lock()->grad += out_weak.lock()->grad;
+                        //}
+                    };
+//            Autograd::global_tape.add_entry(out, [lhs_weak = std::weak_ptr<Value>(lhs), rhs_weak = std::weak_ptr<Value>(rhs), out_weak = std::weak_ptr<Value>(out)]() {
+//                //if (auto lhs = lhs_weak.lock()) {
+//                lhs_weak.lock()->grad += out_weak.lock()->grad;
+//                //}
+//                //if (auto rhs = rhs_weak.lock()) {
+//                rhs_weak.lock()->grad += out_weak.lock()->grad;
+//                //}
+//            });
+
             return out;
         }
 
@@ -177,19 +197,26 @@ namespace microgradpp {
           * @return A shared pointer to the new Value representing the product.
           */
         static ValuePtr multiply(const ValuePtr& lhs, const ValuePtr& rhs) {
-            auto out = create(lhs->data * rhs->data, "*", generateID());
+            auto out = create((float)(lhs->data * rhs->data), "*", generateID());
             out->prev = {lhs, rhs};
-            Autograd::global_tape.add_entry(out,[lhs_weak = std::weak_ptr<Value>(lhs), rhs_weak = std::weak_ptr<Value>(rhs), out_weak = std::weak_ptr<Value>(out)]() {
-                //if (auto lhs = lhs_weak.lock()) {
-                lhs_weak.lock()->grad += rhs_weak.lock()->data * out_weak.lock()->grad;
-                //}
-                //if (auto rhs = rhs_weak.lock()) {
-                rhs_weak.lock()->grad += lhs_weak.lock()->data * out_weak.lock()->grad;
-                //}
-            });
-
+            out->backward  =
+                    [lhs_weak = std::weak_ptr<Value>(lhs), rhs_weak = std::weak_ptr<Value>(rhs), out_weak = std::weak_ptr<Value>(out)]() {
+                        //if (auto lhs = lhs_weak.lock()) {
+                        lhs_weak.lock()->grad += rhs_weak.lock()->data * out_weak.lock()->grad;
+                        //}
+                        //if (auto rhs = rhs_weak.lock()) {
+                        rhs_weak.lock()->grad += lhs_weak.lock()->data * out_weak.lock()->grad;
+                        //}
+                    };
+//            Autograd::global_tape.add_entry(out,[lhs_weak = std::weak_ptr<Value>(lhs), rhs_weak = std::weak_ptr<Value>(rhs), out_weak = std::weak_ptr<Value>(out)]() {
+//                //if (auto lhs = lhs_weak.lock()) {
+//                lhs_weak.lock()->grad += rhs_weak.lock()->data * out_weak.lock()->grad;
+//                //}
+//                //if (auto rhs = rhs_weak.lock()) {
+//                rhs_weak.lock()->grad += lhs_weak.lock()->data * out_weak.lock()->grad;
+//                //}
+//            });
             return out;
-
         }
 
         /**
@@ -200,16 +227,25 @@ namespace microgradpp {
            */
         static ValuePtr multiply(const ValuePtr& lhs, float f) {
             auto rhs = create(f);
-            auto out = create(lhs->data * f, "*", generateID());
+            auto out = create((float)(lhs->data * f), "*", generateID());
             out->prev = {lhs, rhs};
-            Autograd::global_tape.add_entry(out,[lhs_weak = std::weak_ptr<Value>(lhs), rhs_weak = std::weak_ptr<Value>(rhs), out_weak = std::weak_ptr<Value>(out)]() {
-                //if (auto lhs = lhs_weak.lock()) {
-                lhs_weak.lock()->grad += rhs_weak.lock()->data * out_weak.lock()->grad;
-                //}
-                //if (auto rhs = rhs_weak.lock()) {
-                rhs_weak.lock()->grad += lhs_weak.lock()->data * out_weak.lock()->grad;
-                //}
-            });
+            out->backward  =
+                    [lhs_weak = std::weak_ptr<Value>(lhs), rhs_weak = std::weak_ptr<Value>(rhs), out_weak = std::weak_ptr<Value>(out)]() {
+                        //if (auto lhs = lhs_weak.lock()) {
+                        lhs_weak.lock()->grad += rhs_weak.lock()->data * out_weak.lock()->grad;
+                        //}
+                        //if (auto rhs = rhs_weak.lock()) {
+                        rhs_weak.lock()->grad += lhs_weak.lock()->data * out_weak.lock()->grad;
+                        //}
+                    };
+//            Autograd::global_tape.add_entry(out,[lhs_weak = std::weak_ptr<Value>(lhs), rhs_weak = std::weak_ptr<Value>(rhs), out_weak = std::weak_ptr<Value>(out)]() {
+//                //if (auto lhs = lhs_weak.lock()) {
+//                lhs_weak.lock()->grad += rhs_weak.lock()->data * out_weak.lock()->grad;
+//                //}
+//                //if (auto rhs = rhs_weak.lock()) {
+//                rhs_weak.lock()->grad += lhs_weak.lock()->data * out_weak.lock()->grad;
+//                //}
+//            });
             return out;
         }
 
@@ -227,11 +263,18 @@ namespace microgradpp {
             float newValue = std::pow(base->data, exponent);
             auto out = create(newValue, "^", generateID());
             out->prev = {base};
-            Autograd::global_tape.add_entry(out,[base_weak = std::weak_ptr<Value>(base), out_weak = std::weak_ptr<Value>(out), exponent]() {
-                if (auto base = base_weak.lock()) {
-                    base->grad += exponent * std::pow(base->data, exponent - 1) * out_weak.lock()->grad;
-                }
-            });
+            out->backward  =
+                    [base_weak = std::weak_ptr<Value>(base), out_weak = std::weak_ptr<Value>(out), exponent]() {
+                        if (auto base = base_weak.lock()) {
+                            base->grad += exponent * std::pow(base->data, exponent - 1) * out_weak.lock()->grad;
+                        }
+                    };
+//            Autograd::global_tape.add_entry(out,[base_weak = std::weak_ptr<Value>(base), out_weak = std::weak_ptr<Value>(out), exponent]() {
+//                if (auto base = base_weak.lock()) {
+//                    base->grad += exponent * std::pow(base->data, exponent - 1) * out_weak.lock()->grad;
+//                }
+//            });
+
             return out;
         }
 
@@ -269,16 +312,27 @@ namespace microgradpp {
        * @return A shared pointer to the new Value representing the difference.
        */
         static ValuePtr subtract(const ValuePtr& lhs, const ValuePtr& rhs) {
-            auto out = create(lhs->data - rhs->data, "-", generateID());
+            auto out = create((float)(lhs->data - rhs->data), "-", generateID());
             out->prev = {lhs, rhs};
-            Autograd::global_tape.add_entry(out,[lhs_weak = std::weak_ptr<Value>(lhs), rhs_weak = std::weak_ptr<Value>(rhs), out_weak = std::weak_ptr<Value>(out)]() {
-                //if (auto lhs = lhs_weak.lock()) {
-                lhs_weak.lock()->grad += out_weak.lock()->grad;
-                //}
-                //if (auto rhs = rhs_weak.lock()) {
-                rhs_weak.lock()->grad -= out_weak.lock()->grad;
-                //}
-            });
+
+            out->backward  =
+                    [lhs_weak = std::weak_ptr<Value>(lhs), rhs_weak = std::weak_ptr<Value>(rhs), out_weak = std::weak_ptr<Value>(out)]() {
+                        //if (auto lhs = lhs_weak.lock()) {
+                        lhs_weak.lock()->grad += out_weak.lock()->grad;
+                        //}
+                        //if (auto rhs = rhs_weak.lock()) {
+                        rhs_weak.lock()->grad -= out_weak.lock()->grad;
+                        //}
+                    };
+//            Autograd::global_tape.add_entry(out,[lhs_weak = std::weak_ptr<Value>(lhs), rhs_weak = std::weak_ptr<Value>(rhs), out_weak = std::weak_ptr<Value>(out)]() {
+//                //if (auto lhs = lhs_weak.lock()) {
+//                lhs_weak.lock()->grad += out_weak.lock()->grad;
+//                //}
+//                //if (auto rhs = rhs_weak.lock()) {
+//                rhs_weak.lock()->grad -= out_weak.lock()->grad;
+//                //}
+//            });
+
             return out;
         }
 
@@ -290,16 +344,26 @@ namespace microgradpp {
        */
         static ValuePtr subtract(const ValuePtr& lhs, float f) {
             auto rhs = create(f);
-            auto out = create(lhs->data - rhs->data, "-", generateID());
+            auto out = create((float)(lhs->data - rhs->data), "-", generateID());
             out->prev = {lhs, rhs};
-            Autograd::global_tape.add_entry(out,[lhs_weak = std::weak_ptr<Value>(lhs), rhs_weak = std::weak_ptr<Value>(rhs), out_weak = std::weak_ptr<Value>(out)]() {
+
+            out->backward = [lhs_weak = std::weak_ptr<Value>(lhs), rhs_weak = std::weak_ptr<Value>(rhs), out_weak = std::weak_ptr<Value>(out)]() {
                 //if (auto lhs = lhs_weak.lock()) {
                 lhs_weak.lock()->grad += out_weak.lock()->grad;
                 //}
                 //if (auto rhs = rhs_weak.lock()) {
                 rhs_weak.lock()->grad -= out_weak.lock()->grad;
                 //}
-            });
+            };
+//            Autograd::global_tape.add_entry(out,[lhs_weak = std::weak_ptr<Value>(lhs), rhs_weak = std::weak_ptr<Value>(rhs), out_weak = std::weak_ptr<Value>(out)]() {
+//                //if (auto lhs = lhs_weak.lock()) {
+//                lhs_weak.lock()->grad += out_weak.lock()->grad;
+//                //}
+//                //if (auto rhs = rhs_weak.lock()) {
+//                rhs_weak.lock()->grad -= out_weak.lock()->grad;
+//                //}
+//            });
+
             return out;
         }
 
@@ -316,9 +380,17 @@ namespace microgradpp {
             float t = (std::exp(2 * x) - 1) / (std::exp(2 * x) + 1);
             auto out = create(t, "tanh", generateID());
             out->prev = {v};
-            Autograd::global_tape.add_entry(out,[v_weak = std::weak_ptr<Value>(v), t, out_weak = std::weak_ptr<Value>(out)]() {
-                v_weak.lock()->grad += (1 - t * t) * out_weak.lock()->grad;
-            });
+
+            out->backward  = [v_weak = std::weak_ptr<Value>(v), t, out_weak = std::weak_ptr<Value>(out)]() {
+                if(v_weak.lock()){
+                    v_weak.lock()->grad += (1 - t * t) * out_weak.lock()->grad;
+                }
+
+            };
+//            Autograd::global_tape.add_entry(out,[v_weak = std::weak_ptr<Value>(v), t, out_weak = std::weak_ptr<Value>(out)]() {
+//                v_weak.lock()->grad += (1 - t * t) * out_weak.lock()->grad;
+//            });
+
             return out;
         }
 
@@ -331,9 +403,17 @@ namespace microgradpp {
             float val = std::max(0.0f, v->data);
             auto out = create(val, "ReLU", generateID());
             out->prev = {v};
-            Autograd::global_tape.add_entry(out,[v, out]() {
-                if (v) v->grad += static_cast<float>((out->data > 0)) * out->grad;
-            });
+
+            out->backward  = [v_weak = std::weak_ptr<Value>(v), out_weak = std::weak_ptr<Value>(out)]() {
+                //std::cout << "Got outward gradient : " << out_weak.lock()->grad << "\n";
+                if (v_weak.lock()) {
+                    v_weak.lock()->grad += static_cast<float>((out_weak.lock()->data > 0)) * out_weak.lock()->grad;
+                }
+            };
+//            Autograd::global_tape.add_entry(out,[v_weak = std::weak_ptr<Value>(v), out_weak = std::weak_ptr<Value>(out)]() {
+//                if (v_weak.lock()) v_weak.lock()->grad += static_cast<float>((out_weak.lock()->data > 0)) * out_weak.lock()->grad;
+//            });
+
             return out;
         }
 
@@ -347,9 +427,14 @@ namespace microgradpp {
             float t = std::exp(x) / (1 + std::exp(x));
             auto out = create(t, "Sigmoid", generateID());
             out->prev = {v};
-            Autograd::global_tape.add_entry(out,[v_weak = std::weak_ptr<Value>(v), t, out_weak = std::weak_ptr<Value>(out)]() {
+
+            out->backward = [v_weak = std::weak_ptr<Value>(v), t, out_weak = std::weak_ptr<Value>(out)]() {
                 v_weak.lock()->grad += t * (1 - t) * out_weak.lock()->grad;
-            });
+            };
+//            Autograd::global_tape.add_entry(out,[v_weak = std::weak_ptr<Value>(v), t, out_weak = std::weak_ptr<Value>(out)]() {
+//                v_weak.lock()->grad += t * (1 - t) * out_weak.lock()->grad;
+//            });
+
             return out;
         }
 
@@ -379,7 +464,21 @@ namespace microgradpp {
         */
         void _backward() {
             grad = 1.0f;
-            Autograd::global_tape.backward();            // Start the backward pass on the tape
+            //std::unordered_map<size_t, bool> visited;
+            std::vector<ValuePtr> topo;
+            auto shared = shared_from_this();
+            std::unordered_set<std::shared_ptr<Value>, Hash> visited;
+            buildTopo(shared, visited, topo);
+//            for (auto& node : topo) {
+//                node->grad = 0.0f;
+//            }
+            shared->grad = 1.0f;  // Set starting point's gradient
+
+            for(auto it = topo.rbegin(); it!= topo.rend(); ++it){
+                if ((*it)->backward) {
+                    (*it)->backward();
+                }
+            }
 
         }
 
@@ -389,9 +488,10 @@ namespace microgradpp {
          * @param visited A set to track visited nodes.
          * @param topo The topologically sorted output values.
          */
-        void buildTopo(const ValuePtr& v, std::unordered_map<size_t, bool>& visited, std::vector<ValuePtr>& topo) {
-            if (visited.find(v->id) == visited.end()) {
-                visited[v->id] = true;
+        void buildTopo(const ValuePtr& v, std::unordered_set<std::shared_ptr<Value>, Hash> & visited, std::vector<ValuePtr>& topo) {
+            if (visited.find(v) == visited.end()) {
+                //visited[v->id] = true;
+                visited.insert(v);
                 for (const auto& child : v->prev) {
                     buildTopo(child, visited, topo);
                 }
