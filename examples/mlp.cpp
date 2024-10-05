@@ -67,6 +67,8 @@ long getMemoryUsage() {
 #endif
 }
 
+
+
 int main() {
     using microgradpp::Value;
     using microgradpp::Neuron;
@@ -82,11 +84,6 @@ int main() {
         printf("Hello from micrograd++\n");
 
         // Input data
-//        Tensor xs = {{0.2, 0.3, -1.0},
-//                     {0.4, 0.3, 0.1},
-//                     {0.5, 0.1, -0.1},
-//                     {1.0, 1.0, -1.0}};
-//        Tensor ys = {-0.5, 0.8, 0.5, 1};
         Tensor xs = {{-0.6766,  0.8353, -0.9439,  0.4799,  0.6168,  0.8016,  0.6596,  0.6993,
                              0.8828,  0.5242},
                      {-0.2141,  0.1933, -0.7998,  0.0819,  0.6718,  0.3808,  0.5816,  0.2885,
@@ -135,7 +132,7 @@ int main() {
                       -0.1298,  0.0640, -0.1024, -0.0652, -0.0101,  0.0767,  0.1131, -0.0359,
                       -0.1566, -0.0048,  0.1575,  0.4152};
 
-        constexpr float learningRate = 0.00025;
+        constexpr float learningRate = 0.001;
         constexpr size_t numIterations = 100000;
 
         // Define loss function
@@ -148,9 +145,7 @@ int main() {
          * @layer 2 = 100 neurons
          * @layer = output
          */
-        //constexpr float learningRate = 0.0025;
-
-        auto mlp = std::make_unique<MLP>(10, 5,5,1, learningRate);
+        auto mlp = std::make_unique<MLP>(10, 10,10,1, learningRate);
 
         // Initialize prediction Tensor
         Tensor ypred;
@@ -173,29 +168,20 @@ int main() {
 
                 // Predict values
                 for (const auto &input: xs) {
-                    ypred.push_back(mlp->forward(input));
-                    //ypred.push_back((*mlp)(input));
-                }
-            auto loss = Value::create(0.0f);
-                // Calculate loss
-                for (size_t i = 0; i < ys.size(); ++i) {
-                    auto c = Value::subtract(ys.at(i) , ypred.at(i));
-                    auto b = Value::multiply(c, c);
-                    loss = Value::add(loss, b);
+                    ypred.push_back((*mlp)(input));  //
                 }
 
-                //auto loss = lossFcn(ys, ypred);
+
+                auto loss = lossFcn(ys, ypred);
 
                 // Ensure all gradients are zero
                 mlp->zeroGrad();
 
                 // Perform backprop
-                loss->_backward();
+                loss->backProp();
 
                 // Update parameters
                 mlp->update();
-
-                //mlp->printParameters();
 
                 std::cout << "Extra Memory usage: " << getMemoryUsage() - initial_memory_usage << " KB\n";
 
