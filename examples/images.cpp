@@ -2,6 +2,16 @@
 // Created by Gautam Sharma on 7/7/24.
 //
 
+/**
+ * @file Main.cpp
+ * @brief An example demonstrating how to use the Micrograd++ library for an image processing
+ *        application. The code utilizes an MLP model for pixel-wise predictions, visualized with OpenCV.
+ *
+ * @details This program loads an image, resizes it, and uses a multi-layer perceptron (MLP) model
+ *          to predict pixel intensities for the grayscale image. It displays the input image
+ *          and visualizes the model's output in real-time.
+ *          **Note:** OpenCV is required for compilation and visualization.
+ */
 
 #include <iostream>
 #include "Value.hpp"
@@ -11,32 +21,47 @@
 #include "TypeDefs.hpp"
 #include "Autograd.hpp"
 #include "LossFunctions.hpp"
-// This example needs openCV to compile
 
-// For visualization
+// Visualization library
 #include <opencv2/opencv.hpp>
 
+/**
+ * @brief Converts a 1D vector into an OpenCV Mat.
+ * @param vec The 1D vector containing pixel values.
+ * @param rows Number of rows in the target matrix.
+ * @param cols Number of columns in the target matrix.
+ * @param channels Number of color channels.
+ * @return An OpenCV Mat representation of the vector if sizes match; an empty Mat otherwise.
+ */
 cv::Mat vectorToMat(const std::vector<float>& vec, int rows, int cols, int channels) {
     if (vec.size() != rows * cols * channels) {
         std::cerr << "Size of vector does not match given dimensions" << std::endl;
         return {};
     }
 
-    // Create a Mat with the appropriate type and dimensions
     cv::Mat mat(rows, cols, CV_32FC3);
-
-    // Copy data from the vector to the Mat
     std::memcpy(mat.data, vec.data(), vec.size() * sizeof(float));
-
     return mat;
 }
-// Function to resize an image
+
+/**
+ * @brief Resizes an input image to specified dimensions.
+ * @param image The input image.
+ * @param newWidth The desired width.
+ * @param newHeight The desired height.
+ * @return The resized image as an OpenCV Mat.
+ */
 cv::Mat resizeImage(const cv::Mat& image, int newWidth, int newHeight) {
     cv::Mat resizedImage;
     cv::resize(image, resizedImage, cv::Size(newWidth, newHeight));
     return resizedImage;
 }
 
+/**
+ * @brief Normalizes a vector's values to a 0-1 range for neural network input.
+ * @param vec The input vector with original pixel intensities (0-255).
+ * @return A normalized vector with values between 0 and 1.
+ */
 std::vector<float> normalizeVector(const std::vector<float>& vec) {
     auto minmax = std::minmax_element(vec.begin(), vec.end());
     float minVal = *minmax.first;
@@ -47,78 +72,81 @@ std::vector<float> normalizeVector(const std::vector<float>& vec) {
     normalizedVec.reserve(vec.size());
 
     for (const float& val : vec) {
-        float normalizedVal = val/255;// 2 * ((val - minVal) / range) - 1;
+        float normalizedVal = val / 255;  // Normalize to 0-1
         normalizedVec.push_back(normalizedVal);
     }
-
     return normalizedVec;
 }
 
+/**
+ * @brief Converts a normalized vector back to original pixel intensity range (0-255).
+ * @param vec The normalized vector (0-1).
+ * @return A denormalized vector with values scaled back to 0-255.
+ */
 std::vector<float> denormalizeVector(const std::vector<float>& vec) {
     std::vector<float> denormalizedVec;
     denormalizedVec.reserve(vec.size());
 
     for (const float& val : vec) {
-        auto denormalizedVal = (float)(val * 255);
+        auto denormalizedVal = static_cast<float>(val * 255);
         denormalizedVec.push_back(denormalizedVal);
     }
-
     return denormalizedVec;
 }
 
+/**
+ * @brief Main function for loading and preprocessing an image, feeding it to an MLP, and visualizing the output.
+ *
+ * @details This function reads an image, resizes it, normalizes the pixel values, and initializes an MLP model to predict pixel values.
+ *          For each iteration, it displays the predicted image with updated pixel values.
+ *          The loss between the model prediction and actual pixel values is calculated and backpropagated through the MLP for optimization.
+ *
+ * @return 0 if successful, 1 if an error occurs in reading the image.
+ */
 int main() {
     using namespace cv;
     using microgradpp::Tensor;
     using microgradpp::Value;
     using microgradpp::algorithms::MLP;
 
+    // Load and preprocess image
     Mat img = imread("./german_shephard.jpg", IMREAD_GRAYSCALE);
     if (img.empty()) {
         std::cerr << "Could not read the image" << std::endl;
         return 1;
     }
 
-    // Resize the image to new dimensions
-    int newWidth = 50;
-    int newHeight = 50;
+    int newWidth = 50, newHeight = 50;
     cv::Mat resizedImage = resizeImage(img, newWidth, newHeight);
     resizedImage.convertTo(resizedImage, CV_8UC3);
 
+    // Display input image
     cv::imshow("True Pixels", resizedImage);
     waitKey(100);
-    // Flatten the matrix into a single row
-    cv::Mat flatMat = resizedImage.reshape(1, 1);
 
-    // Convert image to a 1 dimensional vector with 1 row and newWidth*newHeight columns
+    cv::Mat flatMat = resizedImage.reshape(1, 1);  // Flatten image
     std::vector<float> vec(flatMat.begin<uint8_t>(), flatMat.end<uint8_t>());
 
-    // convert values from 0 - 255 to  0 - 1
     auto normVec = normalizeVector(vec);
-    Tensor input(normVec);
-    Tensor output(normVec);
+    Tensor input(normVec), output(normVec);
 
-    // Initialize MLP
-    constexpr float learningRate =  0.01;
-    auto mlp = std::make_unique<MLP>(newWidth * newHeight ,10,10,static_cast<size_t>(newWidth * newHeight) , learningRate);
+    // MLP initialization
+    constexpr float learningRate = 0.01;
+    auto mlp = std::make_unique<MLP>(newWidth * newHeight, 10, 10, static_cast<size_t>(newWidth * newHeight), learningRate);
 
     std::vector<float> predictionPixels;
-
-    microgradpp::loss::MeanSquaredErrorForPixels lossFcn;
+    microgradpp::loss::MeanSquaredErrorFor1DPixels lossFcn;
     Tensor ypred;
 
     for (auto idx = 0; idx < 50000; ++idx) {
         __MICROGRADPP_CLEAR__
 
-        input.zeroGrad();;
+        input.zeroGrad();
         predictionPixels.clear();
 
-        auto loss = Value::create(0);
-        // Predict values
         for (const auto& inp : input) {
-            ypred.push_back((*mlp)(inp));
+            ypred.push_back((*mlp)(inp));  // Predict pixel values with MLP
         }
-
-        // std::cout << ypred << std::endl;
 
         for (const auto& y : ypred) {
             for (const auto& val : y) {
@@ -126,37 +154,24 @@ int main() {
             }
         }
 
-        auto p = denormalizeVector(predictionPixels); // convert from 0-1 range to 0-255 range
-
-        cv::Mat predictedMatDuringIter(p, false);  //vectorToMat(p, newHeight, newWidth,1);
+        auto denormalizedPixels = denormalizeVector(predictionPixels);
+        cv::Mat predictedMatDuringIter(denormalizedPixels, false);
         predictedMatDuringIter.convertTo(predictedMatDuringIter, CV_8UC3);
-        predictedMatDuringIter = predictedMatDuringIter.reshape(1,newWidth);
+        predictedMatDuringIter = predictedMatDuringIter.reshape(1, newWidth);
+
         std::string label = "Iteration: " + std::to_string(idx);
         cv::putText(predictedMatDuringIter, label, Point(0, 50), FONT_HERSHEY_PLAIN, 1.0, CV_RGB(0,255,0), 2.0);
         cv::imshow("Predicted True Pixels", predictedMatDuringIter);
         waitKey(50);
 
+        // Loss calculation
+        auto loss = lossFcn(output, ypred);
 
-        // For every pixel calculate loss between input and output
-        for (size_t i = 0; i < output[0].size(); ++i) {
-            // Since output tensor is 1-by-numHeight*numWidth, we need to access the first row and index of columns
-            auto c = Value::subtract(output.at(0,i) , ypred.at(0,i));
-            auto b = Value::multiply(c, c);
-            loss = Value::add(loss, b);
-        }
-
-
-        // Ensure all gradients are zero
-        mlp->zeroGrad();
-
-        // Perform backprop
-        loss->_backward();
-
-        // Update parameters
-        mlp->update();
+        mlp->zeroGrad();      // Zero gradients before backprop
+        loss->backProp();     // Backpropagate loss
+        mlp->update();       // Update MLP weights
 
         ypred.reset();
-
         std::cout << idx << " " << loss->data << std::endl;
     }
 
