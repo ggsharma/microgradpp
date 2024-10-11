@@ -37,14 +37,14 @@ endif()
 # Option to build the main executable
 option(BUILD_MAIN_EXECUTABLE "Build the main executable" ON)
 
-if(BUILD_MAIN_EXECUTABLE)
+#if(BUILD_MAIN_EXECUTABLE)
     add_executable(m++ main.cpp)
 #    if(CMAKE_BUILD_TYPE MATCHES Release)
-        message(STATUS "You are using Release build of micrograd++")
-        set_target_properties(m++ PROPERTIES COMPILE_FLAGS "${CMAKE_CXX_FLAGS_RELEASE}")
+        message(STATUS "You are using Debug build of micrograd++")
+        #set_target_properties(m++ PROPERTIES COMPILE_FLAGS "${CMAKE_CXX_FLAGS_RELEASE}")
 #    endif()
     message(STATUS "Main executable will be built")
-endif()
+#endif()
 
 # Optionally build examples
 #if(BUILD_EXAMPLES)

@@ -5,3 +5,4 @@ a.out
 venv
 CMakeFiles
 _deps
+examples/example_*

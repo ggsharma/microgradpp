@@ -32,7 +32,7 @@ namespace microgradpp{
         }
 
     public:
-        static inline std::unordered_map<ActivationType, std::function<std::shared_ptr<Value>(std::shared_ptr<Value>&)>> mActivationFcn = {
+        static inline std::unordered_map<ActivationType, std::function<std::shared_ptr<Value>(const std::shared_ptr<Value>&)>> mActivationFcn = {
                 {ActivationType::RELU, Relu},
                 {ActivationType::TANH, TanH},
                 {ActivationType::SIGMOID, Sigmoid}
