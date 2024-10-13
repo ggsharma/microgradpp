@@ -22,6 +22,13 @@
 #include "Autograd.hpp"
 #include "LossFunctions.hpp"
 
+
+#include "base/BaseMultiLayerPerceptron.hpp"
+#include "nn/NeuralNet.hpp"
+#include "core/Sequential.hpp"
+#include "core/MppCore.hpp"
+#include "LossFunctions.hpp"
+
 // Visualization library
 #include <opencv2/opencv.hpp>
 
@@ -94,6 +101,38 @@ std::vector<float> denormalizeVector(const std::vector<float>& vec) {
     return denormalizedVec;
 }
 
+namespace microgradpp{
+
+    using microgradpp::base::BaseMultiLayerPerceptron;
+    using microgradpp::core::Sequential;
+    using microgradpp::core::MppCore;
+    using namespace microgradpp::nn;
+    class Example_Images : public BaseMultiLayerPerceptron{
+    public:
+        size_t width, height;
+        Example_Images(size_t width, size_t height):width(width), height(height),
+                BaseMultiLayerPerceptron(Sequential(
+                        {
+                                nn::Linear(width*height,4),
+                                nn::ReLU(),
+                                nn::Linear(4,width*height)
+                        }))
+        {
+
+            this->learningRate = 0.0001;
+        }
+
+
+        Tensor1D forward(Tensor1D input) override{
+            // call this->sequence(input) here
+            return this->sequential(input);
+        };
+
+    };
+
+}
+
+
 /**
  * @brief Main function for loading and preprocessing an image, feeding it to an MLP, and visualizing the output.
  *
@@ -105,9 +144,12 @@ std::vector<float> denormalizeVector(const std::vector<float>& vec) {
  */
 int main() {
     using namespace cv;
-    using microgradpp::Tensor;
+    using microgradpp::Tensor1D;
     using microgradpp::Value;
+    using microgradpp::Example_Images;
     using microgradpp::algorithms::MLP;
+    using microgradpp::Tensor2D;
+    using microgradpp::loss::MeanSquaredErrorFor1DPixels;
 
     // Load and preprocess image
     Mat img = imread("./german_shephard.jpg", IMREAD_GRAYSCALE);
@@ -128,15 +170,15 @@ int main() {
     std::vector<float> vec(flatMat.begin<uint8_t>(), flatMat.end<uint8_t>());
 
     auto normVec = normalizeVector(vec);
-    Tensor input(normVec), output(normVec);
+    Tensor2D input = normVec;
+    Tensor2D output = normVec;
 
     // MLP initialization
-    constexpr float learningRate = 0.01;
-    auto mlp = std::make_unique<MLP>(newWidth * newHeight, 10, 10, static_cast<size_t>(newWidth * newHeight), learningRate);
+    auto mlp = std::make_unique<Example_Images>(newWidth , newHeight);
 
     std::vector<float> predictionPixels;
     microgradpp::loss::MeanSquaredErrorFor1DPixels lossFcn;
-    Tensor ypred;
+    Tensor2D ypred;
 
     for (auto idx = 0; idx < 50000; ++idx) {
         __MICROGRADPP_CLEAR__
@@ -145,7 +187,7 @@ int main() {
         predictionPixels.clear();
 
         for (const auto& inp : input) {
-            ypred.push_back((*mlp)(inp));  // Predict pixel values with MLP
+            ypred.push_back( mlp->operator()(inp) );  // Predict pixel values with MLP
         }
 
         for (const auto& y : ypred) {

@@ -126,6 +126,7 @@
 #include "Value.hpp"
 #include "Activation.hpp"
 #include "TypeDefs.hpp"
+#include "Tensor.hpp"
 
 #include <memory>
 #include <vector>
@@ -151,7 +152,7 @@ namespace microgradpp{
 
     class Neuron {
     private:
-        std::vector<ValuePtr> weights;
+        Tensor1D weights;
         ValuePtr bias = Value::create(0.0f);
         //const ActivationType activation_t;
 
@@ -177,7 +178,7 @@ namespace microgradpp{
         }
 
         // Dot product of a Neuron's weights with the input
-        ValuePtr operator()(const std::vector<ValuePtr>& x) {
+        ValuePtr operator()(const Tensor1D& x) {
             if (x.size() != weights.size()) {
                 throw std::invalid_argument("Error in micrograd::Neuron -> Vectors must be of the same length");
             }
@@ -206,8 +207,8 @@ namespace microgradpp{
         }
 
         __MICROGRADPP_NO_DISCARD__
-        std::vector<ValuePtr> parameters() const {
-            std::vector<ValuePtr> out;
+        Tensor1D parameters() const {
+            Tensor1D out;
             out.reserve(weights.size() + 1);
 
             out.insert(out.end(), weights.begin(), weights.end());
@@ -215,7 +216,6 @@ namespace microgradpp{
 
             return out;
         }
-
 
 
         void printParameters() const {

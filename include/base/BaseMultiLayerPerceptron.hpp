@@ -1,19 +1,19 @@
 #pragma once
 
 #include "core/Sequential.hpp"
-
+#include "TypeDefs.hpp"
 
 using microgradpp::core::Sequential;
 
-namespace microgradpp{
-    class Tensor;
-}
+
 namespace microgradpp::base{
 
     class BaseMultiLayerPerceptron{
-    private:
+
         Sequential _baseSequential;
+
     public:
+        Sequential& sequential = _baseSequential;
 
         BaseMultiLayerPerceptron(const Sequential& sequential) :_baseSequential(sequential) {};
 
@@ -25,14 +25,21 @@ namespace microgradpp::base{
             this->_baseSequential.printParameters();
         }
 
-        std::vector<ValuePtr> operator()(std::vector<ValuePtr> input){
-            return this->_baseSequential(input);
+        void zeroGrad(){
+            this->_baseSequential.zeroGrad();
         }
 
-        virtual Tensor forward(Tensor input) = 0;
+        void update(){
+            this->_baseSequential.update(this->learningRate);
+        }
+
+        Tensor1D operator()(const Tensor1D& input){
+            return this->forward(input);
+        }
+
+        virtual Tensor1D forward(Tensor1D input) = 0;
+
+    protected:
+        float learningRate = 0.001;
     };
 }
-
-
-
-// mlp(input)

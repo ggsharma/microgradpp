@@ -46,6 +46,8 @@ namespace microgradpp {
          */
         explicit Value(float data, std::string op, size_t id)
                 : data(data), grad(0.0), op(std::move(op)), id(id) {}
+
+        bool gradientFlag = true;  ///< By default gradients are calculated for every operation
     public:
         inline static size_t currentID = 0; ///< Global counter for generating unique IDs.
         float data = 0; ///< The actual numerical value.
@@ -54,6 +56,7 @@ namespace microgradpp {
         size_t id = 0LU; ///< A unique identifier for the value.
         std::vector<ValuePtr> prev; ///< Pointers to the previous values that were inputs to this value.
         std::function<void()> backward = nullptr; ///< Function to compute the gradient during backpropagation.
+
 
         /**
         * @brief Generates a new unique ID for each value.
@@ -87,7 +90,12 @@ namespace microgradpp {
         const float GRADIENT_CLIP_VALUE = 1e4; ///< Gradient clipping threshold.
         const float EPSILON = 1e-7; ///< Small value to avoid numerical instability.
 
-        //Value(const Value& v) = default;
+        /**
+            * @brief Switches off gradient calculation
+        */
+        void setGradientFlag(){
+
+        }
 
         /**
              * @brief Clips the gradients to avoid exploding gradients.

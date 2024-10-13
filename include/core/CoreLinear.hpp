@@ -1,16 +1,19 @@
 #pragma once
 
+
+#include <iostream>
+
 #include "MppCore.hpp"
 #include "Neuron.hpp"
 #include "Value.hpp"
-
-#include <iostream>
+#include "TypeDefs.hpp"
 
 namespace microgradpp::core {
     class CoreLinear : public MppCore {
     private:
         size_t _nin, _nout;
         std::vector<Neuron> _neurons;
+
     public:
         CoreLinear(size_t nin, size_t nout): _nin(nin), _nout(nout){
             for(size_t idx = 0; idx < nout; ++idx){
@@ -18,8 +21,8 @@ namespace microgradpp::core {
             }
         }
 
-        std::vector<ValuePtr> operator()(const std::vector<ValuePtr>& x) override {
-            std::vector<ValuePtr> out;
+        Tensor1D operator()(const Tensor1D& x) override {
+            Tensor1D out;
             out.reserve(this->_neurons.size());
             std::for_each(this->_neurons.begin(), this->_neurons.end(), [&out, x=x](   auto neuron)mutable{
                 out.emplace_back(neuron(x));
@@ -27,9 +30,11 @@ namespace microgradpp::core {
             return out;
         }
 
+
         void print() const override final{
             std::cout << _nin << " X " << _nout << " Linear Layer"<< std::endl;
         };
+
 
         void zeroGrad() override final{
             for(auto& neuron: this->_neurons){
@@ -37,8 +42,9 @@ namespace microgradpp::core {
             }
         }
 
+
         __MICROGRADPP_NO_DISCARD__
-        std::vector<Value*> parameters() const{
+        std::vector<Value*> parameters() const override{
             std::vector<Value*> params;
             if(params.empty()) {
                 for(const auto& neuron : _neurons){
@@ -50,7 +56,8 @@ namespace microgradpp::core {
             return params;
         }
 
-        void printParameters() override{
+
+        void printParameters() const override{
             const auto params = this->parameters();
             printf("Num parameters: %d\n", (int)params.size());
             for(const auto& p : params){
@@ -59,7 +66,6 @@ namespace microgradpp::core {
             }
             printf("\n");
         }
-
     };
 
 }

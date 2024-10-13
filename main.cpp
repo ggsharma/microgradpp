@@ -9,6 +9,7 @@
 #include "Neuron.hpp"
 #include "Tensor.hpp"
 #include "Algorithms.hpp"
+#include "TypeDefs.hpp"
 
 using namespace std;
 
@@ -17,37 +18,89 @@ using namespace std;
 #include "nn/NeuralNet.hpp"
 #include "core/Sequential.hpp"
 #include "core/MppCore.hpp"
+#include "LossFunctions.hpp"
+
+#ifdef __APPLE__
+#include <mach/mach.h>
+#elif defined(__linux__)
+#include <unistd.h>
+#include <sys/resource.h>
+#include <sys/types.h>
+#elif defined(_WIN32)
+#include <windows.h>
+#include <psapi.h>
+#endif
+
+long getMemoryUsage() {
+#ifdef __APPLE__
+    // macOS implementation
+    mach_task_basic_info_data_t info;
+    mach_msg_type_number_t count = MACH_TASK_BASIC_INFO_COUNT;
+
+    kern_return_t kr = task_info(mach_task_self(), MACH_TASK_BASIC_INFO, (task_info_t)&info, &count);
+    if (kr != KERN_SUCCESS) {
+        std::cerr << "task_info call failed" << std::endl;
+        return -1; // Error
+    }
+
+    // Return the resident memory size in kilobytes
+    return info.resident_size / 1024; // Convert bytes to KB
+
+#elif defined(__linux__)
+    // Linux implementation
+    struct rusage usage;
+    if (getrusage(RUSAGE_SELF, &usage) != 0) {
+        std::cerr << "getrusage call failed" << std::endl;
+        return -1; // Error
+    }
+
+    // Return resident memory size in kilobytes
+    return usage.ru_maxrss; // ru_maxrss is already in kilobytes
+
+#elif defined(_WIN32)
+    // Windows implementation
+    PROCESS_MEMORY_COUNTERS pmc;
+    if (GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc))) {
+        // Return the working set size (resident set size) in kilobytes
+        return pmc.WorkingSetSize / 1024; // Convert bytes to KB
+    } else {
+        std::cerr << "GetProcessMemoryInfo call failed" << std::endl;
+        return -1; // Error
+    }
+
+#else
+#error "Unsupported platform"
+#endif
+}
+
+
 namespace microgradpp{
 
     using microgradpp::base::BaseMultiLayerPerceptron;
     using microgradpp::core::Sequential;
     using microgradpp::core::MppCore;
     using namespace microgradpp::nn;
-    class Example_MLP : public microgradpp::base::BaseMultiLayerPerceptron{
+    class Example_MLP : public BaseMultiLayerPerceptron{
     public:
 
         Example_MLP():
-                BaseMultiLayerPerceptron(Sequential({nn::Linear(10,8),
-                                                                            nn::ReLU(),
-                                                                            nn::Linear(8,1)
-
-
-                                                                            }))
+        BaseMultiLayerPerceptron(Sequential(
+                        {
+                            nn::Linear(10,8),
+                            nn::ReLU(),
+                            nn::Linear(8,1)
+                        }))
         {
 
+            this->learningRate = 0.0001;
         }
 
 
-
-         Tensor forward(Tensor input) override{
-            Tensor t;
-            return t;
+         Tensor1D forward(Tensor1D input) override{
+            // call this->sequence(input) here
+            return this->sequential(input);
         };
 
-
-//        Tensor forward(Tensor in){
-//
-//        }
     };
 
 }
@@ -56,10 +109,13 @@ namespace microgradpp{
 int main() {
     using microgradpp::Value;
     using microgradpp::Neuron;
-    using microgradpp::Tensor;
+    using microgradpp::Tensor1D;
+    using microgradpp::Tensor2D;
     using microgradpp::algorithms::MLP;
+    using microgradpp::loss::MeanSquaredError;
+
     printf("Hello from micrograd++\n");
-    Tensor xs = {{-0.6766,  0.8353, -0.9439,  0.4799,  0.6168,  0.8016,  0.6596,  0.6993,
+    Tensor2D xs = {{-0.6766,  0.8353, -0.9439,  0.4799,  0.6168,  0.8016,  0.6596,  0.6993,
                          0.8828,  0.5242},
                  {-0.2141,  0.1933, -0.7998,  0.0819,  0.6718,  0.3808,  0.5816,  0.2885,
                          -0.4778,  0.0306},
@@ -98,11 +154,86 @@ int main() {
                  { 0.9084,  0.2898, -0.8604, -0.2312, -0.9680,  0.9569,  0.4857,  0.1534,
                          0.7059,  0.1348},
                  { 0.9870, -0.0352, -0.0840,  0.5445,  0.8870,  0.1733,  0.7722,  0.4949,
-
                          0.7470, -0.3344}};
-    microgradpp::Example_MLP m ;
-    m.print();
-    m.printParameters();
-    m(xs[0]);
 
+    //         Expected output:
+//         Sum of each row in the input should be equal to each entry in ys
+//         Example: 0.2+0.3+-1 = -0.5
+    Tensor2D ys = { {0.3879},  {0.0737}, {-0.1173}, {-0.1467},  {0.1155}, {-0.3718},  {0.2522},  {0.1087},
+                    {-0.1298},  {0.0640}, {-0.1024}, {-0.0652}, {-0.0101},  {0.0767},  {0.1131}, {-0.0359},
+                    {-0.1566}, {-0.0048},  {0.1575},  {0.4152} };
+
+    constexpr float learningRate = 0.001;
+    constexpr size_t numIterations = 100000;
+
+    // Define loss function
+    MeanSquaredError lossFcn;
+
+    /**
+     * Initialize micrograd
+     * @input : 10 params
+     * @layer 1 = 100 neurons
+     * @layer 2 = 100 neurons
+     * @layer = output
+     */
+    auto mlp = std::make_unique<microgradpp::Example_MLP>();
+
+    // Initialize prediction Tensor
+    Tensor2D ypred;
+
+    // Start learning loop
+    auto start = std::chrono::high_resolution_clock::now();
+
+    auto init =  getMemoryUsage();
+
+    for (auto idx = 0; idx < numIterations; ++idx) {
+
+        //std::cout << "////////////////////////////////////////////////////////////////////////\n";
+
+        __MICROGRADPP_CLEAR__
+
+        auto initial_memory_usage = getMemoryUsage();
+
+        // Ensure the gradients of inputs is always zero
+        xs.zeroGrad();
+
+        auto a = xs.begin();
+        // Predict values
+        for (const auto &input: xs) {
+            ypred.push_back(mlp->operator()(input));  //
+        }
+
+        auto loss = lossFcn(ys, ypred);
+
+        // Ensure all gradients are zero
+        mlp->zeroGrad();
+
+        // Perform backprop
+        loss->backProp();
+
+        // Update parameters
+        mlp->update();
+
+        std::cout << "Extra Memory usage: " << getMemoryUsage() - initial_memory_usage << " KB\n";
+
+        std::cout << "Iteration : " << idx << " " << "Loss: " << loss->data << "Extra Memory usage: " << getMemoryUsage() - initial_memory_usage << " KB\n";
+
+        // Reset prediction
+        ypred.reset();
+
+    }
+
+    // Record end time
+    auto end = std::chrono::high_resolution_clock::now();
+
+    // Calculate elapsed time
+    std::chrono::duration<double> elapsed = end - start;
+
+    std::cout << "Time taken for loop: " << elapsed.count() << " seconds" << std::endl;
+
+    // Track final memory usage
+    long final_memory_usage = getMemoryUsage();
+    std::cout << "Final memory usage: " << final_memory_usage << " KB\n";
+    std::cout << "Memory increase: " << (final_memory_usage - init) << " KB\n";
 }
+

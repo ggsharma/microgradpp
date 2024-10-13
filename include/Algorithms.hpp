@@ -73,7 +73,6 @@ namespace microgradpp::algorithms{
                 for (auto &p: this->parameters()) {
                     p->data += (float)((float)-this->learningRate * (float)p->grad);
                 }
-
             }
 
             void zeroGrad(){
@@ -82,12 +81,12 @@ namespace microgradpp::algorithms{
                 }
             }
 
-            std::vector<ValuePtr> forward(const std::vector<ValuePtr>& input){
+            Tensor1D forward(const Tensor1D& input){
                 return this->operator()(input);
             }
 
-            std::vector<ValuePtr> operator()(const std::vector<ValuePtr>& input){
-                std::vector<ValuePtr> x = input;
+            Tensor1D operator()(const Tensor1D& input){
+                Tensor1D x = input;
                 for( auto& layer : this->layers){
                     auto y  = layer(x);
                     x = y;

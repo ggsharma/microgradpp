@@ -26,8 +26,8 @@ namespace microgradpp {
             }
         }
 
-        std::vector<ValuePtr> operator()(const std::vector<ValuePtr>& x) {
-            std::vector<ValuePtr> out;
+        Tensor1D operator()(const Tensor1D & x) {
+            Tensor1D out;
             out.reserve(this->neurons.size());
             std::for_each(this->neurons.begin(), this->neurons.end(), [&out, x=x](   auto neuron)mutable{
                 out.emplace_back(neuron(x));

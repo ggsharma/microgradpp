@@ -7,10 +7,10 @@
 
 namespace microgradpp::loss{
 
-    class MeanSquaredError : public AbstractLoss<Tensor>{
+    class MeanSquaredError : public AbstractLoss<Tensor2D>{
     public:
         MeanSquaredError () = default;
-        ValuePtr operator()(const Tensor& groundTruth, const Tensor& prediction) override{
+        ValuePtr operator()(const Tensor2D& groundTruth, const Tensor2D& prediction) override{
             // Calculate loss
             auto loss = Value::create(0.0f);
             assert(groundTruth.size() == prediction.size());
@@ -24,10 +24,10 @@ namespace microgradpp::loss{
     };
 
 
-    class MeanSquaredErrorFor1DPixels : public AbstractLoss<Tensor>{
+    class MeanSquaredErrorFor1DPixels : public AbstractLoss<Tensor2D>{
     public:
         MeanSquaredErrorFor1DPixels () = default;
-        ValuePtr operator()(const Tensor& groundTruth, const Tensor& prediction) override{
+        ValuePtr operator()(const Tensor2D& groundTruth, const Tensor2D& prediction) override{
             // Calculate loss
             auto loss = Value::create(0.0f);
             const size_t  maxSize = prediction[0].size();
