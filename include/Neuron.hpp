@@ -217,7 +217,6 @@ namespace microgradpp{
             return out;
         }
 
-
         void printParameters() const {
             printf("Number of Parameters: %zu\n", weights.size() + 1);
             for (const auto& param : weights) {

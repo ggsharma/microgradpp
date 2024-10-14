@@ -1,75 +1,128 @@
-/*
- * @file: Tensor.hpp
- * @brief: Defines Tensor1D and 2D class that is the main data structure to perform mathematical operations
+/**
+ *  @file Tensor.hpp
+ *  @brief Defines Tensor1D and 2D classes that are the main data structures for performing mathematical operations.
  *
- * This file is part of the microgradpp project.
+ *  This file is part of the microgradpp project, a lightweight C++ library for neural
+ *  network training and inference.
  *
- * Created by: Gautam Sharma
- * Created on: August, 2024
- * Last Modified: Oct 12, 2024
- * License: MIT
+ *  @section License
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the MIT License.
  *
- * Copyright (c) 2024 Gautam Sharma. All rights reserved.
- * Unauthorized distributing of this file for commercial use, via any medium, is strictly prohibited.
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ *  INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+ *  PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
+ *  FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ *  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+ *  DEALINGS IN THE SOFTWARE.
  *
+ *  @section Author
+ *  Gautam Sharma
+ *  Email: gautamsharma2813@gmail.com
+ *  Date: October 12, 2024
+ *
+ *  @details
+ *  This header file contains the definition of Tensor1D and Tensor2D classes used for
+ *  representing and manipulating multidimensional data structures, along with methods for
+ *  mathematical operations and gradient management.
  */
 
 #ifndef MICROGRADPP_TENSOR_HPP
 #define MICROGRADPP_TENSOR_HPP
 
-#include "Value.hpp"
+// Standard headers
 #include <initializer_list>
 #include <vector>
 #include <memory>
 #include <iostream>
 
+// mpp headers
+#include "Value.hpp"
+
 
 namespace microgradpp {
-
-
-
+    /**
+     * @class BaseTensor
+     * @brief A base class for tensor types providing common functionalities.
+     *
+     * @tparam T The type of tensor (e.g., std::vector<ValuePtr>).
+   */
     template<class T>
     class BaseTensor{
     protected:
-        T tensor;
+        T tensor; ///< The underlying data structure for the tensor.
     public:
         // Provide begin() and end() methods to allow range-based for loop
+
+        /**
+         * @brief Returns an iterator to the beginning of the tensor.
+         * @return An iterator to the first element.
+         */
         __MICROGRADPP_NO_DISCARD__
-         auto begin() {
+        auto begin() {
             return this->tensor.begin();
         }
 
+        /**
+         * @brief Returns an iterator to the end of the tensor.
+         * @return An iterator to the past-the-end element.
+         */
         __MICROGRADPP_NO_DISCARD__
-         auto end() {
+        auto end() {
             return this->tensor.end();
         }
 
+        /**
+         * @brief Returns a const iterator to the beginning of the tensor.
+         * @return A const iterator to the first element.
+         */
         __MICROGRADPP_NO_DISCARD__
-         auto begin() const {
+        auto begin() const {
             return this->tensor.begin();
         }
 
+        /**
+         * @brief Returns a const iterator to the end of the tensor.
+         * @return A const iterator to the past-the-end element.
+         */
         __MICROGRADPP_NO_DISCARD__
-         auto end() const {
+        auto end() const {
             return this->tensor.end();
         }
 
+        /**
+         * @brief Returns the size of the tensor.
+         * @return The number of elements in the tensor.
+         */
         __MICROGRADPP_NO_DISCARD__
-        size_t size() const{
+                size_t size() const {
             return this->tensor.size();
         }
 
-        void reset(){
+        /**
+         * @brief Clears the tensor.
+         */
+        void reset() {
             this->tensor.clear();
         }
 
-        void reserve(size_t size){
+        /**
+         * @brief Reserves memory for the tensor.
+         * @param size The number of elements to reserve space for.
+         */
+        void reserve(size_t size) {
             this->tensor.reserve(size);
         }
 
-        using iterator = typename T::iterator;
-        using const_iterator = typename T::const_iterator;
+        using iterator = typename T::iterator;       ///< Type alias for the iterator.
+        using const_iterator = typename T::const_iterator; ///< Type alias for the const iterator.
 
+        /**
+         * @brief Inserts elements into the tensor.
+         * @param a The position to insert elements.
+         * @param b The starting position of the elements to insert.
+         * @param c The ending position of the elements to insert.
+         */
         void insert(iterator a, const_iterator b, const_iterator c) {
             this->tensor.insert(a, b, c);
         }
@@ -77,12 +130,25 @@ namespace microgradpp {
     };
 
     // Internal Use
+    /**
+     * @class _Tensor1D
+     * @brief A class representing a 1D tensor (vector) of ValuePtr objects.
+     *
+     * This class provides methods for tensor operations, including zeroing gradients,
+     * accessing elements, and pushing back new values.
+     *
+     * @tparam T The type of tensor (e.g., std::vector<ValuePtr>).
+     */
     template<class T>
     class _Tensor1D : public BaseTensor<T>{
     public:
 
         _Tensor1D() = default;
 
+        /**
+            * @brief Constructs a 1D tensor from a vector of floats.
+            * @param input The vector of floats to initialize the tensor.
+        */
         explicit _Tensor1D(const std::vector<float>& input){
             this->tensor.reserve(input.size());
             for (const auto& value : input){
@@ -90,7 +156,12 @@ namespace microgradpp {
             }
         }
 
-        // Overload output stream
+        /**
+             * @brief Overloads the output stream operator for printing the tensor.
+             * @param os The output stream.
+             * @param tensor The tensor to print.
+             * @return The output stream.
+        */
         friend std::ostream & operator << (std::ostream &os, const _Tensor1D &tensor) {
             for (const auto& col : tensor.tensor) {
                 os << col;
@@ -98,35 +169,56 @@ namespace microgradpp {
             return os;
         }
 
-        void zeroGrad(){
-            for(auto& value: this->tensor){
-                    value->grad = 0.0;
+        /**
+           * @brief Zeros the gradients of all elements in the tensor.
+        */
+        void zeroGrad() {
+            for (auto& value : this->tensor) {
+                value->grad = 0.0;
             }
         }
 
-        /*
-         * idx: col index
+        /**
+             * @brief Accesses an element in the tensor using the index operator.
+             * @param idx The index of the element to access.
+             * @return A pointer to the accessed Value.
          */
-        ValuePtr operator[](const size_t idx) const{
+        ValuePtr operator[](const size_t idx) const {
             return accessElement(idx);
         }
 
-        /*
-         * idx: col index
+        /**
+         * @brief Accesses an element in the tensor using the at method.
+         * @param idx The index of the element to access.
+         * @return A pointer to the accessed Value.
          */
         __MICROGRADPP_NO_DISCARD__
-        ValuePtr at(const size_t idx) const{
+                ValuePtr at(const size_t idx) const {
             return accessElement(idx);
         }
 
-        void push_back(const ValuePtr& value){
+        /**
+         * @brief Pushes a new ValuePtr onto the tensor.
+         * @param value The ValuePtr to push back.
+         */
+        void push_back(const ValuePtr& value) {
             this->tensor.emplace_back(value);
         }
 
-        void emplace_back(const ValuePtr& value){
+        /**
+         * @brief Emplaces a new ValuePtr onto the tensor.
+         * @param value The ValuePtr to emplace back.
+         */
+        void emplace_back(const ValuePtr& value) {
             this->tensor.emplace_back(value);
         }
     private:
+        /**
+       * @brief Accesses an element by index with bounds checking.
+       * @param idx The index of the element to access.
+       * @return A pointer to the accessed Value.
+       * @throws std::out_of_range if the index is out of bounds.
+       */
         ValuePtr accessElement(size_t idx) const {
             if (idx >= this->tensor.size()) {
                 throw std::out_of_range("Accessing Tensor1D out of bounds");
@@ -151,14 +243,26 @@ namespace microgradpp {
 
 
     // Internal Use
+    /**
+     * @class _Tensor2D
+     * @brief A class representing a 2D tensor (matrix) of ValuePtr objects.
+     *
+     * This class provides methods for tensor operations, including zeroing gradients,
+     * accessing elements, and pushing back new rows of tensors.
+     *
+     * @tparam T The type of tensor (e.g., std::vector<ValuePtr>).
+     */
     template<class T>
     class _Tensor2D : public BaseTensor<T> {
     public:
-        using Tensor1D_t = typename ExtractValuePtrVector<T>::type;;
+        using Tensor1D_t = typename ExtractValuePtrVector<T>::type; ///< Type alias for 1D tensor.
 
         _Tensor2D() = default;
 
-        // Constructor for a vector of initializer lists of doubles
+        /**
+       * @brief Constructs a 2D tensor from an initializer list of initializer lists.
+       * @param input The initializer list of initializer lists to initialize the tensor.
+       */
         _Tensor2D(const std::initializer_list<std::initializer_list<float>>& input) {
             for (const auto& list : input) {
                 Tensor1D_t subTensor;
@@ -171,6 +275,10 @@ namespace microgradpp {
 
         // Constructor for a vector of initializer lists of doubles
         // make a flattened Tensor
+        /**
+         * @brief Constructs a 2D tensor from a vector of floats, making a flattened tensor.
+         * @param input The vector of floats to initialize the tensor.
+         */
         _Tensor2D(const std::vector<float>& input) {
             Tensor1D_t subTensor(input);
             this->tensor.emplace_back(subTensor);
