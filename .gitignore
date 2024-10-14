@@ -6,3 +6,6 @@ venv
 CMakeFiles
 _deps
 examples/example_*
+latex
+html
+docs

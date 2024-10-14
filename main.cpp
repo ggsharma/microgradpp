@@ -5,7 +5,6 @@
 #include <iostream>
 
 #include "Value.hpp"
-#include "Layer.hpp"
 #include "Neuron.hpp"
 #include "Tensor.hpp"
 #include "Algorithms.hpp"
@@ -14,7 +13,6 @@
 using namespace std;
 
 #include "base/BaseMultiLayerPerceptron.hpp"
-#include "Tensor.hpp"
 #include "nn/NeuralNet.hpp"
 #include "core/Sequential.hpp"
 #include "core/MppCore.hpp"
