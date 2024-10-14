@@ -1,0 +1,141 @@
+\doxysection{microgradpp\+::core\+::Mpp\+Core Class Reference}
+\hypertarget{classmicrogradpp_1_1core_1_1_mpp_core}{}\label{classmicrogradpp_1_1core_1_1_mpp_core}\index{microgradpp::core::MppCore@{microgradpp::core::MppCore}}
+
+
+Abstract base class for core components of neural network layers.  
+
+
+
+
+{\ttfamily \#include $<$Mpp\+Core.\+hpp$>$}
+
+
+
+Inheritance diagram for microgradpp\+::core\+::Mpp\+Core\+:
+% FIG 0
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmicrogradpp_1_1core_1_1_mpp_core_a72e0437cdd12b4dbfffe5db2cf468670}{Mpp\+Core}} ()=default
+\begin{DoxyCompactList}\small\item\em Default constructor for {\ttfamily \doxylink{classmicrogradpp_1_1core_1_1_mpp_core}{Mpp\+Core}}. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classmicrogradpp_1_1core_1_1_mpp_core_a0ac1f62e1f93221c65514f2af702af14}{print}} () const =0
+\begin{DoxyCompactList}\small\item\em Pure virtual function to print layer information. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}} \mbox{\hyperlink{classmicrogradpp_1_1core_1_1_mpp_core_aa346e478c08b034fcbc646502c222873}{operator()}} (const \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}} \&in)=0
+\begin{DoxyCompactList}\small\item\em Pure virtual function for forward computation. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classmicrogradpp_1_1core_1_1_mpp_core_a71dcf1cb4282f9d2b946672ea85ce96c}{zero\+Grad}} ()
+\begin{DoxyCompactList}\small\item\em Resets gradients for all parameters in the layer. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classmicrogradpp_1_1core_1_1_mpp_core_a43e7bdcf0f8565e5cc46f65541aa5098}{print\+Parameters}} () const
+\begin{DoxyCompactList}\small\item\em Prints parameter information for the layer. \end{DoxyCompactList}\item 
+virtual \+\_\+\+\_\+\+MICROGRADPP\+\_\+\+NO\+\_\+\+DISCARD\+\_\+\+\_\+ std\+::vector$<$ \mbox{\hyperlink{classmicrogradpp_1_1_value}{Value}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classmicrogradpp_1_1core_1_1_mpp_core_a807893ada4561094454472a6ada4d8ea}{parameters}} () const
+\begin{DoxyCompactList}\small\item\em Returns a list of pointers to the layer\textquotesingle{}s parameters. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Abstract base class for core components of neural network layers. 
+
+The {\ttfamily \doxylink{classmicrogradpp_1_1core_1_1_mpp_core}{Mpp\+Core}} class serves as an interface for all core neural network layers. It defines essential functions for neural network layers, including parameter management, gradient resetting, and forward computation, which must be implemented by any class that inherits from {\ttfamily \doxylink{classmicrogradpp_1_1core_1_1_mpp_core}{Mpp\+Core}}. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classmicrogradpp_1_1core_1_1_mpp_core_a72e0437cdd12b4dbfffe5db2cf468670}\index{microgradpp::core::MppCore@{microgradpp::core::MppCore}!MppCore@{MppCore}}
+\index{MppCore@{MppCore}!microgradpp::core::MppCore@{microgradpp::core::MppCore}}
+\doxysubsubsection{\texorpdfstring{MppCore()}{MppCore()}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1core_1_1_mpp_core_a72e0437cdd12b4dbfffe5db2cf468670} 
+microgradpp\+::core\+::\+Mpp\+Core\+::\+Mpp\+Core (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+Default constructor for {\ttfamily \doxylink{classmicrogradpp_1_1core_1_1_mpp_core}{Mpp\+Core}}. 
+
+Provides a default constructor that allows derived classes to initialize without specifying additional parameters. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classmicrogradpp_1_1core_1_1_mpp_core_aa346e478c08b034fcbc646502c222873}\index{microgradpp::core::MppCore@{microgradpp::core::MppCore}!operator()@{operator()}}
+\index{operator()@{operator()}!microgradpp::core::MppCore@{microgradpp::core::MppCore}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1core_1_1_mpp_core_aa346e478c08b034fcbc646502c222873} 
+virtual \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}} microgradpp\+::core\+::\+Mpp\+Core\+::operator() (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}} \&}]{in}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Pure virtual function for forward computation. 
+
+Processes the input tensor and returns the output tensor by performing the layer\textquotesingle{}s specific operation. Must be implemented by derived classes.
+
+
+\begin{DoxyParams}{Parameters}
+{\em in} & Input tensor. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Tensor1D Output tensor after applying the layer\textquotesingle{}s computation. 
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{classmicrogradpp_1_1core_1_1_core_linear_a8d341061512db3a8c25b1c8d3347f008}{microgradpp\+::core\+::\+Core\+Linear}}, and \mbox{\hyperlink{classmicrogradpp_1_1core_1_1_core_re_l_u_a2250d924efa54731bd84ef245afe371b}{microgradpp\+::core\+::\+Core\+Re\+LU}}.
+
+\Hypertarget{classmicrogradpp_1_1core_1_1_mpp_core_a807893ada4561094454472a6ada4d8ea}\index{microgradpp::core::MppCore@{microgradpp::core::MppCore}!parameters@{parameters}}
+\index{parameters@{parameters}!microgradpp::core::MppCore@{microgradpp::core::MppCore}}
+\doxysubsubsection{\texorpdfstring{parameters()}{parameters()}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1core_1_1_mpp_core_a807893ada4561094454472a6ada4d8ea} 
+virtual \+\_\+\+\_\+\+MICROGRADPP\+\_\+\+NO\+\_\+\+DISCARD\+\_\+\+\_\+ std\+::vector$<$ \mbox{\hyperlink{classmicrogradpp_1_1_value}{Value}} \texorpdfstring{$\ast$}{*} $>$ microgradpp\+::core\+::\+Mpp\+Core\+::parameters (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Returns a list of pointers to the layer\textquotesingle{}s parameters. 
+
+This function is optional for derived classes and can be overridden to provide access to the layer\textquotesingle{}s parameters, enabling parameter updates and gradient tracking.
+
+\begin{DoxyReturn}{Returns}
+std\+::vector$<$\+Value\texorpdfstring{$\ast$}{*}$>$ A vector of pointers to the parameters in the layer. 
+\end{DoxyReturn}
+
+
+Reimplemented in \mbox{\hyperlink{classmicrogradpp_1_1core_1_1_core_linear_a55b33782c067afb9bdc7d0b747483937}{microgradpp\+::core\+::\+Core\+Linear}}.
+
+\Hypertarget{classmicrogradpp_1_1core_1_1_mpp_core_a0ac1f62e1f93221c65514f2af702af14}\index{microgradpp::core::MppCore@{microgradpp::core::MppCore}!print@{print}}
+\index{print@{print}!microgradpp::core::MppCore@{microgradpp::core::MppCore}}
+\doxysubsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1core_1_1_mpp_core_a0ac1f62e1f93221c65514f2af702af14} 
+virtual void microgradpp\+::core\+::\+Mpp\+Core\+::print (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Pure virtual function to print layer information. 
+
+This function must be implemented by derived classes to print relevant layer information, such as the type and size of the layer. 
+
+Implemented in \mbox{\hyperlink{classmicrogradpp_1_1core_1_1_core_linear_ae14726dac6e95bb6dbd6fcad05b01c27}{microgradpp\+::core\+::\+Core\+Linear}}, and \mbox{\hyperlink{classmicrogradpp_1_1core_1_1_core_re_l_u_a356b40d5d3646e5667a0a40274459080}{microgradpp\+::core\+::\+Core\+Re\+LU}}.
+
+\Hypertarget{classmicrogradpp_1_1core_1_1_mpp_core_a43e7bdcf0f8565e5cc46f65541aa5098}\index{microgradpp::core::MppCore@{microgradpp::core::MppCore}!printParameters@{printParameters}}
+\index{printParameters@{printParameters}!microgradpp::core::MppCore@{microgradpp::core::MppCore}}
+\doxysubsubsection{\texorpdfstring{printParameters()}{printParameters()}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1core_1_1_mpp_core_a43e7bdcf0f8565e5cc46f65541aa5098} 
+virtual void microgradpp\+::core\+::\+Mpp\+Core\+::print\+Parameters (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Prints parameter information for the layer. 
+
+This function is optional for derived classes and can be overridden to print specific details about the layer\textquotesingle{}s parameters. 
+
+Reimplemented in \mbox{\hyperlink{classmicrogradpp_1_1core_1_1_core_linear_a6dd5a2781e687cd7858dc38985ca1dd2}{microgradpp\+::core\+::\+Core\+Linear}}.
+
+\Hypertarget{classmicrogradpp_1_1core_1_1_mpp_core_a71dcf1cb4282f9d2b946672ea85ce96c}\index{microgradpp::core::MppCore@{microgradpp::core::MppCore}!zeroGrad@{zeroGrad}}
+\index{zeroGrad@{zeroGrad}!microgradpp::core::MppCore@{microgradpp::core::MppCore}}
+\doxysubsubsection{\texorpdfstring{zeroGrad()}{zeroGrad()}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1core_1_1_mpp_core_a71dcf1cb4282f9d2b946672ea85ce96c} 
+virtual void microgradpp\+::core\+::\+Mpp\+Core\+::zero\+Grad (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Resets gradients for all parameters in the layer. 
+
+Sets the gradient values of all parameters in the layer to zero. This function is optional for derived classes and can be overridden where necessary. 
+
+Reimplemented in \mbox{\hyperlink{classmicrogradpp_1_1core_1_1_core_linear_af9b8ed09c652ae6e9a6f58c2566e33af}{microgradpp\+::core\+::\+Core\+Linear}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/core/\mbox{\hyperlink{_mpp_core_8hpp}{Mpp\+Core.\+hpp}}\end{DoxyCompactItemize}

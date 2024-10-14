@@ -1,0 +1,155 @@
+\doxysection{microgradpp\+::Neuron Class Reference}
+\hypertarget{classmicrogradpp_1_1_neuron}{}\label{classmicrogradpp_1_1_neuron}\index{microgradpp::Neuron@{microgradpp::Neuron}}
+
+
+Represents a single neuron in a neural network.  
+
+
+
+
+{\ttfamily \#include $<$Neuron.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmicrogradpp_1_1_neuron_a8dd19e34ffd3a25bc58465ed917c1298}{Neuron}} (size\+\_\+t nin)
+\begin{DoxyCompactList}\small\item\em Constructs a \doxylink{classmicrogradpp_1_1_neuron}{Neuron} with a specified number of inputs. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmicrogradpp_1_1_neuron_a60298debc125c5fd0cc7b77429b605f6}{Neuron}} (size\+\_\+t nin, float val)
+\begin{DoxyCompactList}\small\item\em Constructs a \doxylink{classmicrogradpp_1_1_neuron}{Neuron} for testing purposes. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmicrogradpp_1_1_neuron_a581013f945385c4a3a59dde974f958f9}{zero\+Grad}} ()
+\begin{DoxyCompactList}\small\item\em Resets the gradients of the neuron. \end{DoxyCompactList}\item 
+Value\+Ptr \mbox{\hyperlink{classmicrogradpp_1_1_neuron_a2abc5dc4595d729d38393240930e131b}{operator()}} (const \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}} \&x)
+\begin{DoxyCompactList}\small\item\em Computes the output of the neuron for a given input. \end{DoxyCompactList}\item 
+\+\_\+\+\_\+\+MICROGRADPP\+\_\+\+NO\+\_\+\+DISCARD\+\_\+\+\_\+ \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}} \mbox{\hyperlink{classmicrogradpp_1_1_neuron_ac9713219413ae060ce5b999c3fd566af}{parameters}} () const
+\begin{DoxyCompactList}\small\item\em Returns the parameters of the neuron as a tensor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmicrogradpp_1_1_neuron_aede12667424ccd2220959d9f7262da41}{print\+Parameters}} () const
+\begin{DoxyCompactList}\small\item\em Prints the parameters of the neuron. \end{DoxyCompactList}\item 
+\+\_\+\+\_\+\+MICROGRADPP\+\_\+\+NO\+\_\+\+DISCARD\+\_\+\+\_\+ size\+\_\+t \mbox{\hyperlink{classmicrogradpp_1_1_neuron_a11ccb91276d85745a6b6911fb6b610d5}{get\+Parameters\+Size}} () const
+\begin{DoxyCompactList}\small\item\em Returns the total number of parameters in the neuron. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a single neuron in a neural network. 
+
+The \doxylink{classmicrogradpp_1_1_neuron}{Neuron} class contains weights and a bias that are used for calculating the output of the neuron given an input tensor. It also provides methods for parameter management, gradient resetting, and output computation. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classmicrogradpp_1_1_neuron_a8dd19e34ffd3a25bc58465ed917c1298}\index{microgradpp::Neuron@{microgradpp::Neuron}!Neuron@{Neuron}}
+\index{Neuron@{Neuron}!microgradpp::Neuron@{microgradpp::Neuron}}
+\doxysubsubsection{\texorpdfstring{Neuron()}{Neuron()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1_neuron_a8dd19e34ffd3a25bc58465ed917c1298} 
+microgradpp\+::\+Neuron\+::\+Neuron (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{nin}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructs a \doxylink{classmicrogradpp_1_1_neuron}{Neuron} with a specified number of inputs. 
+
+Initializes the weights with random values and the bias with zero.
+
+
+\begin{DoxyParams}{Parameters}
+{\em nin} & The number of input connections to the neuron. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classmicrogradpp_1_1_neuron_a60298debc125c5fd0cc7b77429b605f6}\index{microgradpp::Neuron@{microgradpp::Neuron}!Neuron@{Neuron}}
+\index{Neuron@{Neuron}!microgradpp::Neuron@{microgradpp::Neuron}}
+\doxysubsubsection{\texorpdfstring{Neuron()}{Neuron()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1_neuron_a60298debc125c5fd0cc7b77429b605f6} 
+microgradpp\+::\+Neuron\+::\+Neuron (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{nin}{, }\item[{float}]{val}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructs a \doxylink{classmicrogradpp_1_1_neuron}{Neuron} for testing purposes. 
+
+Initializes the weights with random values. The second parameter is currently unused but provided for potential testing customization.
+
+
+\begin{DoxyParams}{Parameters}
+{\em nin} & The number of input connections to the neuron. \\
+\hline
+{\em val} & A float value (currently unused). \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classmicrogradpp_1_1_neuron_a11ccb91276d85745a6b6911fb6b610d5}\index{microgradpp::Neuron@{microgradpp::Neuron}!getParametersSize@{getParametersSize}}
+\index{getParametersSize@{getParametersSize}!microgradpp::Neuron@{microgradpp::Neuron}}
+\doxysubsubsection{\texorpdfstring{getParametersSize()}{getParametersSize()}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1_neuron_a11ccb91276d85745a6b6911fb6b610d5} 
+\+\_\+\+\_\+\+MICROGRADPP\+\_\+\+NO\+\_\+\+DISCARD\+\_\+\+\_\+ size\+\_\+t microgradpp\+::\+Neuron\+::get\+Parameters\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the total number of parameters in the neuron. 
+
+This method counts the number of weights plus the bias, which represents the total parameters of the neuron.
+
+\begin{DoxyReturn}{Returns}
+The total number of parameters in the neuron. 
+\end{DoxyReturn}
+\Hypertarget{classmicrogradpp_1_1_neuron_a2abc5dc4595d729d38393240930e131b}\index{microgradpp::Neuron@{microgradpp::Neuron}!operator()@{operator()}}
+\index{operator()@{operator()}!microgradpp::Neuron@{microgradpp::Neuron}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1_neuron_a2abc5dc4595d729d38393240930e131b} 
+Value\+Ptr microgradpp\+::\+Neuron\+::operator() (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}} \&}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Computes the output of the neuron for a given input. 
+
+This operator overload calculates the dot product of the neuron\textquotesingle{}s weights and the input tensor, adds the bias, and returns the result. If the input tensor size does not match the weights size, an exception is thrown.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The input tensor (1D) to the neuron. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A pointer to the resulting \doxylink{classmicrogradpp_1_1_value}{Value} after computation. 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em std\+::invalid\+\_\+argument} & If the input size does not match the weights size. \\
+\hline
+\end{DoxyExceptions}
+\Hypertarget{classmicrogradpp_1_1_neuron_ac9713219413ae060ce5b999c3fd566af}\index{microgradpp::Neuron@{microgradpp::Neuron}!parameters@{parameters}}
+\index{parameters@{parameters}!microgradpp::Neuron@{microgradpp::Neuron}}
+\doxysubsubsection{\texorpdfstring{parameters()}{parameters()}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1_neuron_ac9713219413ae060ce5b999c3fd566af} 
+\+\_\+\+\_\+\+MICROGRADPP\+\_\+\+NO\+\_\+\+DISCARD\+\_\+\+\_\+ \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}} microgradpp\+::\+Neuron\+::parameters (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the parameters of the neuron as a tensor. 
+
+This method combines the weights and the bias into a single Tensor1D object and returns it. The method reserves space for efficiency.
+
+\begin{DoxyReturn}{Returns}
+A Tensor1D containing the weights and bias of the neuron. 
+\end{DoxyReturn}
+\Hypertarget{classmicrogradpp_1_1_neuron_aede12667424ccd2220959d9f7262da41}\index{microgradpp::Neuron@{microgradpp::Neuron}!printParameters@{printParameters}}
+\index{printParameters@{printParameters}!microgradpp::Neuron@{microgradpp::Neuron}}
+\doxysubsubsection{\texorpdfstring{printParameters()}{printParameters()}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1_neuron_aede12667424ccd2220959d9f7262da41} 
+void microgradpp\+::\+Neuron\+::print\+Parameters (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Prints the parameters of the neuron. 
+
+This method outputs the current values and gradients of the weights and bias to the console for debugging purposes. \Hypertarget{classmicrogradpp_1_1_neuron_a581013f945385c4a3a59dde974f958f9}\index{microgradpp::Neuron@{microgradpp::Neuron}!zeroGrad@{zeroGrad}}
+\index{zeroGrad@{zeroGrad}!microgradpp::Neuron@{microgradpp::Neuron}}
+\doxysubsubsection{\texorpdfstring{zeroGrad()}{zeroGrad()}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1_neuron_a581013f945385c4a3a59dde974f958f9} 
+void microgradpp\+::\+Neuron\+::zero\+Grad (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Resets the gradients of the neuron. 
+
+This method sets the gradients of all weights and the bias to zero, preparing the neuron for a new forward/backward pass in training. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{_neuron_8hpp}{Neuron.\+hpp}}\end{DoxyCompactItemize}

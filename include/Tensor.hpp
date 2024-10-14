@@ -7,14 +7,17 @@
  *
  *  @section License
  *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the MIT License.
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
  *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
- *  INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
- *  PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
- *  FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
- *  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- *  DEALINGS IN THE SOFTWARE.
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program. If not, see <https://www.gnu.org/licenses/>.
  *
  *  @section Author
  *  Gautam Sharma
@@ -284,58 +287,106 @@ namespace microgradpp {
             this->tensor.emplace_back(subTensor);
         }
 
-
-        // Overload output stream
-        friend std::ostream & operator << (std::ostream &os, const _Tensor2D &tensor) {
-            for (const auto& row : tensor.tensor) {
-                for (const auto& val : row) {
-                    os << val;  // Assuming you want to print the data value
-                }
-            }
-            return os;
-        }
-
-        void zeroGrad(){
-            for(auto& subTensor: this->tensor){
-                for(auto& value: subTensor){
-                    value->grad = 0.0;
-                }
-            }
-        }
-
-
-        /*
-         * idx: row index
+        /**
+         * @brief Overloads the output stream operator for printing the contents of the 2D tensor.
+         *
+         * This operator iterates through each row of the tensor and then through each value
+         * in that row, sending each value to the output stream. This allows for a
+         * convenient way to display the contents of the tensor.
+         *
+         * @param os The output stream to write to.
+         * @param tensor The 2D tensor to print.
+         * @return The output stream after writing the tensor contents.
          */
-        Tensor1D_t operator[](const size_t idx) const{
-            if(this->tensor.size() <= idx){
-                throw std::invalid_argument("Accessing a Tensor out of bounds");
-            }
-            return this->tensor[idx];
-        }
+                friend std::ostream & operator << (std::ostream &os, const _Tensor2D &tensor) {
+                    for (const auto& row : tensor.tensor) {
+                        for (const auto& val : row) {
+                            os << val;  // Assuming you want to print the data value
+                        }
+                    }
+                    return os;
+                }
 
+        /**
+         * @brief Zeros the gradients of all elements in the 2D tensor.
+         *
+         * This method iterates through each sub-tensor (row) and sets the gradient
+         * of each ValuePtr to zero. This is typically used before starting a new
+         * forward/backward pass in training a neural network to ensure gradients
+         * from the previous pass do not affect the current calculations.
+         */
+                void zeroGrad() {
+                    for (auto& subTensor : this->tensor) {
+                        for (auto& value : subTensor) {
+                            value->grad = 0.0;
+                        }
+                    }
+                }
 
-        /*
-         * idx: row index
-         * jdx: col index
+        /**
+         * @brief Accesses a row in the 2D tensor using the index operator.
+         *
+         * This method returns a Tensor1D_t object representing a specific row
+         * in the 2D tensor. If the provided index is out of bounds, an
+         * std::invalid_argument exception is thrown.
+         *
+         * @param idx The index of the row to access.
+         * @return A Tensor1D_t object corresponding to the specified row.
+         * @throws std::invalid_argument If the index is out of bounds.
+         */
+                Tensor1D_t operator[](const size_t idx) const {
+                    if (this->tensor.size() <= idx) {
+                        throw std::invalid_argument("Accessing a Tensor out of bounds");
+                    }
+                    return this->tensor[idx];
+                }
+
+        /**
+         * @brief Accesses an element in the 2D tensor using the at method.
+         *
+         * This method returns a pointer to the Value at the specified row (idx)
+         * and column (jdx). If either the row or column index is out of bounds,
+         * an std::invalid_argument exception is thrown.
+         *
+         * @param idx The index of the row to access.
+         * @param jdx The index of the column to access (default is 0).
+         * @return A pointer to the Value at the specified position in the tensor.
+         * @throws std::invalid_argument If the indices are out of bounds.
+         */
+                __MICROGRADPP_NO_DISCARD__
+                        ValuePtr at(const size_t idx, const size_t jdx = 0) const {
+                    if (this->tensor.size() <= idx || this->tensor[idx].size() <= jdx) {
+                        throw std::invalid_argument("Accessing a Tensor out of bounds");
+                    }
+                    return this->tensor[idx][jdx];
+                }
+
+        /**
+         * @brief Pushes a new Tensor1D_t (row) onto the 2D tensor.
+         *
+         * This method appends the given Tensor1D_t object to the 2D tensor,
+         * increasing its size by one row. This is useful for dynamically
+         * adding new data to the tensor structure.
+         *
+         * @param value The Tensor1D_t object (row) to push back onto the tensor.
+         */
+                void push_back(const Tensor1D_t& value) {
+                    this->tensor.emplace_back(value);
+                }
+
+        /**
+         * @brief Returns the number of rows in the 2D tensor.
+         *
+         * This method provides the size of the 2D tensor, which is the
+         * number of sub-tensors (rows) it contains. This is useful for
+         * determining the dimensions of the tensor.
+         *
+         * @return The number of rows in the 2D tensor.
          */
         __MICROGRADPP_NO_DISCARD__
-        ValuePtr at(const size_t idx, const size_t jdx = 0) const{
-            if(this->tensor.size() <= idx || this->tensor[idx].size() <= jdx){
-                throw std::invalid_argument("Accessing a Tensor out of bounds");
-            }
-            return this->tensor[idx][jdx];
+        size_t size() const {
+                    return this->tensor.size();
         }
-
-        void push_back(const Tensor1D_t& value){
-            this->tensor.emplace_back(value);
-        }
-
-        __MICROGRADPP_NO_DISCARD__
-        size_t size() const{
-            return this->tensor.size();
-        }
-
     };
 
 

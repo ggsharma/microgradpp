@@ -1,0 +1,14 @@
+digraph "include/core/CoreLinear.hpp"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  Node1 [id="Node000001",label="include/core/CoreLinear.hpp",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Defines the CoreLinear class for linear transformation in neural networks."];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="include/core/Sequential.hpp",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$_sequential_8hpp.html",tooltip="Defines the Sequential class for sequentially stacking neural network layers."];
+  Node2 -> Node3 [id="edge2_Node000002_Node000003",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="include/base/BaseMultiLayer\lPerceptron.hpp",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$_base_multi_layer_perceptron_8hpp.html",tooltip="Defines a base class for implementing Multi-Layer Perceptron (MLP) networks."];
+  Node1 -> Node4 [id="edge3_Node000001_Node000004",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="include/nn/NeuralNet.hpp",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$_neural_net_8hpp_source.html",tooltip=" "];
+}

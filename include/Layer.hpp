@@ -2,6 +2,9 @@
 // Created by Gautam Sharma on 7/1/24.
 //
 
+
+// [DEPRECATED]
+
 #ifndef MICROGRADPP_LAYER_HPP
 #define MICROGRADPP_LAYER_HPP
 
@@ -17,9 +20,9 @@ namespace microgradpp {
 
     class Layer{
     private:
-        //mutable std::vector<Value*> params;
     public:
         std::vector<Neuron> neurons;
+
         Layer(size_t nin , size_t nout, const ActivationType& activation){
             for(size_t idx = 0; idx < nout; ++idx){
                 this->neurons.emplace_back(nin, activation);

@@ -24,8 +24,6 @@ using microgradpp::Value;
          auto c = Value::add(a,b);
          c->label = "c";
          c->backProp();
-
-
          microgradpp::GradTester::equals<float>(a->data, variables["a"].data, "testAddValue a data");
          microgradpp::GradTester::equals<float>(a->grad, variables["a"].grad, "testAddValue a grad");
          microgradpp::GradTester::equals<float>(b->data, variables["b"].data, "testAddValue b data");

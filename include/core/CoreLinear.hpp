@@ -130,5 +130,4 @@ namespace microgradpp::core {
             printf("\n");
         }
     };
-    };
 }

@@ -1,0 +1,334 @@
+\doxysection{Tensor.\+hpp}
+\hypertarget{_tensor_8hpp_source}{}\label{_tensor_8hpp_source}\index{include/Tensor.hpp@{include/Tensor.hpp}}
+\mbox{\hyperlink{_tensor_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#ifndef\ MICROGRADPP\_TENSOR\_HPP}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#define\ MICROGRADPP\_TENSOR\_HPP}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{comment}{//\ Standard\ headers}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#include\ <initializer\_list>}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{comment}{//\ mpp\ headers}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_value_8hpp}{Value.hpp}}"{}}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{keyword}{namespace\ }microgradpp\ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor}{BaseTensor}}\{}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ T\ \mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_a2ec32e7a12e37e2cb6368139d616a27a}{tensor}};\ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Provide\ begin()\ and\ end()\ methods\ to\ allow\ range-\/based\ for\ loop}}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \_\_MICROGRADPP\_NO\_DISCARD\_\_}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_a05dbc53131442f447afa5b2fe1c0aa42}{begin}}()\ \{}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>tensor.begin();}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \_\_MICROGRADPP\_NO\_DISCARD\_\_}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_aefae505be71051a0bb25f0f6feaf6214}{end}}()\ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>tensor.end();}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \_\_MICROGRADPP\_NO\_DISCARD\_\_}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_a3b93393e41bd060b53142bdee13acdf8}{begin}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>tensor.begin();}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \_\_MICROGRADPP\_NO\_DISCARD\_\_}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_ac808b701e84b2f7b2ef580c183c30b69}{end}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>tensor.end();}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \_\_MICROGRADPP\_NO\_DISCARD\_\_}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_aacab8796320c8b482a25a969a7d8bf20}{size}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>tensor.size();}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_a26611a2de387eea4023fc61fb45b1aa2}{reset}}()\ \{}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>tensor.clear();}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_a70b58da89b5a848cb20aa4bbc2a26302}{reserve}}(\textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_aacab8796320c8b482a25a969a7d8bf20}{size}})\ \{}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>tensor.reserve(\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_aacab8796320c8b482a25a969a7d8bf20}{size}});}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_aa8790ae3dcc9d3671e4c5231b5f925a5}{iterator}}\ =\ \textcolor{keyword}{typename}\ T::iterator;\ \ \ \ \ \ \ }
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_ae263de5850b7cbb040cb912498aec237}{const\_iterator}}\ =\ \textcolor{keyword}{typename}\ T::const\_iterator;\ }
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_aec6b187e4552ccad593c7e37123fc4f8}{insert}}(\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_aa8790ae3dcc9d3671e4c5231b5f925a5}{iterator}}\ a,\ \mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_ae263de5850b7cbb040cb912498aec237}{const\_iterator}}\ b,\ \mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_ae263de5850b7cbb040cb912498aec237}{const\_iterator}}\ c)\ \{}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>tensor.insert(a,\ b,\ c);}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00133\ \ \ \ \ \};}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{comment}{//\ Internal\ Use}}
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{\_Tensor1D}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classmicrogradpp_1_1_base_tensor}{BaseTensor}}<T>\{}
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{\_Tensor1D}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d_af4ab0c9311102389efa701c670c0e9ad}{\_Tensor1D}}(\textcolor{keyword}{const}\ std::vector<float>\&\ input)\{}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_a2ec32e7a12e37e2cb6368139d616a27a}{tensor}}.reserve(input.size());}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ value\ :\ input)\{}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_a2ec32e7a12e37e2cb6368139d616a27a}{tensor}}.emplace\_back(\mbox{\hyperlink{classmicrogradpp_1_1_value_a052fbe55c17739acae958c7255a7590b}{Value::create}}(value));}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00161\ }
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ std::ostream\ \&\ \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d_a072a08071833b5c9ac8bfd8c83f0f65d}{operator\ <<\ }}(std::ostream\ \&os,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{\_Tensor1D}}\ \&\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_a2ec32e7a12e37e2cb6368139d616a27a}{tensor}})\ \{}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ col\ :\ \mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_a2ec32e7a12e37e2cb6368139d616a27a}{tensor}}.tensor)\ \{}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ os\ <<\ col;}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ os;}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d_a16caeb3a4c365c5509aca7700ca6e180}{zeroGrad}}()\ \{}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ value\ :\ this-\/>\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_a2ec32e7a12e37e2cb6368139d616a27a}{tensor}})\ \{}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ value-\/>grad\ =\ 0.0;}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00183\ }
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ ValuePtr\ \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d_abaa919a3a8ecb6b4e8158e58d6465448}{operator[]}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ idx)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ accessElement(idx);}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \_\_MICROGRADPP\_NO\_DISCARD\_\_}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ValuePtr\ \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d_ac4610acf971ac59207f4b7f5b975bbab}{at}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ idx)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ accessElement(idx);}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00202\ }
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d_a2eeb41e9447a1cf3622c3abf7ee3d501}{push\_back}}(\textcolor{keyword}{const}\ ValuePtr\&\ value)\ \{}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_a2ec32e7a12e37e2cb6368139d616a27a}{tensor}}.emplace\_back(value);}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00210\ }
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d_a338c3aafab6853cd46b97f7122108dac}{emplace\_back}}(\textcolor{keyword}{const}\ ValuePtr\&\ value)\ \{}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_a2ec32e7a12e37e2cb6368139d616a27a}{tensor}}.emplace\_back(value);}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00218\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ ValuePtr\ accessElement(\textcolor{keywordtype}{size\_t}\ idx)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (idx\ >=\ this-\/>\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_a2ec32e7a12e37e2cb6368139d616a27a}{tensor}}.size())\ \{}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(\textcolor{stringliteral}{"{}Accessing\ Tensor1D\ out\ of\ bounds"{}});}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_a2ec32e7a12e37e2cb6368139d616a27a}{tensor}}[idx];}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00231\ }
+\DoxyCodeLine{00232\ \ \ \ \ \};}
+\DoxyCodeLine{00233\ }
+\DoxyCodeLine{00234\ }
+\DoxyCodeLine{00235\ \ \ \ \ \textcolor{comment}{//\ Type\ trait\ for\ extracting\ std::vector<ValuePtr>\ from\ T}}
+\DoxyCodeLine{00236\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00237\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmicrogradpp_1_1_extract_value_ptr_vector}{ExtractValuePtrVector}}\ \{}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }type\ =\ std::vector<ValuePtr>;\ \textcolor{comment}{//\ Default\ type\ if\ not\ matched}}
+\DoxyCodeLine{00239\ \ \ \ \ \};}
+\DoxyCodeLine{00240\ }
+\DoxyCodeLine{00241\ \ \ \ \ \textcolor{comment}{//\ Specialization\ for\ \_Tensor1D\ types}}
+\DoxyCodeLine{00242\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ U>}
+\DoxyCodeLine{00243\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmicrogradpp_1_1_extract_value_ptr_vector}{ExtractValuePtrVector}}<std::vector<\_Tensor1D<std::vector<U>>>>\ \{}
+\DoxyCodeLine{00244\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{type}}\ =\ \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{\_Tensor1D<std::vector<ValuePtr>}}>;}
+\DoxyCodeLine{00245\ \};}
+\DoxyCodeLine{00246\ }
+\DoxyCodeLine{00247\ }
+\DoxyCodeLine{00248\ \ \ \ \ \textcolor{comment}{//\ Internal\ Use}}
+\DoxyCodeLine{00258\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00259\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classmicrogradpp_1_1___tensor2_d}{\_Tensor2D}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classmicrogradpp_1_1_base_tensor}{BaseTensor}}<T>\ \{}
+\DoxyCodeLine{00260\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{classmicrogradpp_1_1___tensor2_d_aef4828a9bf290dfb98e3762ea6e2b812}{Tensor1D\_t}}\ =\ \textcolor{keyword}{typename}\ ExtractValuePtrVector<T>::type;\ }
+\DoxyCodeLine{00262\ }
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classmicrogradpp_1_1___tensor2_d}{\_Tensor2D}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00264\ }
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classmicrogradpp_1_1___tensor2_d_a6cc282a846deab983535d138a80881df}{\_Tensor2D}}(\textcolor{keyword}{const}\ std::initializer\_list<std::initializer\_list<float>>\&\ input)\ \{}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ list\ :\ input)\ \{}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classmicrogradpp_1_1___tensor2_d_aef4828a9bf290dfb98e3762ea6e2b812}{Tensor1D\_t}}\ subTensor;}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ value\ :\ list)\ \{}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ subTensor.emplace\_back(\mbox{\hyperlink{classmicrogradpp_1_1_value_a052fbe55c17739acae958c7255a7590b}{Value::create}}(value));}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_a2ec32e7a12e37e2cb6368139d616a27a}{tensor}}.emplace\_back(subTensor);}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00278\ }
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Constructor\ for\ a\ vector\ of\ initializer\ lists\ of\ doubles}}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ make\ a\ flattened\ Tensor}}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classmicrogradpp_1_1___tensor2_d_a1a544aca9843ac6a52131ffc965c5389}{\_Tensor2D}}(\textcolor{keyword}{const}\ std::vector<float>\&\ input)\ \{}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classmicrogradpp_1_1___tensor2_d_aef4828a9bf290dfb98e3762ea6e2b812}{Tensor1D\_t}}\ subTensor(input);}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_a2ec32e7a12e37e2cb6368139d616a27a}{tensor}}.emplace\_back(subTensor);}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00289\ }
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ std::ostream\ \&\ \mbox{\hyperlink{classmicrogradpp_1_1___tensor2_d_acf1c30b887d3613635cad5a9f6da6d93}{operator\ <<\ }}(std::ostream\ \&os,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classmicrogradpp_1_1___tensor2_d}{\_Tensor2D}}\ \&\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_a2ec32e7a12e37e2cb6368139d616a27a}{tensor}})\ \{}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ row\ :\ \mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_a2ec32e7a12e37e2cb6368139d616a27a}{tensor}}.tensor)\ \{}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ val\ :\ row)\ \{}
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ os\ <<\ val;\ \ \textcolor{comment}{//\ Assuming\ you\ want\ to\ print\ the\ data\ value}}
+\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ os;}
+\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00309\ }
+\DoxyCodeLine{00318\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classmicrogradpp_1_1___tensor2_d_a572e060694a7f60f5973298bbc00e93c}{zeroGrad}}()\ \{}
+\DoxyCodeLine{00319\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ subTensor\ :\ this-\/>\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_a2ec32e7a12e37e2cb6368139d616a27a}{tensor}})\ \{}
+\DoxyCodeLine{00320\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ value\ :\ subTensor)\ \{}
+\DoxyCodeLine{00321\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ value-\/>grad\ =\ 0.0;}
+\DoxyCodeLine{00322\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00323\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00324\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00325\ }
+\DoxyCodeLine{00337\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classmicrogradpp_1_1___tensor2_d_aef4828a9bf290dfb98e3762ea6e2b812}{Tensor1D\_t}}\ \mbox{\hyperlink{classmicrogradpp_1_1___tensor2_d_a02276485ab2de4f3a94bbb8942d2ef2e}{operator[]}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ idx)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00338\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this-\/>\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_a2ec32e7a12e37e2cb6368139d616a27a}{tensor}}.size()\ <=\ idx)\ \{}
+\DoxyCodeLine{00339\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::invalid\_argument(\textcolor{stringliteral}{"{}Accessing\ a\ Tensor\ out\ of\ bounds"{}});}
+\DoxyCodeLine{00340\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00341\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_a2ec32e7a12e37e2cb6368139d616a27a}{tensor}}[idx];}
+\DoxyCodeLine{00342\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00343\ }
+\DoxyCodeLine{00356\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_\_MICROGRADPP\_NO\_DISCARD\_\_}
+\DoxyCodeLine{00357\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ValuePtr\ \mbox{\hyperlink{classmicrogradpp_1_1___tensor2_d_a6bcb53545f0a3ceeba4556d266e048c7}{at}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ idx,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ jdx\ =\ 0)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00358\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this-\/>\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_a2ec32e7a12e37e2cb6368139d616a27a}{tensor}}.size()\ <=\ idx\ ||\ this-\/>tensor[idx].size()\ <=\ jdx)\ \{}
+\DoxyCodeLine{00359\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::invalid\_argument(\textcolor{stringliteral}{"{}Accessing\ a\ Tensor\ out\ of\ bounds"{}});}
+\DoxyCodeLine{00360\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00361\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_a2ec32e7a12e37e2cb6368139d616a27a}{tensor}}[idx][jdx];}
+\DoxyCodeLine{00362\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00363\ }
+\DoxyCodeLine{00373\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classmicrogradpp_1_1___tensor2_d_a6b4b52743f109d8c8af8232bb3d44137}{push\_back}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classmicrogradpp_1_1___tensor2_d_aef4828a9bf290dfb98e3762ea6e2b812}{Tensor1D\_t}}\&\ value)\ \{}
+\DoxyCodeLine{00374\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_a2ec32e7a12e37e2cb6368139d616a27a}{tensor}}.emplace\_back(value);}
+\DoxyCodeLine{00375\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00376\ }
+\DoxyCodeLine{00386\ \ \ \ \ \ \ \ \ \_\_MICROGRADPP\_NO\_DISCARD\_\_}
+\DoxyCodeLine{00387\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classmicrogradpp_1_1___tensor2_d_ab5bcfe5d13e5946d78a8cc3444102500}{size}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00388\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_a2ec32e7a12e37e2cb6368139d616a27a}{tensor}}.size();}
+\DoxyCodeLine{00389\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00390\ \ \ \ \ \};}
+\DoxyCodeLine{00391\ }
+\DoxyCodeLine{00392\ }
+\DoxyCodeLine{00393\ \ \ \ \ \textcolor{keyword}{typedef}\ \_Tensor1D<std::vector<ValuePtr>>\ Tensor1D;}
+\DoxyCodeLine{00394\ \ \ \ \ \textcolor{keyword}{typedef}\ \_Tensor2D<std::vector<Tensor1D>>\ Tensor2D;\ \textcolor{comment}{//\ std::vector<std::vector<ValuePtr>>}}
+\DoxyCodeLine{00395\ }
+\DoxyCodeLine{00396\ }
+\DoxyCodeLine{00397\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classmicrogradpp_1_1_tensor}{Tensor}}\ \{}
+\DoxyCodeLine{00398\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00399\ \ \ \ \ \ \ \ \ std::vector<std::vector<ValuePtr>>\ tensor;}
+\DoxyCodeLine{00400\ }
+\DoxyCodeLine{00401\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classmicrogradpp_1_1_tensor}{Tensor}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00402\ }
+\DoxyCodeLine{00403\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classmicrogradpp_1_1_tensor}{Tensor}}(\textcolor{keyword}{const}\ std::initializer\_list<float>\&\ input)\{}
+\DoxyCodeLine{00404\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ value\ :\ input)\{}
+\DoxyCodeLine{00405\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<ValuePtr>\ subTensor;}
+\DoxyCodeLine{00406\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ subTensor.emplace\_back(\mbox{\hyperlink{classmicrogradpp_1_1_value_a052fbe55c17739acae958c7255a7590b}{Value::create}}(value));}
+\DoxyCodeLine{00407\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tensor.emplace\_back(subTensor);}
+\DoxyCodeLine{00408\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00409\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00410\ }
+\DoxyCodeLine{00411\ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classmicrogradpp_1_1_tensor}{Tensor}}(\textcolor{keyword}{const}\ std::vector<float>\&\ input)\{}
+\DoxyCodeLine{00412\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<ValuePtr>\ subTensor;}
+\DoxyCodeLine{00413\ \ \ \ \ \ \ \ \ \ \ \ \ subTensor.reserve(input.size());}
+\DoxyCodeLine{00414\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ value\ :\ input)\{}
+\DoxyCodeLine{00415\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ subTensor.emplace\_back(\mbox{\hyperlink{classmicrogradpp_1_1_value_a052fbe55c17739acae958c7255a7590b}{Value::create}}(value));}
+\DoxyCodeLine{00416\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00417\ \ \ \ \ \ \ \ \ \ \ \ \ tensor.emplace\_back(subTensor);}
+\DoxyCodeLine{00418\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00419\ }
+\DoxyCodeLine{00420\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Constructor\ for\ a\ vector\ of\ initializer\ lists\ of\ doubles}}
+\DoxyCodeLine{00421\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classmicrogradpp_1_1_tensor}{Tensor}}(\textcolor{keyword}{const}\ std::initializer\_list<std::initializer\_list<float>>\&\ input)\ \{}
+\DoxyCodeLine{00422\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ list\ :\ input)\ \{}
+\DoxyCodeLine{00423\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<ValuePtr>\ subTensor;}
+\DoxyCodeLine{00424\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ value\ :\ list)\ \{}
+\DoxyCodeLine{00425\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ subTensor.emplace\_back(\mbox{\hyperlink{classmicrogradpp_1_1_value_a052fbe55c17739acae958c7255a7590b}{Value::create}}(value));}
+\DoxyCodeLine{00426\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00427\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tensor.emplace\_back(subTensor);}
+\DoxyCodeLine{00428\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00429\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00430\ }
+\DoxyCodeLine{00431\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Provide\ begin()\ and\ end()\ methods\ to\ allow\ range-\/based\ for\ loop}}
+\DoxyCodeLine{00432\ \ \ \ \ \ \ \ \ \_\_MICROGRADPP\_NO\_DISCARD\_\_}
+\DoxyCodeLine{00433\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ begin()\ \{}
+\DoxyCodeLine{00434\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ tensor.begin();}
+\DoxyCodeLine{00435\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00436\ }
+\DoxyCodeLine{00437\ \ \ \ \ \ \ \ \ \_\_MICROGRADPP\_NO\_DISCARD\_\_}
+\DoxyCodeLine{00438\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ end()\ \{}
+\DoxyCodeLine{00439\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ tensor.end();}
+\DoxyCodeLine{00440\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00441\ }
+\DoxyCodeLine{00442\ \ \ \ \ \ \ \ \ \_\_MICROGRADPP\_NO\_DISCARD\_\_}
+\DoxyCodeLine{00443\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ begin()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00444\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ tensor.begin();}
+\DoxyCodeLine{00445\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00446\ }
+\DoxyCodeLine{00447\ \ \ \ \ \ \ \ \ \_\_MICROGRADPP\_NO\_DISCARD\_\_}
+\DoxyCodeLine{00448\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ end()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00449\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ tensor.end();}
+\DoxyCodeLine{00450\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00451\ }
+\DoxyCodeLine{00452\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Overload\ output\ stream}}
+\DoxyCodeLine{00453\ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ std::ostream\ \&\ operator\ <<\ (std::ostream\ \&os,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classmicrogradpp_1_1_tensor}{Tensor}}\ \&tensor)\ \{}
+\DoxyCodeLine{00454\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ row\ :\ tensor.tensor)\ \{}
+\DoxyCodeLine{00455\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ val\ :\ row)\ \{}
+\DoxyCodeLine{00456\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ os\ <<\ val;\ \ \textcolor{comment}{//\ Assuming\ you\ want\ to\ print\ the\ data\ value}}
+\DoxyCodeLine{00457\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00458\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00459\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ os;}
+\DoxyCodeLine{00460\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00461\ }
+\DoxyCodeLine{00462\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ zeroGrad()\{}
+\DoxyCodeLine{00463\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keyword}{auto}\&\ subTensor:\ tensor)\{}
+\DoxyCodeLine{00464\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keyword}{auto}\&\ value:\ subTensor)\{}
+\DoxyCodeLine{00465\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ value-\/>grad\ =\ 0.0;}
+\DoxyCodeLine{00466\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00467\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00468\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00469\ }
+\DoxyCodeLine{00470\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ reset()\{}
+\DoxyCodeLine{00471\ \ \ \ \ \ \ \ \ \ \ \ \ tensor.clear();}
+\DoxyCodeLine{00472\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00473\ }
+\DoxyCodeLine{00474\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00475\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ *\ idx:\ row\ index}}
+\DoxyCodeLine{00476\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00477\ \ \ \ \ \ \ \ \ std::vector<ValuePtr>\ operator[](\textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ idx)\textcolor{keyword}{\ const}\{}
+\DoxyCodeLine{00478\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(tensor.size()\ <=\ idx)\{}
+\DoxyCodeLine{00479\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::invalid\_argument(\textcolor{stringliteral}{"{}Accessing\ a\ Tensor\ out\ of\ bounds"{}});}
+\DoxyCodeLine{00480\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00481\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ tensor[idx];}
+\DoxyCodeLine{00482\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00483\ }
+\DoxyCodeLine{00484\ }
+\DoxyCodeLine{00485\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00486\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ *\ idx:\ row\ index}}
+\DoxyCodeLine{00487\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ *\ jdx:\ col\ index}}
+\DoxyCodeLine{00488\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00489\ \ \ \ \ \ \ \ \ \_\_MICROGRADPP\_NO\_DISCARD\_\_}
+\DoxyCodeLine{00490\ \ \ \ \ \ \ \ \ ValuePtr\ at(\textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ idx,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ jdx\ =\ 0)\textcolor{keyword}{\ const}\{}
+\DoxyCodeLine{00491\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(tensor.size()\ <=\ idx\ ||\ tensor[idx].size()\ <=\ jdx)\{}
+\DoxyCodeLine{00492\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::invalid\_argument(\textcolor{stringliteral}{"{}Accessing\ a\ Tensor\ out\ of\ bounds"{}});}
+\DoxyCodeLine{00493\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00494\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ tensor[idx][jdx];}
+\DoxyCodeLine{00495\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00496\ }
+\DoxyCodeLine{00497\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ push\_back(\textcolor{keyword}{const}\ std::vector<ValuePtr>\&\ value)\{}
+\DoxyCodeLine{00498\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<ValuePtr>\ subTensor;}
+\DoxyCodeLine{00499\ \ \ \ \ \ \ \ \ \ \ \ \ std::copy(value.begin(),\ value.end(),\ std::back\_inserter(subTensor));}
+\DoxyCodeLine{00500\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>tensor.emplace\_back(subTensor);}
+\DoxyCodeLine{00501\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00502\ }
+\DoxyCodeLine{00503\ \ \ \ \ \ \ \ \ \_\_MICROGRADPP\_NO\_DISCARD\_\_}
+\DoxyCodeLine{00504\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ size()\textcolor{keyword}{\ const}\{}
+\DoxyCodeLine{00505\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ tensor.size();}
+\DoxyCodeLine{00506\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00507\ }
+\DoxyCodeLine{00508\ }
+\DoxyCodeLine{00509\ }
+\DoxyCodeLine{00510\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Web}}
+\DoxyCodeLine{00511\ \textcolor{comment}{//\ \ \ \ \ \ \ \_\_WEB\_\_\ float\ web\_at(const\ size\_t\ idx,\ const\ size\_t\ jdx)\{}}
+\DoxyCodeLine{00512\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ if(tensor.size()\ <=\ idx\ ||\ tensor[idx].size()\ <=\ jdx)\{}}
+\DoxyCodeLine{00513\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ throw\ std::invalid\_argument("{}Accessing\ a\ Tensor\ out\ of\ bounds"{});}}
+\DoxyCodeLine{00514\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00515\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ return\ tensor[idx][jdx]-\/>data;}}
+\DoxyCodeLine{00516\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00517\ }
+\DoxyCodeLine{00518\ \ \ \ \ \};}
+\DoxyCodeLine{00519\ \}}
+\DoxyCodeLine{00520\ }
+\DoxyCodeLine{00521\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//MICROGRADPP\_TENSOR\_HPP}}
+
+\end{DoxyCode}

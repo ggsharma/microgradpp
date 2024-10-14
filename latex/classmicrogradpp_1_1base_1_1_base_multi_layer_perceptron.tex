@@ -1,0 +1,115 @@
+\doxysection{microgradpp\+::base\+::Base\+Multi\+Layer\+Perceptron Class Reference}
+\hypertarget{classmicrogradpp_1_1base_1_1_base_multi_layer_perceptron}{}\label{classmicrogradpp_1_1base_1_1_base_multi_layer_perceptron}\index{microgradpp::base::BaseMultiLayerPerceptron@{microgradpp::base::BaseMultiLayerPerceptron}}
+
+
+Abstract base class for Multi-\/\+Layer Perceptron (MLP) networks.  
+
+
+
+
+{\ttfamily \#include $<$Base\+Multi\+Layer\+Perceptron.\+hpp$>$}
+
+
+
+Collaboration diagram for microgradpp\+::base\+::Base\+Multi\+Layer\+Perceptron\+:
+% FIG 0
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmicrogradpp_1_1base_1_1_base_multi_layer_perceptron_a69fd51108d98ea9dc8fee1ec626a613e}{Base\+Multi\+Layer\+Perceptron}} (const \mbox{\hyperlink{classmicrogradpp_1_1core_1_1_sequential}{Sequential}} \&\mbox{\hyperlink{classmicrogradpp_1_1base_1_1_base_multi_layer_perceptron_ad948bbc2ce04068c57704c1e1c625f7a}{sequential}})
+\begin{DoxyCompactList}\small\item\em Constructs the MLP base class with a given {\ttfamily Sequential} layer sequence. \end{DoxyCompactList}\item 
+\Hypertarget{classmicrogradpp_1_1base_1_1_base_multi_layer_perceptron_aca44d43993f056cfaba1a2489a7d7892}\label{classmicrogradpp_1_1base_1_1_base_multi_layer_perceptron_aca44d43993f056cfaba1a2489a7d7892} 
+void {\bfseries print} ()
+\begin{DoxyCompactList}\small\item\em Prints information about the model\textquotesingle{}s layer sequence. \end{DoxyCompactList}\item 
+\Hypertarget{classmicrogradpp_1_1base_1_1_base_multi_layer_perceptron_a6d96ea624db3ee6eca701abc11ef1981}\label{classmicrogradpp_1_1base_1_1_base_multi_layer_perceptron_a6d96ea624db3ee6eca701abc11ef1981} 
+void {\bfseries print\+Parameters} ()
+\begin{DoxyCompactList}\small\item\em Prints the parameters of each layer in the MLP model. \end{DoxyCompactList}\item 
+\Hypertarget{classmicrogradpp_1_1base_1_1_base_multi_layer_perceptron_a06f366c5b4b8a864e585e09f0d9097a9}\label{classmicrogradpp_1_1base_1_1_base_multi_layer_perceptron_a06f366c5b4b8a864e585e09f0d9097a9} 
+void {\bfseries zero\+Grad} ()
+\begin{DoxyCompactList}\small\item\em Resets the gradients for all layers to zero, preparing for a new training iteration. \end{DoxyCompactList}\item 
+\Hypertarget{classmicrogradpp_1_1base_1_1_base_multi_layer_perceptron_a421e2f66a2131b8eb01cb1b9942f6b31}\label{classmicrogradpp_1_1base_1_1_base_multi_layer_perceptron_a421e2f66a2131b8eb01cb1b9942f6b31} 
+void {\bfseries update} ()
+\begin{DoxyCompactList}\small\item\em Updates the model parameters based on computed gradients and the learning rate. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}} \mbox{\hyperlink{classmicrogradpp_1_1base_1_1_base_multi_layer_perceptron_af3e323533ec9fdc09e781084d6b11b7e}{operator()}} (const \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}} \&input)
+\begin{DoxyCompactList}\small\item\em Invokes the forward pass of the MLP for a given input. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}} \mbox{\hyperlink{classmicrogradpp_1_1base_1_1_base_multi_layer_perceptron_a5923dd156909d6c79bb102feaf68d353}{forward}} (\mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}} input)=0
+\begin{DoxyCompactList}\small\item\em Pure virtual method for the forward pass, to be implemented in derived classes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classmicrogradpp_1_1base_1_1_base_multi_layer_perceptron_ad948bbc2ce04068c57704c1e1c625f7a}\label{classmicrogradpp_1_1base_1_1_base_multi_layer_perceptron_ad948bbc2ce04068c57704c1e1c625f7a} 
+\mbox{\hyperlink{classmicrogradpp_1_1core_1_1_sequential}{Sequential}} \& {\bfseries sequential} = \+\_\+base\+Sequential
+\begin{DoxyCompactList}\small\item\em Public reference to the underlying {\ttfamily Sequential} object, used to build layer sequences. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classmicrogradpp_1_1base_1_1_base_multi_layer_perceptron_a354c9a9b819f7e8f0d8b19360f951c2d}\label{classmicrogradpp_1_1base_1_1_base_multi_layer_perceptron_a354c9a9b819f7e8f0d8b19360f951c2d} 
+float {\bfseries learning\+Rate} = 0.\+001
+\begin{DoxyCompactList}\small\item\em Learning rate used during the parameter update step. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Abstract base class for Multi-\/\+Layer Perceptron (MLP) networks. 
+
+This class provides a foundation for implementing multi-\/layer perceptron models. It encapsulates a {\ttfamily Sequential} object, which contains a series of neural network layers, and provides methods to print parameters, reset gradients, and update parameters. Derived classes must implement the {\ttfamily forward} method to define the forward pass logic. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classmicrogradpp_1_1base_1_1_base_multi_layer_perceptron_a69fd51108d98ea9dc8fee1ec626a613e}\index{microgradpp::base::BaseMultiLayerPerceptron@{microgradpp::base::BaseMultiLayerPerceptron}!BaseMultiLayerPerceptron@{BaseMultiLayerPerceptron}}
+\index{BaseMultiLayerPerceptron@{BaseMultiLayerPerceptron}!microgradpp::base::BaseMultiLayerPerceptron@{microgradpp::base::BaseMultiLayerPerceptron}}
+\doxysubsubsection{\texorpdfstring{BaseMultiLayerPerceptron()}{BaseMultiLayerPerceptron()}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1base_1_1_base_multi_layer_perceptron_a69fd51108d98ea9dc8fee1ec626a613e} 
+microgradpp\+::base\+::\+Base\+Multi\+Layer\+Perceptron\+::\+Base\+Multi\+Layer\+Perceptron (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmicrogradpp_1_1core_1_1_sequential}{Sequential}} \&}]{sequential}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructs the MLP base class with a given {\ttfamily Sequential} layer sequence. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sequential} & A {\ttfamily Sequential} object containing the layer sequence for the MLP. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classmicrogradpp_1_1base_1_1_base_multi_layer_perceptron_a5923dd156909d6c79bb102feaf68d353}\index{microgradpp::base::BaseMultiLayerPerceptron@{microgradpp::base::BaseMultiLayerPerceptron}!forward@{forward}}
+\index{forward@{forward}!microgradpp::base::BaseMultiLayerPerceptron@{microgradpp::base::BaseMultiLayerPerceptron}}
+\doxysubsubsection{\texorpdfstring{forward()}{forward()}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1base_1_1_base_multi_layer_perceptron_a5923dd156909d6c79bb102feaf68d353} 
+virtual \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}} microgradpp\+::base\+::\+Base\+Multi\+Layer\+Perceptron\+::forward (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}}}]{input}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Pure virtual method for the forward pass, to be implemented in derived classes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em input} & Input tensor for the forward pass. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Output tensor after processing the input through the MLP layers. 
+\end{DoxyReturn}
+\Hypertarget{classmicrogradpp_1_1base_1_1_base_multi_layer_perceptron_af3e323533ec9fdc09e781084d6b11b7e}\index{microgradpp::base::BaseMultiLayerPerceptron@{microgradpp::base::BaseMultiLayerPerceptron}!operator()@{operator()}}
+\index{operator()@{operator()}!microgradpp::base::BaseMultiLayerPerceptron@{microgradpp::base::BaseMultiLayerPerceptron}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1base_1_1_base_multi_layer_perceptron_af3e323533ec9fdc09e781084d6b11b7e} 
+\mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}} microgradpp\+::base\+::\+Base\+Multi\+Layer\+Perceptron\+::operator() (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}} \&}]{input}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Invokes the forward pass of the MLP for a given input. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em input} & The input tensor of shape 1D. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The output tensor after the forward pass. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/base/\mbox{\hyperlink{_base_multi_layer_perceptron_8hpp}{Base\+Multi\+Layer\+Perceptron.\+hpp}}\end{DoxyCompactItemize}

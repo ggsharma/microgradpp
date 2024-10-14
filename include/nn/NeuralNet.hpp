@@ -37,6 +37,7 @@
 
 // microgradpp core libraries
 #include "core/CoreReLU.hpp"
+#include "core/CoreTanH.hpp"
 #include "core/CoreLinear.hpp"
 
 namespace microgradpp::nn {
@@ -69,5 +70,18 @@ namespace microgradpp::nn {
      */
     std::unique_ptr<microgradpp::core::CoreReLU> ReLU() {
         return std::make_unique<microgradpp::core::CoreReLU>();
+    }
+
+    /**
+     * @brief Factory function to create a unique pointer to a CoreTanH layer.
+     *
+     * This function constructs a new instance of the `CoreTanH` class without any
+     * constructor arguments, returning a unique pointer to the created layer.
+     *
+     * @return std::unique_ptr<microgradpp::core::CoreTanH> A unique pointer
+     *         to the created CoreTanH layer instance.
+     */
+    std::unique_ptr<microgradpp::core::CoreTanH> TanH() {
+        return std::make_unique<microgradpp::core::CoreTanH>();
     }
 }

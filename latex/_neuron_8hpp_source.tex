@@ -1,0 +1,107 @@
+\doxysection{Neuron.\+hpp}
+\hypertarget{_neuron_8hpp_source}{}\label{_neuron_8hpp_source}\index{include/Neuron.hpp@{include/Neuron.hpp}}
+\mbox{\hyperlink{_neuron_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#ifndef\ MICROGRADPP\_NEURON\_HPP}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#define\ MICROGRADPP\_NEURON\_HPP}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_value_8hpp}{Value.hpp}}"{}}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_activation_8hpp}{Activation.hpp}}"{}}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#include\ "{}TypeDefs.hpp"{}}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_tensor_8hpp}{Tensor.hpp}}"{}}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#include\ <random>}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#include\ <numeric>}\ \textcolor{comment}{//\ for\ std::inner\_product}}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#include\ <thread>}}
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#include\ <execution>}\ \textcolor{comment}{//\ For\ parallel\ execution\ policies}}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#include\ <numeric>}\ \textcolor{comment}{//\ For\ std::transform\_reduce}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#include\ <future>}}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{keyword}{namespace\ }microgradpp\ \{}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{_neuron_8hpp_ac641c38fbe3dd46d0956d711aae882fc}{getRandomFloat}}()\ \{}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::random\_device\ rd;}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::mt19937\ gen(rd());}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::uniform\_real\_distribution<>\ dis(-\/1,\ 1);}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{float}\textcolor{keyword}{>}(dis(gen));}
+\DoxyCodeLine{00069\ \ \ \ \ \}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classmicrogradpp_1_1_neuron}{Neuron}}\ \{}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}}\ weights;\ \ \ \ \ \ }
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ ValuePtr\ bias\ =\ \mbox{\hyperlink{classmicrogradpp_1_1_value_a052fbe55c17739acae958c7255a7590b}{Value::create}}(0.0f);\ }
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classmicrogradpp_1_1_neuron_a8dd19e34ffd3a25bc58465ed917c1298}{Neuron}}(\textcolor{keywordtype}{size\_t}\ nin)\ \{}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ idx\ =\ 0;\ idx\ <\ nin;\ ++idx)\ \{}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ weights.\mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d_a338c3aafab6853cd46b97f7122108dac}{emplace\_back}}(\mbox{\hyperlink{classmicrogradpp_1_1_value_a052fbe55c17739acae958c7255a7590b}{Value::create}}(\mbox{\hyperlink{_neuron_8hpp_ac641c38fbe3dd46d0956d711aae882fc}{getRandomFloat}}()));}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classmicrogradpp_1_1_neuron_a60298debc125c5fd0cc7b77429b605f6}{Neuron}}(\textcolor{keywordtype}{size\_t}\ nin,\ \textcolor{keywordtype}{float}\ val)\ \{}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ idx\ =\ 0;\ idx\ <\ nin;\ ++idx)\ \{}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ weights.\mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d_a338c3aafab6853cd46b97f7122108dac}{emplace\_back}}(\mbox{\hyperlink{classmicrogradpp_1_1_value_a052fbe55c17739acae958c7255a7590b}{Value::create}}(\mbox{\hyperlink{_neuron_8hpp_ac641c38fbe3dd46d0956d711aae882fc}{getRandomFloat}}()));}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classmicrogradpp_1_1_neuron_a581013f945385c4a3a59dde974f958f9}{zeroGrad}}()\ \{}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ weight\ :\ weights)\ \{}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ weight-\/>grad\ =\ 0;}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ bias-\/>grad\ =\ 0;}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ ValuePtr\ \mbox{\hyperlink{classmicrogradpp_1_1_neuron_a2abc5dc4595d729d38393240930e131b}{operator()}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}}\&\ x)\ \{}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x.\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_aacab8796320c8b482a25a969a7d8bf20}{size}}()\ !=\ weights.\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_aacab8796320c8b482a25a969a7d8bf20}{size}}())\ \{}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::invalid\_argument(\textcolor{stringliteral}{"{}Error\ in\ micrograd::Neuron\ -\/>\ Vectors\ must\ be\ of\ the\ same\ length"{}});}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ ValuePtr\ sum\ =\ \mbox{\hyperlink{classmicrogradpp_1_1_value_a052fbe55c17739acae958c7255a7590b}{Value::create}}(0.0);}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ idx\ =\ 0;\ idx\ <\ weights.\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_aacab8796320c8b482a25a969a7d8bf20}{size}}();\ ++idx)\ \{}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ValuePtr\ intermediateVal\ =\ \mbox{\hyperlink{classmicrogradpp_1_1_value_ab404a0dc56e44379e6da5c78389ec178}{Value::multiply}}(x[idx],\ weights[idx]);}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sum\ =\ \mbox{\hyperlink{classmicrogradpp_1_1_value_a8e0413c6126c5024829b952489aa7e5c}{Value::add}}(sum,\ intermediateVal);}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00149\ }
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Add\ bias}}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ sum\ =\ \mbox{\hyperlink{classmicrogradpp_1_1_value_a8e0413c6126c5024829b952489aa7e5c}{Value::add}}(sum,\ bias);}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ sum;}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \_\_MICROGRADPP\_NO\_DISCARD\_\_}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}}\ \mbox{\hyperlink{classmicrogradpp_1_1_neuron_ac9713219413ae060ce5b999c3fd566af}{parameters}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}}\ out;}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_a70b58da89b5a848cb20aa4bbc2a26302}{reserve}}(weights.\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_aacab8796320c8b482a25a969a7d8bf20}{size}}()\ +\ 1);}
+\DoxyCodeLine{00168\ }
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_aec6b187e4552ccad593c7e37123fc4f8}{insert}}(out.\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_aefae505be71051a0bb25f0f6feaf6214}{end}}(),\ weights.\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_a05dbc53131442f447afa5b2fe1c0aa42}{begin}}(),\ weights.\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_aefae505be71051a0bb25f0f6feaf6214}{end}}());}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d_a2eeb41e9447a1cf3622c3abf7ee3d501}{push\_back}}(bias);}
+\DoxyCodeLine{00171\ }
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classmicrogradpp_1_1_neuron_aede12667424ccd2220959d9f7262da41}{printParameters}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Number\ of\ Parameters:\ \%zu\(\backslash\)n"{}},\ weights.\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_aacab8796320c8b482a25a969a7d8bf20}{size}}()\ +\ 1);}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ param\ :\ weights)\ \{}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}\%f,\ \%f\(\backslash\)n"{}},\ param-\/>data,\ param-\/>grad);}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}\%f,\ \%f\(\backslash\)n"{}},\ bias-\/>data,\ bias-\/>grad);}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00189\ }
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \_\_MICROGRADPP\_NO\_DISCARD\_\_}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classmicrogradpp_1_1_neuron_a11ccb91276d85745a6b6911fb6b610d5}{getParametersSize}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ weights.\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_aacab8796320c8b482a25a969a7d8bf20}{size}}()\ +\ 1;}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00202\ \ \ \ \ \};}
+\DoxyCodeLine{00203\ }
+\DoxyCodeLine{00204\ \}\ \textcolor{comment}{//\ namespace\ microgradpp}}
+\DoxyCodeLine{00205\ }
+\DoxyCodeLine{00206\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//MICROGRADPP\_NEURON\_HPP}}
+
+\end{DoxyCode}

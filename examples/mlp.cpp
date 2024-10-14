@@ -104,7 +104,6 @@ namespace microgradpp{
 
 }
 
-
 int main() {
     using microgradpp::Value;
     using microgradpp::Neuron;
@@ -156,8 +155,8 @@ int main() {
                            0.7470, -0.3344}};
 
     //         Expected output:
-//         Sum of each row in the input should be equal to each entry in ys
-//         Example: 0.2+0.3+-1 = -0.5
+    //         Sum of each row in the input should be equal to each entry in ys
+    //         Example: 0.2+0.3+-1 = -0.5
     Tensor2D ys = { {0.3879},  {0.0737}, {-0.1173}, {-0.1467},  {0.1155}, {-0.3718},  {0.2522},  {0.1087},
                     {-0.1298},  {0.0640}, {-0.1024}, {-0.0652}, {-0.0101},  {0.0767},  {0.1131}, {-0.0359},
                     {-0.1566}, {-0.0048},  {0.1575},  {0.4152} };
@@ -186,10 +185,7 @@ int main() {
     auto init =  getMemoryUsage();
 
     for (auto idx = 0; idx < numIterations; ++idx) {
-
-        //std::cout << "////////////////////////////////////////////////////////////////////////\n";
-
-        __MICROGRADPP_CLEAR__
+       __MICROGRADPP_CLEAR__
 
         auto initial_memory_usage = getMemoryUsage();
 

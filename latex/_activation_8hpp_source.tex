@@ -1,0 +1,51 @@
+\doxysection{Activation.\+hpp}
+\hypertarget{_activation_8hpp_source}{}\label{_activation_8hpp_source}\index{include/Activation.hpp@{include/Activation.hpp}}
+\mbox{\hyperlink{_activation_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#ifndef\ MICROGRADPP\_ACTIVATION\_HPP}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#define\ MICROGRADPP\_ACTIVATION\_HPP}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{comment}{//\ Standard\ libraries}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{comment}{//\ Microgradpp\ headers}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_value_8hpp}{Value.hpp}}"{}}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{keyword}{namespace\ }microgradpp\ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{comment}{//\ Enumeration\ for\ different\ activation\ types}}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{enum}\ \mbox{\hyperlink{_activation_8hpp_aed6a7eb28467c6f5d15e4ca0f27740df}{ActivationType}}\ \{}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_activation_8hpp_aed6a7eb28467c6f5d15e4ca0f27740dfaa98556c77ce675dae22a13590eed87bc}{RELU}},\ \ \ \ }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_activation_8hpp_aed6a7eb28467c6f5d15e4ca0f27740dfac58820440783ce8002fb399785383ea5}{TANH}},\ \ \ \ }
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_activation_8hpp_aed6a7eb28467c6f5d15e4ca0f27740dfa09ff01bf3880135470e194a04e4d6353}{SIGMOID}}\ \ }
+\DoxyCodeLine{00050\ \ \ \ \ \};}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classmicrogradpp_1_1_activation}{Activation}}\ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Static\ functions\ for\ activation\ computations}}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<Value>\ Relu(\textcolor{keyword}{const}\ std::shared\_ptr<Value>\&\ val)\ \{}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classmicrogradpp_1_1_value_a1d1b6b557b21badf8d81cfbc361d63b1}{Value::relu}}(val);}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<Value>\ TanH(\textcolor{keyword}{const}\ std::shared\_ptr<Value>\&\ val)\ \{}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classmicrogradpp_1_1_value_a07aef3c3d4ed3d39e05734dc6642d2c6}{Value::tanh}}(val);}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<Value>\ Sigmoid(\textcolor{keyword}{const}\ std::shared\_ptr<Value>\&\ val)\ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classmicrogradpp_1_1_value_ab37c547a08a48b4d825ceadbceecfe1c}{Value::sigmoid}}(val);}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Map\ of\ activation\ types\ to\ their\ corresponding\ functions}}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ std::unordered\_map<ActivationType,\ std::function<std::shared\_ptr<Value>(\textcolor{keyword}{const}\ std::shared\_ptr<Value>\&)>>\ mActivationFcn\ =\ \{}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{ActivationType::RELU,\ Relu\},}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{ActivationType::TANH,\ TanH\},}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{ActivationType::SIGMOID,\ Sigmoid\}}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00073\ \ \ \ \ \};}
+\DoxyCodeLine{00074\ \}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ MICROGRADPP\_ACTIVATION\_HPP}}
+\DoxyCodeLine{00077\ }
+
+\end{DoxyCode}

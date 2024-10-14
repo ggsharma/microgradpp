@@ -1,0 +1,207 @@
+\doxysection{microgradpp\+::\+\_\+\+Tensor1D\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classmicrogradpp_1_1___tensor1_d}{}\label{classmicrogradpp_1_1___tensor1_d}\index{microgradpp::\_Tensor1D$<$ T $>$@{microgradpp::\_Tensor1D$<$ T $>$}}
+
+
+A class representing a 1D tensor (vector) of Value\+Ptr objects.  
+
+
+
+
+{\ttfamily \#include $<$Tensor.\+hpp$>$}
+
+
+
+Inheritance diagram for microgradpp\+::\+\_\+\+Tensor1D\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:
+% FIG 0
+
+
+Collaboration diagram for microgradpp\+::\+\_\+\+Tensor1D\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:
+% FIG 1
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d_af4ab0c9311102389efa701c670c0e9ad}{\+\_\+\+Tensor1D}} (const std\+::vector$<$ float $>$ \&input)
+\begin{DoxyCompactList}\small\item\em Constructs a 1D tensor from a vector of floats. \end{DoxyCompactList}\item 
+\Hypertarget{classmicrogradpp_1_1___tensor1_d_a16caeb3a4c365c5509aca7700ca6e180}\label{classmicrogradpp_1_1___tensor1_d_a16caeb3a4c365c5509aca7700ca6e180} 
+void {\bfseries zero\+Grad} ()
+\begin{DoxyCompactList}\small\item\em Zeros the gradients of all elements in the tensor. \end{DoxyCompactList}\item 
+Value\+Ptr \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d_abaa919a3a8ecb6b4e8158e58d6465448}{operator\mbox{[}$\,$\mbox{]}}} (const size\+\_\+t idx) const
+\begin{DoxyCompactList}\small\item\em Accesses an element in the tensor using the index operator. \end{DoxyCompactList}\item 
+\+\_\+\+\_\+\+MICROGRADPP\+\_\+\+NO\+\_\+\+DISCARD\+\_\+\+\_\+ Value\+Ptr \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d_ac4610acf971ac59207f4b7f5b975bbab}{at}} (const size\+\_\+t idx) const
+\begin{DoxyCompactList}\small\item\em Accesses an element in the tensor using the at method. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d_a2eeb41e9447a1cf3622c3abf7ee3d501}{push\+\_\+back}} (const Value\+Ptr \&value)
+\begin{DoxyCompactList}\small\item\em Pushes a new Value\+Ptr onto the tensor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d_a338c3aafab6853cd46b97f7122108dac}{emplace\+\_\+back}} (const Value\+Ptr \&value)
+\begin{DoxyCompactList}\small\item\em Emplaces a new Value\+Ptr onto the tensor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classmicrogradpp_1_1_base_tensor}{microgradpp\+::\+Base\+Tensor$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\+\_\+\+\_\+\+MICROGRADPP\+\_\+\+NO\+\_\+\+DISCARD\+\_\+\+\_\+ auto \mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_a05dbc53131442f447afa5b2fe1c0aa42}{begin}} ()
+\begin{DoxyCompactList}\small\item\em Returns an iterator to the beginning of the tensor. \end{DoxyCompactList}\item 
+\+\_\+\+\_\+\+MICROGRADPP\+\_\+\+NO\+\_\+\+DISCARD\+\_\+\+\_\+ auto \mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_aefae505be71051a0bb25f0f6feaf6214}{end}} ()
+\begin{DoxyCompactList}\small\item\em Returns an iterator to the end of the tensor. \end{DoxyCompactList}\item 
+\+\_\+\+\_\+\+MICROGRADPP\+\_\+\+NO\+\_\+\+DISCARD\+\_\+\+\_\+ auto \mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_a3b93393e41bd060b53142bdee13acdf8}{begin}} () const
+\begin{DoxyCompactList}\small\item\em Returns a const iterator to the beginning of the tensor. \end{DoxyCompactList}\item 
+\+\_\+\+\_\+\+MICROGRADPP\+\_\+\+NO\+\_\+\+DISCARD\+\_\+\+\_\+ auto \mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_ac808b701e84b2f7b2ef580c183c30b69}{end}} () const
+\begin{DoxyCompactList}\small\item\em Returns a const iterator to the end of the tensor. \end{DoxyCompactList}\item 
+\+\_\+\+\_\+\+MICROGRADPP\+\_\+\+NO\+\_\+\+DISCARD\+\_\+\+\_\+ size\+\_\+t \mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_aacab8796320c8b482a25a969a7d8bf20}{size}} () const
+\begin{DoxyCompactList}\small\item\em Returns the size of the tensor. \end{DoxyCompactList}\item 
+void {\bfseries reset} ()
+\begin{DoxyCompactList}\small\item\em Clears the tensor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_a70b58da89b5a848cb20aa4bbc2a26302}{reserve}} (size\+\_\+t \mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_aacab8796320c8b482a25a969a7d8bf20}{size}})
+\begin{DoxyCompactList}\small\item\em Reserves memory for the tensor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_aec6b187e4552ccad593c7e37123fc4f8}{insert}} (\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_aa8790ae3dcc9d3671e4c5231b5f925a5}{iterator}} a, \mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_ae263de5850b7cbb040cb912498aec237}{const\+\_\+iterator}} b, \mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_ae263de5850b7cbb040cb912498aec237}{const\+\_\+iterator}} c)
+\begin{DoxyCompactList}\small\item\em Inserts elements into the tensor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+std\+::ostream \& \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d_a072a08071833b5c9ac8bfd8c83f0f65d}{operator$<$$<$}} (std\+::ostream \&os, const \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{\+\_\+\+Tensor1D}} \&\mbox{\hyperlink{classmicrogradpp_1_1_base_tensor_a2ec32e7a12e37e2cb6368139d616a27a}{tensor}})
+\begin{DoxyCompactList}\small\item\em Overloads the output stream operator for printing the tensor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Types inherited from \mbox{\hyperlink{classmicrogradpp_1_1_base_tensor}{microgradpp\+::\+Base\+Tensor$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+using {\bfseries iterator} = typename T\+::iterator
+\begin{DoxyCompactList}\small\item\em Type alias for the iterator. \end{DoxyCompactList}\item 
+using {\bfseries const\+\_\+iterator} = typename T\+::const\+\_\+iterator
+\begin{DoxyCompactList}\small\item\em Type alias for the const iterator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classmicrogradpp_1_1_base_tensor}{microgradpp\+::\+Base\+Tensor$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+T {\bfseries tensor}
+\begin{DoxyCompactList}\small\item\em The underlying data structure for the tensor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class T$>$\newline
+class microgradpp\+::\+\_\+\+Tensor1\+D$<$ T $>$}
+A class representing a 1D tensor (vector) of Value\+Ptr objects. 
+
+This class provides methods for tensor operations, including zeroing gradients, accessing elements, and pushing back new values.
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The type of tensor (e.\+g., std\+::vector$<$\+Value\+Ptr$>$). \\
+\hline
+\end{DoxyTemplParams}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classmicrogradpp_1_1___tensor1_d_af4ab0c9311102389efa701c670c0e9ad}\index{microgradpp::\_Tensor1D$<$ T $>$@{microgradpp::\_Tensor1D$<$ T $>$}!\_Tensor1D@{\_Tensor1D}}
+\index{\_Tensor1D@{\_Tensor1D}!microgradpp::\_Tensor1D$<$ T $>$@{microgradpp::\_Tensor1D$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{\_Tensor1D()}{\_Tensor1D()}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1___tensor1_d_af4ab0c9311102389efa701c670c0e9ad} 
+template$<$class T $>$ \\
+\mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{microgradpp\+::\+\_\+\+Tensor1D}}$<$ T $>$\+::\+\_\+\+Tensor1D (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ float $>$ \&}]{input}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+Constructs a 1D tensor from a vector of floats. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em input} & The vector of floats to initialize the tensor. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classmicrogradpp_1_1___tensor1_d_ac4610acf971ac59207f4b7f5b975bbab}\index{microgradpp::\_Tensor1D$<$ T $>$@{microgradpp::\_Tensor1D$<$ T $>$}!at@{at}}
+\index{at@{at}!microgradpp::\_Tensor1D$<$ T $>$@{microgradpp::\_Tensor1D$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{at()}{at()}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1___tensor1_d_ac4610acf971ac59207f4b7f5b975bbab} 
+template$<$class T $>$ \\
+\+\_\+\+\_\+\+MICROGRADPP\+\_\+\+NO\+\_\+\+DISCARD\+\_\+\+\_\+ Value\+Ptr \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{microgradpp\+::\+\_\+\+Tensor1D}}$<$ T $>$\+::at (\begin{DoxyParamCaption}\item[{const size\+\_\+t}]{idx}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accesses an element in the tensor using the at method. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em idx} & The index of the element to access. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A pointer to the accessed \doxylink{classmicrogradpp_1_1_value}{Value}. 
+\end{DoxyReturn}
+\Hypertarget{classmicrogradpp_1_1___tensor1_d_a338c3aafab6853cd46b97f7122108dac}\index{microgradpp::\_Tensor1D$<$ T $>$@{microgradpp::\_Tensor1D$<$ T $>$}!emplace\_back@{emplace\_back}}
+\index{emplace\_back@{emplace\_back}!microgradpp::\_Tensor1D$<$ T $>$@{microgradpp::\_Tensor1D$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{emplace\_back()}{emplace\_back()}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1___tensor1_d_a338c3aafab6853cd46b97f7122108dac} 
+template$<$class T $>$ \\
+void \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{microgradpp\+::\+\_\+\+Tensor1D}}$<$ T $>$\+::emplace\+\_\+back (\begin{DoxyParamCaption}\item[{const Value\+Ptr \&}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Emplaces a new Value\+Ptr onto the tensor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & The Value\+Ptr to emplace back. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classmicrogradpp_1_1___tensor1_d_abaa919a3a8ecb6b4e8158e58d6465448}\index{microgradpp::\_Tensor1D$<$ T $>$@{microgradpp::\_Tensor1D$<$ T $>$}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!microgradpp::\_Tensor1D$<$ T $>$@{microgradpp::\_Tensor1D$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1___tensor1_d_abaa919a3a8ecb6b4e8158e58d6465448} 
+template$<$class T $>$ \\
+Value\+Ptr \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{microgradpp\+::\+\_\+\+Tensor1D}}$<$ T $>$\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{const size\+\_\+t}]{idx}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accesses an element in the tensor using the index operator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em idx} & The index of the element to access. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A pointer to the accessed \doxylink{classmicrogradpp_1_1_value}{Value}. 
+\end{DoxyReturn}
+\Hypertarget{classmicrogradpp_1_1___tensor1_d_a2eeb41e9447a1cf3622c3abf7ee3d501}\index{microgradpp::\_Tensor1D$<$ T $>$@{microgradpp::\_Tensor1D$<$ T $>$}!push\_back@{push\_back}}
+\index{push\_back@{push\_back}!microgradpp::\_Tensor1D$<$ T $>$@{microgradpp::\_Tensor1D$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{push\_back()}{push\_back()}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1___tensor1_d_a2eeb41e9447a1cf3622c3abf7ee3d501} 
+template$<$class T $>$ \\
+void \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{microgradpp\+::\+\_\+\+Tensor1D}}$<$ T $>$\+::push\+\_\+back (\begin{DoxyParamCaption}\item[{const Value\+Ptr \&}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Pushes a new Value\+Ptr onto the tensor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & The Value\+Ptr to push back. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Friends And Related Symbol Documentation}
+\Hypertarget{classmicrogradpp_1_1___tensor1_d_a072a08071833b5c9ac8bfd8c83f0f65d}\index{microgradpp::\_Tensor1D$<$ T $>$@{microgradpp::\_Tensor1D$<$ T $>$}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!microgradpp::\_Tensor1D$<$ T $>$@{microgradpp::\_Tensor1D$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$}{operator<<}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1___tensor1_d_a072a08071833b5c9ac8bfd8c83f0f65d} 
+template$<$class T $>$ \\
+std\+::ostream \& operator$<$$<$ (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{os}{, }\item[{const \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{\+\_\+\+Tensor1D}}$<$ T $>$ \&}]{tensor}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Overloads the output stream operator for printing the tensor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em os} & The output stream. \\
+\hline
+{\em tensor} & The tensor to print. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The output stream. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{_tensor_8hpp}{Tensor.\+hpp}}\end{DoxyCompactItemize}

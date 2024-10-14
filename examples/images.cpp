@@ -107,6 +107,7 @@ namespace microgradpp{
     using microgradpp::core::Sequential;
     using microgradpp::core::MppCore;
     using namespace microgradpp::nn;
+
     class Example_Images : public BaseMultiLayerPerceptron{
     public:
         size_t width, height;
@@ -114,17 +115,16 @@ namespace microgradpp{
                 BaseMultiLayerPerceptron(Sequential(
                         {
                                 nn::Linear(width*height,4),
-                                nn::ReLU(),
+                                nn::TanH(),
                                 nn::Linear(4,width*height)
                         }))
         {
 
-            this->learningRate = 0.0001;
+            this->learningRate = 0.00001;
         }
 
 
         Tensor1D forward(Tensor1D input) override{
-            // call this->sequence(input) here
             return this->sequential(input);
         };
 
@@ -202,7 +202,7 @@ int main() {
         predictedMatDuringIter = predictedMatDuringIter.reshape(1, newWidth);
 
         std::string label = "Iteration: " + std::to_string(idx);
-        cv::putText(predictedMatDuringIter, label, Point(0, 50), FONT_HERSHEY_PLAIN, 1.0, CV_RGB(0,255,0), 2.0);
+        //cv::putText(predictedMatDuringIter, label, Point(0, 50), FONT_HERSHEY_PLAIN, 1.0, CV_RGB(255,255,255), 2.0);
         cv::imshow("Predicted True Pixels", predictedMatDuringIter);
         waitKey(50);
 

@@ -1,0 +1,49 @@
+\doxysection{Autograd.\+hpp}
+\hypertarget{_autograd_8hpp_source}{}\label{_autograd_8hpp_source}\index{include/Autograd.hpp@{include/Autograd.hpp}}
+\mbox{\hyperlink{_autograd_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{keyword}{namespace\ }microgradpp\{}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{class\ }Value;}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{using\ }ValuePtr\ =\ std::shared\_ptr<Value>;}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{comment}{//\ TapeEntry}}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmicrogradpp_1_1_tape_entry}{TapeEntry}}\ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ ValuePtr\ output;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ The\ output\ of\ the\ operation}}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ std::function<void()>\ backward\_fn\ =\ \textcolor{keyword}{nullptr};\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Function\ to\ compute\ gradients\ during\ backward\ pass}}
+\DoxyCodeLine{00047\ \ \ \ \ \};}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classmicrogradpp_1_1_autograd}{Autograd}}\ \{}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classmicrogradpp_1_1_autograd}{Autograd}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ std::vector<TapeEntry>\ tape;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Stores\ the\ sequence\ of\ operations}}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ std::unordered\_map<size\_t,\ std::function<void()>>\ TapeMap;}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classmicrogradpp_1_1_autograd_a3cae934e38cf8b41fa448f3c11834470}{add\_entry}}(ValuePtr\&\ output,\ std::function<\textcolor{keywordtype}{void}()>\ backward\_fn)\ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ tape.push\_back(\{output,\ std::move(backward\_fn)\});}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classmicrogradpp_1_1_autograd_a43151b89f84cd33131b592d218967772}{backward}}()\ \{}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ it\ =\ \mbox{\hyperlink{classmicrogradpp_1_1_autograd_aa6943749445aa13815022036b389cecb}{global\_tape}}.tape.rbegin();\ it\ !=\ \mbox{\hyperlink{classmicrogradpp_1_1_autograd_aa6943749445aa13815022036b389cecb}{global\_tape}}.tape.rend();\ ++it)\ \{}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (it-\/>backward\_fn)\ \{}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ it-\/>backward\_fn();}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classmicrogradpp_1_1_autograd_aa2cc6e29c8fbc40f1bafd5336776333d}{clear}}()\ noexcept\ \{}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classmicrogradpp_1_1_autograd_aa6943749445aa13815022036b389cecb}{global\_tape}}.tape.clear();}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classmicrogradpp_1_1_autograd}{Autograd}}\ \mbox{\hyperlink{classmicrogradpp_1_1_autograd_aa6943749445aa13815022036b389cecb}{global\_tape}};\ \textcolor{comment}{//\ Global\ instance\ of\ Autograd\ for\ tracking\ operations}}
+\DoxyCodeLine{00086\ \ \ \ \ \};}
+\DoxyCodeLine{00087\ \}}
+
+\end{DoxyCode}

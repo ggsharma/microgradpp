@@ -1,0 +1,61 @@
+\doxysection{microgradpp\+::Tensor Class Reference}
+\hypertarget{classmicrogradpp_1_1_tensor}{}\label{classmicrogradpp_1_1_tensor}\index{microgradpp::Tensor@{microgradpp::Tensor}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classmicrogradpp_1_1_tensor_a6a4314fae668e6cd4cfdd26829d41f1f}\label{classmicrogradpp_1_1_tensor_a6a4314fae668e6cd4cfdd26829d41f1f} 
+{\bfseries Tensor} (const std\+::initializer\+\_\+list$<$ float $>$ \&input)
+\item 
+\Hypertarget{classmicrogradpp_1_1_tensor_af10c8fa7453acd873483b0e7825214d6}\label{classmicrogradpp_1_1_tensor_af10c8fa7453acd873483b0e7825214d6} 
+{\bfseries Tensor} (const std\+::vector$<$ float $>$ \&input)
+\item 
+\Hypertarget{classmicrogradpp_1_1_tensor_a65dbfba724ded9f074e6820d4272300a}\label{classmicrogradpp_1_1_tensor_a65dbfba724ded9f074e6820d4272300a} 
+{\bfseries Tensor} (const std\+::initializer\+\_\+list$<$ std\+::initializer\+\_\+list$<$ float $>$ $>$ \&input)
+\item 
+\Hypertarget{classmicrogradpp_1_1_tensor_a830ff9d8d558a911cc66096e08fee0fc}\label{classmicrogradpp_1_1_tensor_a830ff9d8d558a911cc66096e08fee0fc} 
+\+\_\+\+\_\+\+MICROGRADPP\+\_\+\+NO\+\_\+\+DISCARD\+\_\+\+\_\+ auto {\bfseries begin} ()
+\item 
+\Hypertarget{classmicrogradpp_1_1_tensor_a0bb9ba6bcd37ad8794503529b43d1882}\label{classmicrogradpp_1_1_tensor_a0bb9ba6bcd37ad8794503529b43d1882} 
+\+\_\+\+\_\+\+MICROGRADPP\+\_\+\+NO\+\_\+\+DISCARD\+\_\+\+\_\+ auto {\bfseries end} ()
+\item 
+\Hypertarget{classmicrogradpp_1_1_tensor_afdeadacdae03033ad95555dfa5b8e73a}\label{classmicrogradpp_1_1_tensor_afdeadacdae03033ad95555dfa5b8e73a} 
+\+\_\+\+\_\+\+MICROGRADPP\+\_\+\+NO\+\_\+\+DISCARD\+\_\+\+\_\+ auto {\bfseries begin} () const
+\item 
+\Hypertarget{classmicrogradpp_1_1_tensor_a16ee27184994c482de30eb17cc410bdd}\label{classmicrogradpp_1_1_tensor_a16ee27184994c482de30eb17cc410bdd} 
+\+\_\+\+\_\+\+MICROGRADPP\+\_\+\+NO\+\_\+\+DISCARD\+\_\+\+\_\+ auto {\bfseries end} () const
+\item 
+\Hypertarget{classmicrogradpp_1_1_tensor_a05859095384243ffbb79ecacb8ec70a5}\label{classmicrogradpp_1_1_tensor_a05859095384243ffbb79ecacb8ec70a5} 
+void {\bfseries zero\+Grad} ()
+\item 
+\Hypertarget{classmicrogradpp_1_1_tensor_a3a1813908bc43a1d7aef87aa1fd8193f}\label{classmicrogradpp_1_1_tensor_a3a1813908bc43a1d7aef87aa1fd8193f} 
+void {\bfseries reset} ()
+\item 
+\Hypertarget{classmicrogradpp_1_1_tensor_ae84db6fe53ddcf489a4798a68a19695b}\label{classmicrogradpp_1_1_tensor_ae84db6fe53ddcf489a4798a68a19695b} 
+std\+::vector$<$ Value\+Ptr $>$ {\bfseries operator\mbox{[}$\,$\mbox{]}} (const size\+\_\+t idx) const
+\item 
+\Hypertarget{classmicrogradpp_1_1_tensor_ae6b53277b5919c17142dd5e612c7ccd1}\label{classmicrogradpp_1_1_tensor_ae6b53277b5919c17142dd5e612c7ccd1} 
+\+\_\+\+\_\+\+MICROGRADPP\+\_\+\+NO\+\_\+\+DISCARD\+\_\+\+\_\+ Value\+Ptr {\bfseries at} (const size\+\_\+t idx, const size\+\_\+t jdx=0) const
+\item 
+\Hypertarget{classmicrogradpp_1_1_tensor_aef03e21196f6171a618b66941ba6e933}\label{classmicrogradpp_1_1_tensor_aef03e21196f6171a618b66941ba6e933} 
+void {\bfseries push\+\_\+back} (const std\+::vector$<$ Value\+Ptr $>$ \&value)
+\item 
+\Hypertarget{classmicrogradpp_1_1_tensor_a7981e25f149fcb63d465b1e50520d68b}\label{classmicrogradpp_1_1_tensor_a7981e25f149fcb63d465b1e50520d68b} 
+\+\_\+\+\_\+\+MICROGRADPP\+\_\+\+NO\+\_\+\+DISCARD\+\_\+\+\_\+ size\+\_\+t {\bfseries size} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classmicrogradpp_1_1_tensor_a1d6ad79a720b2c74164b8412bc18abb9}\label{classmicrogradpp_1_1_tensor_a1d6ad79a720b2c74164b8412bc18abb9} 
+std\+::vector$<$ std\+::vector$<$ Value\+Ptr $>$ $>$ {\bfseries tensor}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classmicrogradpp_1_1_tensor_a07daa26f0a2da4a162cb2c7242556ab1}\label{classmicrogradpp_1_1_tensor_a07daa26f0a2da4a162cb2c7242556ab1} 
+std\+::ostream \& {\bfseries operator$<$$<$} (std\+::ostream \&os, const \mbox{\hyperlink{classmicrogradpp_1_1_tensor}{Tensor}} \&tensor)
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{_tensor_8hpp}{Tensor.\+hpp}}\end{DoxyCompactItemize}

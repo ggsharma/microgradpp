@@ -1,0 +1,35 @@
+\doxysection{include/core/\+Sequential.hpp File Reference}
+\hypertarget{_sequential_8hpp}{}\label{_sequential_8hpp}\index{include/core/Sequential.hpp@{include/core/Sequential.hpp}}
+
+
+Defines the {\ttfamily Sequential} class for sequentially stacking neural network layers.  
+
+
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include "{}Core\+Re\+LU.\+hpp"{}}\newline
+{\ttfamily \#include "{}Core\+Linear.\+hpp"{}}\newline
+{\ttfamily \#include "{}Type\+Defs.\+hpp"{}}\newline
+Include dependency graph for Sequential.\+hpp\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classmicrogradpp_1_1core_1_1_sequential}{microgradpp\+::core\+::\+Sequential}}
+\begin{DoxyCompactList}\small\item\em Manages a sequence of neural network layers and supports forward propagation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Defines the {\ttfamily Sequential} class for sequentially stacking neural network layers. 
+
+This file is part of the microgradpp project, a lightweight C++ library for neural network training and inference.\hypertarget{_value_8hpp_License}{}\doxysubsection{\texorpdfstring{License}{License}}\label{_value_8hpp_License}
+This program is free software\+: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program. If not, see \href{https://www.gnu.org/licenses/}{\texttt{ https\+://www.\+gnu.\+org/licenses/}}.\hypertarget{_value_8hpp_Author}{}\doxysubsection{\texorpdfstring{Author}{Author}}\label{_value_8hpp_Author}
+Gautam Sharma Email\+: \href{mailto:gautamsharma2813@gmail.com}{\texttt{ gautamsharma2813@gmail.\+com}} Date\+: October 14, 2024
+
+The {\ttfamily Sequential} class facilitates the creation of a sequence of neural network layers, allowing for easy forward propagation through a series of layers and providing methods for gradient management and parameter updates. This structure is designed to simplify model construction and manipulation in the microgradpp framework. 

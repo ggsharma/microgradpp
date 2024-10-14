@@ -1,0 +1,53 @@
+\doxysection{Loss\+Functions.\+hpp}
+\hypertarget{_loss_functions_8hpp_source}{}\label{_loss_functions_8hpp_source}\index{include/LossFunctions.hpp@{include/LossFunctions.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{comment}{//\ stdlibs}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#include\ <cassert>}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_abstract_loss_8hpp}{AbstractLoss.hpp}}"{}}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_tensor_8hpp}{Tensor.hpp}}"{}}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{keyword}{namespace\ }microgradpp::loss\{}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classmicrogradpp_1_1loss_1_1_mean_squared_error}{MeanSquaredError}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classmicrogradpp_1_1_abstract_loss}{AbstractLoss}}<Tensor2D>\{}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classmicrogradpp_1_1loss_1_1_mean_squared_error}{MeanSquaredError}}\ ()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ ValuePtr\ \mbox{\hyperlink{classmicrogradpp_1_1loss_1_1_mean_squared_error_a07e41c61459e8b23bf8e92ba659fd129}{operator()}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classmicrogradpp_1_1___tensor2_d}{Tensor2D}}\&\ groundTruth,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classmicrogradpp_1_1___tensor2_d}{Tensor2D}}\&\ prediction)\textcolor{keyword}{\ override}\{}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Calculate\ loss}}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ loss\ =\ \mbox{\hyperlink{classmicrogradpp_1_1_value_a052fbe55c17739acae958c7255a7590b}{Value::create}}(0.0f);}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ assert(groundTruth.\mbox{\hyperlink{classmicrogradpp_1_1___tensor2_d_ab5bcfe5d13e5946d78a8cc3444102500}{size}}()\ ==\ prediction.\mbox{\hyperlink{classmicrogradpp_1_1___tensor2_d_ab5bcfe5d13e5946d78a8cc3444102500}{size}}());}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ groundTruth.\mbox{\hyperlink{classmicrogradpp_1_1___tensor2_d_ab5bcfe5d13e5946d78a8cc3444102500}{size}}();\ ++i)\ \{}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ c\ =\ \mbox{\hyperlink{classmicrogradpp_1_1_value_a91834dfeca032f1f99cbabc1ec4a273e}{Value::subtract}}(groundTruth.\mbox{\hyperlink{classmicrogradpp_1_1___tensor2_d_a6bcb53545f0a3ceeba4556d266e048c7}{at}}(i)\ ,\ prediction.\mbox{\hyperlink{classmicrogradpp_1_1___tensor2_d_a6bcb53545f0a3ceeba4556d266e048c7}{at}}(i));}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ b\ =\ \mbox{\hyperlink{classmicrogradpp_1_1_value_ab404a0dc56e44379e6da5c78389ec178}{Value::multiply}}(c,\ c);}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ loss\ =\ \mbox{\hyperlink{classmicrogradpp_1_1_value_a8e0413c6126c5024829b952489aa7e5c}{Value::add}}(loss,\ b);}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ loss;}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00066\ \ \ \ \ \};}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classmicrogradpp_1_1loss_1_1_mean_squared_error_for1_d_pixels}{MeanSquaredErrorFor1DPixels}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classmicrogradpp_1_1_abstract_loss}{AbstractLoss}}<Tensor2D>\{}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classmicrogradpp_1_1loss_1_1_mean_squared_error_for1_d_pixels}{MeanSquaredErrorFor1DPixels}}\ ()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ ValuePtr\ \mbox{\hyperlink{classmicrogradpp_1_1loss_1_1_mean_squared_error_for1_d_pixels_adc58334e60d6348ab7bbb5b166dc41d9}{operator()}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classmicrogradpp_1_1___tensor2_d}{Tensor2D}}\&\ groundTruth,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classmicrogradpp_1_1___tensor2_d}{Tensor2D}}\&\ prediction)\textcolor{keyword}{\ override}\{}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Calculate\ loss}}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ loss\ =\ \mbox{\hyperlink{classmicrogradpp_1_1_value_a052fbe55c17739acae958c7255a7590b}{Value::create}}(0.0f);}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ \ maxSize\ =\ prediction[0].\mbox{\hyperlink{classmicrogradpp_1_1___tensor2_d_ab5bcfe5d13e5946d78a8cc3444102500}{size}}();}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ assert(groundTruth.\mbox{\hyperlink{classmicrogradpp_1_1___tensor2_d_ab5bcfe5d13e5946d78a8cc3444102500}{size}}()\ ==\ prediction.\mbox{\hyperlink{classmicrogradpp_1_1___tensor2_d_ab5bcfe5d13e5946d78a8cc3444102500}{size}}());}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ maxSize;\ ++i)\ \{}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ c\ =\ \mbox{\hyperlink{classmicrogradpp_1_1_value_a91834dfeca032f1f99cbabc1ec4a273e}{Value::subtract}}(groundTruth.\mbox{\hyperlink{classmicrogradpp_1_1___tensor2_d_a6bcb53545f0a3ceeba4556d266e048c7}{at}}(0,i)\ ,\ prediction.\mbox{\hyperlink{classmicrogradpp_1_1___tensor2_d_a6bcb53545f0a3ceeba4556d266e048c7}{at}}(0,i));}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ b\ =\ \mbox{\hyperlink{classmicrogradpp_1_1_value_ab404a0dc56e44379e6da5c78389ec178}{Value::multiply}}(c,\ c);}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ loss\ =\ \mbox{\hyperlink{classmicrogradpp_1_1_value_a8e0413c6126c5024829b952489aa7e5c}{Value::add}}(loss,\ b);}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ loss;}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00092\ \ \ \ \ \};}
+\DoxyCodeLine{00093\ \}}
+
+\end{DoxyCode}

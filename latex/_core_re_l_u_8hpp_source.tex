@@ -1,0 +1,36 @@
+\doxysection{Core\+Re\+LU.\+hpp}
+\hypertarget{_core_re_l_u_8hpp_source}{}\label{_core_re_l_u_8hpp_source}\index{include/core/CoreReLU.hpp@{include/core/CoreReLU.hpp}}
+\mbox{\hyperlink{_core_re_l_u_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{comment}{//\ Standard\ libraries}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#include\ <cassert>}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{comment}{//\ microgradpp\ libraries}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_mpp_core_8hpp}{MppCore.hpp}}"{}}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_activation_8hpp}{Activation.hpp}}"{}}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{keyword}{namespace\ }microgradpp::core\ \{}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classmicrogradpp_1_1core_1_1_core_re_l_u}{CoreReLU}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classmicrogradpp_1_1core_1_1_mpp_core}{MppCore}}\ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classmicrogradpp_1_1core_1_1_core_re_l_u_a356b40d5d3646e5667a0a40274459080}{print}}()\ const\ override\ final\ \{}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}ReLU\ Layer"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}}\ \mbox{\hyperlink{classmicrogradpp_1_1core_1_1_core_re_l_u_a2250d924efa54731bd84ef245afe371b}{operator()}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}}\&\ in)\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ activationFcn\ =\ Activation::mActivationFcn.\mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d_ac4610acf971ac59207f4b7f5b975bbab}{at}}(ActivationType::RELU);}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}}\ out;}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ value\ :\ in)\ \{}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out.\mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d_a2eeb41e9447a1cf3622c3abf7ee3d501}{push\_back}}(activationFcn(value));}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00082\ \ \ \ \ \};}
+\DoxyCodeLine{00083\ \}}
+
+\end{DoxyCode}

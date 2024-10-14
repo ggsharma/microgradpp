@@ -1,0 +1,41 @@
+\doxysection{include/\+Autograd.hpp File Reference}
+\hypertarget{_autograd_8hpp}{}\label{_autograd_8hpp}\index{include/Autograd.hpp@{include/Autograd.hpp}}
+
+
+Defines the Autograd class for automatic differentiation and gradient computation.  
+
+
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$functional$>$}\newline
+{\ttfamily \#include $<$unordered\+\_\+map$>$}\newline
+Include dependency graph for Autograd.\+hpp\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structmicrogradpp_1_1_tape_entry}{microgradpp\+::\+Tape\+Entry}}
+\item 
+class \mbox{\hyperlink{classmicrogradpp_1_1_autograd}{microgradpp\+::\+Autograd}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{_autograd_8hpp_a7bea0c126fabb778e0d0b35636eca5da}\label{_autograd_8hpp_a7bea0c126fabb778e0d0b35636eca5da} 
+using {\bfseries microgradpp\+::\+Value\+Ptr} = std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{classmicrogradpp_1_1_value}{Value}}$>$
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Defines the Autograd class for automatic differentiation and gradient computation. 
+
+This file is part of the microgradpp project, a lightweight C++ library for neural network training and inference.\hypertarget{_value_8hpp_License}{}\doxysubsection{\texorpdfstring{License}{License}}\label{_value_8hpp_License}
+This program is free software\+: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program. If not, see \href{https://www.gnu.org/licenses/}{\texttt{ https\+://www.\+gnu.\+org/licenses/}}.\hypertarget{_value_8hpp_Author}{}\doxysubsection{\texorpdfstring{Author}{Author}}\label{_value_8hpp_Author}
+Gautam Sharma Email\+: \href{mailto:gautamsharma2813@gmail.com}{\texttt{ gautamsharma2813@gmail.\+com}} Date\+: October 12, 2024
+
+This header file contains the definition of the Autograd class, which facilitates automatic differentiation by recording operations on the Value class. It provides methods for adding entries to the computation tape and performing backward passes to compute gradients. 

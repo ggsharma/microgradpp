@@ -1,0 +1,152 @@
+\doxysection{microgradpp\+::algorithms\+::MLP Class Reference}
+\hypertarget{classmicrogradpp_1_1algorithms_1_1_m_l_p}{}\label{classmicrogradpp_1_1algorithms_1_1_m_l_p}\index{microgradpp::algorithms::MLP@{microgradpp::algorithms::MLP}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmicrogradpp_1_1algorithms_1_1_m_l_p_a381ea3b024b78380a3e850553e9f4621}{MLP}} (size\+\_\+t nin, std\+::vector$<$ size\+\_\+t $>$ nouts, const float learning\+Rate=0.\+0025)
+\begin{DoxyCompactList}\small\item\em Constructs an \doxylink{classmicrogradpp_1_1algorithms_1_1_m_l_p}{MLP} with specified input size and output sizes. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmicrogradpp_1_1algorithms_1_1_m_l_p_ad812c3cf8f623b3946407dd5533b35ba}{MLP}} (size\+\_\+t nin, size\+\_\+t nout1, size\+\_\+t nout2, const float learning\+Rate=0.\+0025)
+\begin{DoxyCompactList}\small\item\em Constructs an \doxylink{classmicrogradpp_1_1algorithms_1_1_m_l_p}{MLP} with specified input size and two output sizes. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmicrogradpp_1_1algorithms_1_1_m_l_p_a36504608b0e6e553af4ce17e4eb16820}{MLP}} (size\+\_\+t nin, size\+\_\+t nout1, size\+\_\+t nout2, size\+\_\+t nout3, const float learning\+Rate=0.\+0025)
+\begin{DoxyCompactList}\small\item\em Constructs an \doxylink{classmicrogradpp_1_1algorithms_1_1_m_l_p}{MLP} with specified input size and three output sizes. \end{DoxyCompactList}\item 
+\Hypertarget{classmicrogradpp_1_1algorithms_1_1_m_l_p_aa29d2c9ada315b94dd897a102edfd1d2}\label{classmicrogradpp_1_1algorithms_1_1_m_l_p_aa29d2c9ada315b94dd897a102edfd1d2} 
+{\bfseries \texorpdfstring{$\sim$}{\string~}\+MLP} ()
+\begin{DoxyCompactList}\small\item\em Destructor for \doxylink{classmicrogradpp_1_1algorithms_1_1_m_l_p}{MLP}. \end{DoxyCompactList}\item 
+\Hypertarget{classmicrogradpp_1_1algorithms_1_1_m_l_p_aa64f557ee42b5cd29aec4af1fccb909c}\label{classmicrogradpp_1_1algorithms_1_1_m_l_p_aa64f557ee42b5cd29aec4af1fccb909c} 
+void {\bfseries update} () const
+\begin{DoxyCompactList}\small\item\em Updates the parameters of the \doxylink{classmicrogradpp_1_1algorithms_1_1_m_l_p}{MLP} using the gradients. \end{DoxyCompactList}\item 
+\Hypertarget{classmicrogradpp_1_1algorithms_1_1_m_l_p_afec2a2b2b5e88a43204d98c73e32200d}\label{classmicrogradpp_1_1algorithms_1_1_m_l_p_afec2a2b2b5e88a43204d98c73e32200d} 
+void {\bfseries zero\+Grad} ()
+\begin{DoxyCompactList}\small\item\em Resets the gradients of all layers to zero. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}} \mbox{\hyperlink{classmicrogradpp_1_1algorithms_1_1_m_l_p_aad59ffc25e998957280252070b63e8c5}{forward}} (const \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}} \&input)
+\begin{DoxyCompactList}\small\item\em Performs forward propagation with the given input. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}} \mbox{\hyperlink{classmicrogradpp_1_1algorithms_1_1_m_l_p_ac90455cc47c6a1279abaa9ef32f36c7a}{operator()}} (const \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}} \&input)
+\begin{DoxyCompactList}\small\item\em Performs forward propagation through the \doxylink{classmicrogradpp_1_1algorithms_1_1_m_l_p}{MLP}. \end{DoxyCompactList}\item 
+\Hypertarget{classmicrogradpp_1_1algorithms_1_1_m_l_p_adc0d2af3eeb5f5712b7a30000f90b5ed}\label{classmicrogradpp_1_1algorithms_1_1_m_l_p_adc0d2af3eeb5f5712b7a30000f90b5ed} 
+void {\bfseries print\+Parameters} () const
+\begin{DoxyCompactList}\small\item\em Prints the parameters and their gradients. \end{DoxyCompactList}\item 
+\+\_\+\+\_\+\+MICROGRADPP\+\_\+\+NO\+\_\+\+DISCARD\+\_\+\+\_\+ std\+::vector$<$ \mbox{\hyperlink{classmicrogradpp_1_1_value}{Value}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classmicrogradpp_1_1algorithms_1_1_m_l_p_a43418c60546ad812b6d80aa1f61c9c54}{parameters}} () const
+\begin{DoxyCompactList}\small\item\em Retrieves the parameters of the \doxylink{classmicrogradpp_1_1algorithms_1_1_m_l_p}{MLP}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classmicrogradpp_1_1algorithms_1_1_m_l_p_a381ea3b024b78380a3e850553e9f4621}\index{microgradpp::algorithms::MLP@{microgradpp::algorithms::MLP}!MLP@{MLP}}
+\index{MLP@{MLP}!microgradpp::algorithms::MLP@{microgradpp::algorithms::MLP}}
+\doxysubsubsection{\texorpdfstring{MLP()}{MLP()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1algorithms_1_1_m_l_p_a381ea3b024b78380a3e850553e9f4621} 
+microgradpp\+::algorithms\+::\+MLP\+::\+MLP (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{nin}{, }\item[{std\+::vector$<$ size\+\_\+t $>$}]{nouts}{, }\item[{const float}]{learning\+Rate}{ = {\ttfamily 0.0025}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructs an \doxylink{classmicrogradpp_1_1algorithms_1_1_m_l_p}{MLP} with specified input size and output sizes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nin} & Input size. \\
+\hline
+{\em nouts} & Vector of output sizes for each layer. \\
+\hline
+{\em learning\+Rate} & Learning rate for parameter updates (default is 0.\+0025). \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classmicrogradpp_1_1algorithms_1_1_m_l_p_ad812c3cf8f623b3946407dd5533b35ba}\index{microgradpp::algorithms::MLP@{microgradpp::algorithms::MLP}!MLP@{MLP}}
+\index{MLP@{MLP}!microgradpp::algorithms::MLP@{microgradpp::algorithms::MLP}}
+\doxysubsubsection{\texorpdfstring{MLP()}{MLP()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1algorithms_1_1_m_l_p_ad812c3cf8f623b3946407dd5533b35ba} 
+microgradpp\+::algorithms\+::\+MLP\+::\+MLP (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{nin}{, }\item[{size\+\_\+t}]{nout1}{, }\item[{size\+\_\+t}]{nout2}{, }\item[{const float}]{learning\+Rate}{ = {\ttfamily 0.0025}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructs an \doxylink{classmicrogradpp_1_1algorithms_1_1_m_l_p}{MLP} with specified input size and two output sizes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nin} & Input size. \\
+\hline
+{\em nout1} & Size of the first output layer. \\
+\hline
+{\em nout2} & Size of the second output layer. \\
+\hline
+{\em learning\+Rate} & Learning rate for parameter updates (default is 0.\+0025). \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classmicrogradpp_1_1algorithms_1_1_m_l_p_a36504608b0e6e553af4ce17e4eb16820}\index{microgradpp::algorithms::MLP@{microgradpp::algorithms::MLP}!MLP@{MLP}}
+\index{MLP@{MLP}!microgradpp::algorithms::MLP@{microgradpp::algorithms::MLP}}
+\doxysubsubsection{\texorpdfstring{MLP()}{MLP()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1algorithms_1_1_m_l_p_a36504608b0e6e553af4ce17e4eb16820} 
+microgradpp\+::algorithms\+::\+MLP\+::\+MLP (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{nin}{, }\item[{size\+\_\+t}]{nout1}{, }\item[{size\+\_\+t}]{nout2}{, }\item[{size\+\_\+t}]{nout3}{, }\item[{const float}]{learning\+Rate}{ = {\ttfamily 0.0025}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructs an \doxylink{classmicrogradpp_1_1algorithms_1_1_m_l_p}{MLP} with specified input size and three output sizes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nin} & Input size. \\
+\hline
+{\em nout1} & Size of the first output layer. \\
+\hline
+{\em nout2} & Size of the second output layer. \\
+\hline
+{\em nout3} & Size of the third output layer. \\
+\hline
+{\em learning\+Rate} & Learning rate for parameter updates (default is 0.\+0025). \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classmicrogradpp_1_1algorithms_1_1_m_l_p_aad59ffc25e998957280252070b63e8c5}\index{microgradpp::algorithms::MLP@{microgradpp::algorithms::MLP}!forward@{forward}}
+\index{forward@{forward}!microgradpp::algorithms::MLP@{microgradpp::algorithms::MLP}}
+\doxysubsubsection{\texorpdfstring{forward()}{forward()}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1algorithms_1_1_m_l_p_aad59ffc25e998957280252070b63e8c5} 
+\mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}} microgradpp\+::algorithms\+::\+MLP\+::forward (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}} \&}]{input}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Performs forward propagation with the given input. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em input} & Input tensor for the \doxylink{classmicrogradpp_1_1algorithms_1_1_m_l_p}{MLP}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Tensor1D Result of the forward pass. 
+\end{DoxyReturn}
+\Hypertarget{classmicrogradpp_1_1algorithms_1_1_m_l_p_ac90455cc47c6a1279abaa9ef32f36c7a}\index{microgradpp::algorithms::MLP@{microgradpp::algorithms::MLP}!operator()@{operator()}}
+\index{operator()@{operator()}!microgradpp::algorithms::MLP@{microgradpp::algorithms::MLP}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1algorithms_1_1_m_l_p_ac90455cc47c6a1279abaa9ef32f36c7a} 
+\mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}} microgradpp\+::algorithms\+::\+MLP\+::operator() (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}} \&}]{input}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Performs forward propagation through the \doxylink{classmicrogradpp_1_1algorithms_1_1_m_l_p}{MLP}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em input} & Input tensor for the \doxylink{classmicrogradpp_1_1algorithms_1_1_m_l_p}{MLP}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Tensor1D Result of the forward pass. 
+\end{DoxyReturn}
+\Hypertarget{classmicrogradpp_1_1algorithms_1_1_m_l_p_a43418c60546ad812b6d80aa1f61c9c54}\index{microgradpp::algorithms::MLP@{microgradpp::algorithms::MLP}!parameters@{parameters}}
+\index{parameters@{parameters}!microgradpp::algorithms::MLP@{microgradpp::algorithms::MLP}}
+\doxysubsubsection{\texorpdfstring{parameters()}{parameters()}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1algorithms_1_1_m_l_p_a43418c60546ad812b6d80aa1f61c9c54} 
+\+\_\+\+\_\+\+MICROGRADPP\+\_\+\+NO\+\_\+\+DISCARD\+\_\+\+\_\+ std\+::vector$<$ \mbox{\hyperlink{classmicrogradpp_1_1_value}{Value}} \texorpdfstring{$\ast$}{*} $>$ microgradpp\+::algorithms\+::\+MLP\+::parameters (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Retrieves the parameters of the \doxylink{classmicrogradpp_1_1algorithms_1_1_m_l_p}{MLP}. 
+
+\begin{DoxyReturn}{Returns}
+Vector of pointers to \doxylink{classmicrogradpp_1_1_value}{Value} objects representing the parameters. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{_algorithms_8hpp}{Algorithms.\+hpp}}\end{DoxyCompactItemize}

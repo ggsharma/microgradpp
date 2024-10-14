@@ -1,0 +1,141 @@
+\doxysection{microgradpp\+::core\+::Sequential Class Reference}
+\hypertarget{classmicrogradpp_1_1core_1_1_sequential}{}\label{classmicrogradpp_1_1core_1_1_sequential}\index{microgradpp::core::Sequential@{microgradpp::core::Sequential}}
+
+
+Manages a sequence of neural network layers and supports forward propagation.  
+
+
+
+
+{\ttfamily \#include $<$Sequential.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmicrogradpp_1_1core_1_1_sequential_ae08fd9c88776406e0065f6ab9ceabb8b}{Sequential}} (std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classmicrogradpp_1_1core_1_1_mpp_core}{Mpp\+Core}} $>$ $>$ layer\+Sequence)
+\begin{DoxyCompactList}\small\item\em Constructs a {\ttfamily \doxylink{classmicrogradpp_1_1core_1_1_sequential}{Sequential}} object with a specified layer sequence. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}} \mbox{\hyperlink{classmicrogradpp_1_1core_1_1_sequential_ab3ce3d16c2a50a629ab778f5369ef6ce}{operator()}} (const \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}} \&input)
+\begin{DoxyCompactList}\small\item\em Performs forward propagation through the sequence of layers. \end{DoxyCompactList}\item 
+\+\_\+\+\_\+\+MICROGRADPP\+\_\+\+NO\+\_\+\+DISCARD\+\_\+\+\_\+ std\+::vector$<$ \mbox{\hyperlink{classmicrogradpp_1_1_value}{Value}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classmicrogradpp_1_1core_1_1_sequential_afdcebbe428f6fd0ccee8e7b60ff49fb6}{parameters}} () const
+\begin{DoxyCompactList}\small\item\em Collects parameters from all layers in the sequence. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmicrogradpp_1_1core_1_1_sequential_ac825ff01a52439af9110ac768e319bb5}{update}} (float learning\+Rate)
+\begin{DoxyCompactList}\small\item\em Updates each parameter in the network based on the specified learning rate. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmicrogradpp_1_1core_1_1_sequential_a58648da9a3221f5708aefe4569dd8888}{print\+Parameters}} ()
+\begin{DoxyCompactList}\small\item\em Prints parameters for each layer in the sequence. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmicrogradpp_1_1core_1_1_sequential_ab49ee0801bea30f4ef60089d32632da3}{zero\+Grad}} ()
+\begin{DoxyCompactList}\small\item\em Resets gradients for all parameters in each layer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmicrogradpp_1_1core_1_1_sequential_ab4d52037df7e8bc453450c42cadb24f1}{print}} ()
+\begin{DoxyCompactList}\small\item\em Prints information about each layer in the sequence. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Manages a sequence of neural network layers and supports forward propagation. 
+
+The {\ttfamily \doxylink{classmicrogradpp_1_1core_1_1_sequential}{Sequential}} class allows users to stack neural network layers in a defined sequence, providing functionality for forward propagation, parameter access, gradient updates, and zeroing. This class is essential for constructing feedforward neural networks in the microgradpp library. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classmicrogradpp_1_1core_1_1_sequential_ae08fd9c88776406e0065f6ab9ceabb8b}\index{microgradpp::core::Sequential@{microgradpp::core::Sequential}!Sequential@{Sequential}}
+\index{Sequential@{Sequential}!microgradpp::core::Sequential@{microgradpp::core::Sequential}}
+\doxysubsubsection{\texorpdfstring{Sequential()}{Sequential()}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1core_1_1_sequential_ae08fd9c88776406e0065f6ab9ceabb8b} 
+microgradpp\+::core\+::\+Sequential\+::\+Sequential (\begin{DoxyParamCaption}\item[{std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classmicrogradpp_1_1core_1_1_mpp_core}{Mpp\+Core}} $>$ $>$}]{layer\+Sequence}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructs a {\ttfamily \doxylink{classmicrogradpp_1_1core_1_1_sequential}{Sequential}} object with a specified layer sequence. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em layer\+Sequence} & A vector of shared pointers to {\ttfamily \doxylink{classmicrogradpp_1_1core_1_1_mpp_core}{Mpp\+Core}} objects representing the neural network layers to be stacked sequentially. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classmicrogradpp_1_1core_1_1_sequential_ab3ce3d16c2a50a629ab778f5369ef6ce}\index{microgradpp::core::Sequential@{microgradpp::core::Sequential}!operator()@{operator()}}
+\index{operator()@{operator()}!microgradpp::core::Sequential@{microgradpp::core::Sequential}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1core_1_1_sequential_ab3ce3d16c2a50a629ab778f5369ef6ce} 
+\mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}} microgradpp\+::core\+::\+Sequential\+::operator() (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classmicrogradpp_1_1___tensor1_d}{Tensor1D}} \&}]{input}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Performs forward propagation through the sequence of layers. 
+
+Iteratively applies each layer in the sequence to the input, passing the result from one layer as the input to the next.
+
+
+\begin{DoxyParams}{Parameters}
+{\em input} & The input tensor for the network. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Tensor1D The output tensor after passing through all layers. 
+\end{DoxyReturn}
+\Hypertarget{classmicrogradpp_1_1core_1_1_sequential_afdcebbe428f6fd0ccee8e7b60ff49fb6}\index{microgradpp::core::Sequential@{microgradpp::core::Sequential}!parameters@{parameters}}
+\index{parameters@{parameters}!microgradpp::core::Sequential@{microgradpp::core::Sequential}}
+\doxysubsubsection{\texorpdfstring{parameters()}{parameters()}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1core_1_1_sequential_afdcebbe428f6fd0ccee8e7b60ff49fb6} 
+\+\_\+\+\_\+\+MICROGRADPP\+\_\+\+NO\+\_\+\+DISCARD\+\_\+\+\_\+ std\+::vector$<$ \mbox{\hyperlink{classmicrogradpp_1_1_value}{Value}} \texorpdfstring{$\ast$}{*} $>$ microgradpp\+::core\+::\+Sequential\+::parameters (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Collects parameters from all layers in the sequence. 
+
+Provides access to all parameters within the layers in the sequence, enabling updates and gradient tracking across the entire network.
+
+\begin{DoxyReturn}{Returns}
+std\+::vector$<$\+Value\texorpdfstring{$\ast$}{*}$>$ A vector of pointers to the parameters in all layers. 
+\end{DoxyReturn}
+\Hypertarget{classmicrogradpp_1_1core_1_1_sequential_ab4d52037df7e8bc453450c42cadb24f1}\index{microgradpp::core::Sequential@{microgradpp::core::Sequential}!print@{print}}
+\index{print@{print}!microgradpp::core::Sequential@{microgradpp::core::Sequential}}
+\doxysubsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1core_1_1_sequential_ab4d52037df7e8bc453450c42cadb24f1} 
+void microgradpp\+::core\+::\+Sequential\+::print (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Prints information about each layer in the sequence. 
+
+Calls the {\ttfamily print} function of each layer, outputting information such as layer types and sizes for each component in the sequence. \Hypertarget{classmicrogradpp_1_1core_1_1_sequential_a58648da9a3221f5708aefe4569dd8888}\index{microgradpp::core::Sequential@{microgradpp::core::Sequential}!printParameters@{printParameters}}
+\index{printParameters@{printParameters}!microgradpp::core::Sequential@{microgradpp::core::Sequential}}
+\doxysubsubsection{\texorpdfstring{printParameters()}{printParameters()}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1core_1_1_sequential_a58648da9a3221f5708aefe4569dd8888} 
+void microgradpp\+::core\+::\+Sequential\+::print\+Parameters (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Prints parameters for each layer in the sequence. 
+
+Calls the {\ttfamily print\+Parameters} function of each layer, displaying details about the parameters across all layers. \Hypertarget{classmicrogradpp_1_1core_1_1_sequential_ac825ff01a52439af9110ac768e319bb5}\index{microgradpp::core::Sequential@{microgradpp::core::Sequential}!update@{update}}
+\index{update@{update}!microgradpp::core::Sequential@{microgradpp::core::Sequential}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1core_1_1_sequential_ac825ff01a52439af9110ac768e319bb5} 
+void microgradpp\+::core\+::\+Sequential\+::update (\begin{DoxyParamCaption}\item[{float}]{learning\+Rate}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Updates each parameter in the network based on the specified learning rate. 
+
+Adjusts each parameter by subtracting the product of the learning rate and the parameter\textquotesingle{}s gradient, supporting the training process.
+
+
+\begin{DoxyParams}{Parameters}
+{\em learning\+Rate} & The learning rate to apply for each parameter update. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classmicrogradpp_1_1core_1_1_sequential_ab49ee0801bea30f4ef60089d32632da3}\index{microgradpp::core::Sequential@{microgradpp::core::Sequential}!zeroGrad@{zeroGrad}}
+\index{zeroGrad@{zeroGrad}!microgradpp::core::Sequential@{microgradpp::core::Sequential}}
+\doxysubsubsection{\texorpdfstring{zeroGrad()}{zeroGrad()}}
+{\footnotesize\ttfamily \label{classmicrogradpp_1_1core_1_1_sequential_ab49ee0801bea30f4ef60089d32632da3} 
+void microgradpp\+::core\+::\+Sequential\+::zero\+Grad (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Resets gradients for all parameters in each layer. 
+
+Calls the {\ttfamily zero\+Grad} function of each layer, setting all parameter gradients to zero for a new optimization step. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/core/\mbox{\hyperlink{_sequential_8hpp}{Sequential.\+hpp}}\end{DoxyCompactItemize}
