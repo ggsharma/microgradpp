@@ -132,15 +132,17 @@ We welcome contributions to micrograd++. Here are a few areas where you can help
 
 ### TODO
 
+- ~~**Modify CMakeLists to Add a Flag to Build Tests**: Enhance the build configuration to optionally include tests.~~
+- ~~**Make a Tensor Class**: Create a Tensor class to simplify data loading and manipulation.~~
+- ~~**Add an Activation Function Enum or Class**: Implement a flexible way to handle different activation functions.~~
+- ~~**Make an Abstract Base Class for Layer and Value**: Design abstract base classes to improve the architecture and extensibility.~~
 - **CI/CD pipeline**: Develop a pipeline using github actions to execute tests automatically on a commit.
-- **Modify CMakeLists to Add a Flag to Build Tests**: Enhance the build configuration to optionally include tests.
-- **Make a Tensor Class**: Create a Tensor class to simplify data loading and manipulation.
-- **Add an Activation Function Enum or Class**: Implement a flexible way to handle different activation functions.
-- **Make an Abstract Base Class for Layer and Value**: Design abstract base classes to improve the architecture and extensibility.
+- **Improve README**: Add few examples on how to leverage this library.
+- **Python Interface??**: Probably make a python interface  
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the GNU License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
