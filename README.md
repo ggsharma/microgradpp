@@ -1,13 +1,13 @@
 
 ---
 
-# micrograd++
+# microgradpp
 
 ## Are you tired of using predated hard-to-use C++ machine learning library???
 
 <img src="/public/german_shephard.jpg" alt="drawing" width="200" height="200"/>
 
-Welcome to micrograd++. This repository is inspired by Andrej Karpathy's [micrograd](https://github.com/karpathy/micrograd). micrograd++ is a pure C++ machine learning library designed to make machine learning accessible to everyone.
+Welcome to microgradpp. This repository is inspired by Andrej Karpathy's [micrograd](https://github.com/karpathy/micrograd). micrograd++ is a pure C++ machine learning library designed to make machine learning accessible to everyone.
 
 ## Overview
 
