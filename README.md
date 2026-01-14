@@ -1,6 +1,7 @@
 <p align="center">
-  <img src="public/german_shephard.jpg" alt="microgradpp" width="300"/>
+  <img src="assets/logo.svg" alt="microgradpp logo" width="300"/>
 </p>
+
 
 <h1 align="center">microgradpp</h1>
 
