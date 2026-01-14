@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo.svg" alt="microgradpp logo" width="300"/>
+  <img src="assets/logo.svg" alt="microgradpp logo" width="500"/>
 </p>
 
 
