@@ -1,157 +1,298 @@
+<p align="center">
+  <img src="public/german_shephard.jpg" alt="microgradpp" width="300"/>
+</p>
+
+<h1 align="center">microgradpp</h1>
+
+<p align="center">
+  <strong>A pure C++ machine learning library inspired by Andrej Karpathy's micrograd</strong>
+</p>
+
+<p align="center">
+  <a href="#features">Features</a> •
+  <a href="#getting-started">Getting Started</a> •
+  <a href="#examples">Examples</a> •
+  <a href="#usage">Usage</a> •
+  <a href="#contributing">Contributing</a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/C%2B%2B-17-blue.svg" alt="C++17"/>
+  <img src="https://img.shields.io/badge/CMake-3.15+-green.svg" alt="CMake"/>
+  <img src="https://img.shields.io/github/license/ggsharma/microgradpp" alt="License"/>
+  <img src="https://img.shields.io/github/stars/ggsharma/microgradpp?style=social" alt="Stars"/>
+</p>
 
 ---
 
-# microgradpp
+## Are you tired of using outdated hard-to-use C++ machine learning libraries???
 
-## Are you tired of using predated hard-to-use C++ machine learning library???
+Welcome to **microgradpp**! This repository is inspired by Andrej Karpathy's [micrograd](https://github.com/karpathy/micrograd). microgradpp is a pure C++ machine learning library designed to make machine learning accessible to everyone.
 
-<img src="/public/german_shephard.jpg" alt="drawing" width="200" height="200"/>
+<p align="center">
+  <img src="public/mlp.gif" alt="Multi layer perceptron training visualization" width="600"/>
+</p>
 
-Welcome to microgradpp. This repository is inspired by Andrej Karpathy's [micrograd](https://github.com/karpathy/micrograd). micrograd++ is a pure C++ machine learning library designed to make machine learning accessible to everyone.
+---
 
-## Overview
+## What is microgradpp?
 
-micrograd++ aims to provide a simple yet powerful framework for building and training machine learning models. By leveraging C++, it ensures performance efficiency and allows for deep integration with C++-based systems and applications.
+**microgradpp** (micrograd++) is a C++ implementation of an automatic differentiation (autograd) engine with a neural network library built on top. It implements backpropagation (reverse-mode autodiff) over a dynamically built computational graph and provides tools to build and train neural networks.
 
-![Multi layer perceptron](/public/mlp.gif)
+### Why microgradpp?
+
+| Feature | microgradpp | Python micrograd |
+|---------|-------------|------------------|
+| Language | Modern C++17 | Python |
+| Performance | Fast (compiled) | Interpreted |
+| Computer Vision | ✅ OpenCV support | ❌ |
+| Header-Only Option | ✅ | ✅ |
+
+---
 
 ## Features
 
-- **Pure C++**: Entirely implemented in C++ for high performance.
-- **Inspired by micrograd**: Brings the simplicity and educational value of micrograd to the C++ ecosystem.
-- **Accessible Machine Learning**: Designed to be easy to use, even for those new to machine learning or C++.
+* ✅ **Pure C++**: Entirely implemented in C++ for high performance
+* ✅ **Inspired by micrograd**: Brings the simplicity and educational value of micrograd to the C++ ecosystem
+* ✅ **Accessible Machine Learning**: Designed to be easy to use, even for those new to machine learning or C++
+* ✅ **Computer Vision Support**: OpenCV integration for image-based neural networks
+* ✅ **Header-Only Option**: Can be used as a header-only library
+* ✅ **Tensor Class**: Simplified data loading and manipulation
+* ✅ **Multiple Activation Functions**: ReLU, Tanh, Sigmoid, and more
+
+---
 
 ## Getting Started
 
 ### Prerequisites
 
-- **CMake**: Version 3.15 or higher
-- **C++ Compiler**: Supports C++17 standard
-- **opencv**: For visualization
+* **CMake**: Version 3.15 or higher
+* **C++ Compiler**: Supports C++17 standard
+* **OpenCV**: For visualization (optional)
 
 ### Building the Library
 
-1. Clone the repository:
-   ```sh
+1. **Clone the repository:**
+   ```bash
    git clone https://github.com/gautam-sharma1/microgradpp.git
    cd microgradpp
    ```
 
-2. Create a build directory:
-   ```sh
+2. **Create a build directory:**
+   ```bash
    mkdir build
    cd build
    ```
 
-3. Configure the project with CMake:
-   ### Build microgradpp only
-      ```sh
-      cmake ..
-      ```
-   or
-   ### Builds example and tests
-   ```sh
-   cmake .. -DBUILD_EXAMPLES=ON -DBUILD_TESTS=ON ..
+3. **Configure the project with CMake:**
+
+   Build microgradpp only:
+   ```bash
+   cmake ..
    ```
-   or
-   ### To build a Release build
-   ```sh
+
+   Build with examples and tests:
+   ```bash
+   cmake .. -DBUILD_EXAMPLES=ON -DBUILD_TESTS=ON
+   ```
+
+   Release build:
+   ```bash
    cmake .. -DCMAKE_BUILD_TYPE=Release
    ```
 
-4. Build the project:
-   ```sh
+4. **Build the project:**
+   ```bash
    make
    ```
 
-### Using the Header only Library
+### Using as Header-Only Library
 
-Microgradpp is also available as a header only library. 
+microgradpp is also available as a header-only library. Simply include the headers from `include/` in your project:
 
+```cpp
+#include "microgradpp/Value.hpp"
+#include "microgradpp/MLP.hpp"
+```
 
 ### Running the Example
 
-After building, you can run the provided example by executing the `m++` binary:
-```sh
+After building, run the provided example:
+```bash
 ./m++
 ```
 
-## Project Structure
-
-- `CMakeLists.txt`: Build configuration for CMake.
-- `include/`: Header files for the library.
-- `src/`: Source files for the library.
-- `main.cpp`: Example usage of the library.
+---
 
 ## Usage
 
-Here’s a brief example of how to use micrograd++:
+Here's a brief example of how to use microgradpp:
 
 ```cpp
 #include <iostream>
 #include "Value.h"
 
 int main() {
+    // Create values
     auto a = microgradpp::Value::create(2.0);
     auto b = microgradpp::Value::create(3.0);
+    
+    // Build computation graph
     auto c = a * b;
+    
+    // Backpropagation
     c->backProp();
     
-    std::cout << "a->grad: " << a->grad << std::endl;
-    std::cout << "b->grad: " << b->grad << std::endl;
+    std::cout << "a->grad: " << a->grad << std::endl;  // 3.0
+    std::cout << "b->grad: " << b->grad << std::endl;  // 2.0
 
     return 0;
 }
 ```
 
+---
+
 ## Examples
 
-Head over to the examples directory to play around with the examples. To build examples, configure cmake from the root directory as follows:
+Head over to the `examples/` directory to explore various examples. To build examples:
 
-```sh
+```bash
 cd build
 cmake -DBUILD_EXAMPLES=ON .. && make
 cd examples
-./example_mlp # to run mlp example
+./example_mlp  # Run MLP example
 ```
-This will produce executables in the build folder
 
-### ML example
-A simple multi layer perceptron is defined in 
-**mlp.cpp**. Running it for 50 iterations gives the following result:
+### Multi-Layer Perceptron (MLP)
 
-![Loss function of MLP](/public/mlp.png)
+A simple multi-layer perceptron defined in **mlp.cpp**. Running it for 50 iterations:
 
-### Computer Vision example
+<p align="center">
+  <img src="public/mlp.png" alt="Loss function of MLP training" width="600"/>
+</p>
 
-The example in **images.cpp** learns a cute german shephard puppy face. The output of it is as follows:
+### Computer Vision Example 🐕
 
-![Neural network predicting a german shephard face](/public/gsd.gif)
+The example in **images.cpp** trains a neural network to learn a German Shepherd puppy face:
+
+<p align="center">
+  <img src="public/gsd.gif" alt="Neural network learning a German Shepherd face" width="600"/>
+</p>
+
+---
+
+## Project Structure
+
+```
+microgradpp/
+├── include/          # Header files
+├── examples/         # Example programs
+├── tests/            # Unit tests
+├── public/           # Images and assets
+├── scripts/          # Utility scripts
+├── CMakeLists.txt    # CMake configuration
+├── main.cpp          # Main example
+└── README.md
+```
+
+---
+
+## API Overview
+
+### Value Class
+
+The core building block for automatic differentiation:
+
+```cpp
+auto x = microgradpp::Value::create(2.0);
+auto y = microgradpp::Value::create(3.0);
+auto z = x * y + x->pow(2);
+z->backProp();
+// x->grad and y->grad now contain gradients
+```
+
+### Neural Network Classes
+
+```cpp
+// Create a Multi-Layer Perceptron
+// Input: 3 features, Hidden: 4 neurons, Output: 1 neuron
+MLP model(3, {4, 4, 1});
+
+// Forward pass
+auto output = model(input_data);
+
+// Training
+model.zeroGrad();
+loss->backProp();
+// Update weights...
+```
+
+---
 
 ## Contributing
 
-We welcome contributions to micrograd++. Here are a few areas where you can help:
+We welcome contributions to microgradpp! Here are areas where you can help:
 
 ### TODO
 
-- ~~**Modify CMakeLists to Add a Flag to Build Tests**: Enhance the build configuration to optionally include tests.~~
-- ~~**Make a Tensor Class**: Create a Tensor class to simplify data loading and manipulation.~~
-- ~~**Add an Activation Function Enum or Class**: Implement a flexible way to handle different activation functions.~~
-- ~~**Make an Abstract Base Class for Layer and Value**: Design abstract base classes to improve the architecture and extensibility.~~
-- **CI/CD pipeline**: Develop a pipeline using github actions to execute tests automatically on a commit.
-- **Improve README**: Add few examples on how to leverage this library.
-- **Python Interface??**: Probably make a python interface  
+* ~~**Modify CMakeLists to Add a Flag to Build Tests**~~: ✅ Done
+* ~~**Make a Tensor Class**~~: ✅ Done
+* ~~**Add an Activation Function Enum or Class**~~: ✅ Done
+* ~~**Make an Abstract Base Class for Layer and Value**~~: ✅ Done
+* **CI/CD Pipeline**: Develop a pipeline using GitHub Actions
+* **More Examples**: Add tutorials and use cases
+* **Python Interface**: Create Python bindings
 
-## License
+### How to Contribute
 
-This project is licensed under the GNU License - see the [LICENSE](LICENSE) file for details.
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+---
 
 ## Acknowledgments
 
-- **Andrej Karpathy**: For the original [micrograd](https://github.com/karpathy/micrograd) library and inspiration.
-
-
-## Author
-- **Gautam Sharma**: [gsharma](https://www.gsharma.dev)
+* **Andrej Karpathy**: For the original [micrograd](https://github.com/karpathy/micrograd) library and inspiration
+* The C++ community for feedback and contributions
 
 ---
+
+## Citation
+
+If you use microgradpp in your research or projects:
+
+```bibtex
+@software{microgradpp,
+  author = {Gautam Sharma},
+  title = {microgradpp: A C++ Machine Learning Library},
+  year = {2024},
+  url = {https://github.com/ggsharma/microgradpp}
+}
+```
+
+---
+
+## License
+
+This project is licensed under the GNU GPL-3.0 License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## Author
+
+**Gautam Sharma** - [gsharma.dev](https://www.gsharma.dev)
+
+---
+
+<p align="center">
+  <b>If you find microgradpp useful, please consider giving it a ⭐!</b>
+</p>
+
+<p align="center">
+  <a href="https://github.com/ggsharma/microgradpp/stargazers">
+    <img src="https://img.shields.io/github/stars/ggsharma/microgradpp?style=for-the-badge" alt="Stars"/>
+  </a>
+</p>
