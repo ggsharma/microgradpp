@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f093fb;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f5576c;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="120" rx="10" fill="#1a1a2e"/>
+  
+  <!-- Neural network nodes -->
+  <!-- Input layer -->
+  <circle cx="40" cy="35" r="8" fill="url(#grad1)"/>
+  <circle cx="40" cy="60" r="8" fill="url(#grad1)"/>
+  <circle cx="40" cy="85" r="8" fill="url(#grad1)"/>
+  
+  <!-- Hidden layer -->
+  <circle cx="85" cy="45" r="8" fill="url(#grad2)"/>
+  <circle cx="85" cy="75" r="8" fill="url(#grad2)"/>
+  
+  <!-- Output -->
+  <circle cx="130" cy="60" r="8" fill="#00d4ff"/>
+  
+  <!-- Connections -->
+  <g stroke="#4a5568" stroke-width="1.5" opacity="0.6">
+    <line x1="48" y1="35" x2="77" y2="45"/>
+    <line x1="48" y1="35" x2="77" y2="75"/>
+    <line x1="48" y1="60" x2="77" y2="45"/>
+    <line x1="48" y1="60" x2="77" y2="75"/>
+    <line x1="48" y1="85" x2="77" y2="45"/>
+    <line x1="48" y1="85" x2="77" y2="75"/>
+    <line x1="93" y1="45" x2="122" y2="60"/>
+    <line x1="93" y1="75" x2="122" y2="60"/>
+  </g>
+  
+  <!-- Gradient arrow -->
+  <path d="M 135 60 L 155 60" stroke="#00d4ff" stroke-width="2" fill="none"/>
+  <polygon points="155,55 165,60 155,65" fill="#00d4ff"/>
+  
+  <!-- Text: microgradpp -->
+  <text x="175" y="70" font-family="JetBrains Mono, Monaco, Consolas, monospace" font-size="32" font-weight="bold" fill="white">
+    micro<tspan fill="url(#grad2)">grad</tspan><tspan fill="#00d4ff">++</tspan>
+  </text>
+  
+  <!-- Subtitle -->
+  <text x="175" y="95" font-family="Arial, sans-serif" font-size="11" fill="#8b8b9a">
+    C++ Autograd Engine
+  </text>
+</svg>
